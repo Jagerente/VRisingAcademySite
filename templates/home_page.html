@@ -25,52 +25,75 @@
             padding: 15px;
         }
 
-        .bg-filter {
-            background-color: orange;
+        .catalogue-body {
+            text-align: left;
         }
 
-        .bg-catalogue {
-            background-color: rgba(255, 255, 0, 0.856);
+        .text-vertical {
+            transform: rotate(-90deg);
+        }
+
+        .items {
+            width: 48px;
+            box-shadow: 0 0 8px black;
+            margin-bottom: 5px;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        .items:hover {
+            box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+        }
+
+        #tabBestiary {
+            width: 800px;
+
+            margin: 15px auto;
+
+            height: 400px;
+        }
+
+        #search {
+            width: auto;
+            margin: 0px -8px 0px -12px;
             padding: 0px;
         }
 
-        .text-vertical{
-           transform: rotate(-90deg);
+        #card-filter {
+            background-color: rgba(255, 166, 0, 0.5);
+            padding-top: 10px;
+            margin: 5px 5px 0px 0px;
+            width: 75px;
+            min-height: 475px;
         }
-        .items{
-            width: 64px;
-            box-shadow: 0 0 8px black;
-            margin-bottom: 5px;
+
+        #card-catalogue {
+            background-color: rgba(255, 238, 0, 0.5);
+            padding-top: 10px;
+            margin: 5px 5px 0px 0px;
         }
-        .items:hover{
-            box-shadow: 0 0 8px rgba(255, 0, 0, 0.6);
+
+        #card-info {
+            background-color: rgba(0, 204, 255, 0.5);
+            padding-top: 10px;
+            margin: 0px 5px 0px 0px;
+            width: 75px;
         }
-        .catalogue-body{
-            text-align: left;
+
+        #card-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
         }
-        .card2{
-            margin-right: 5px;
+
+        .spacer {
+            flex: 1;
         }
-        .fixed-left{
-            width: 325px;
-        }
-        .fixed-right{
-            width: 600px;
-        }
-        #tabBestiary{
-            width: 800px;
-            max-height: 600px;
-            margin: 15px auto;
-        }
-        #search{
-            width: auto;
-            margin: 0px -10px 5px;
-        }
-        .table-height{
-            height: 300px;
-        }
-        .filter-width{
-            width: 35px;
+
+        .test {
+            background-color: aqua;
+            border-color: red;
+            border: 3px dashed red;
         }
     </style>
 </head>
@@ -129,8 +152,8 @@
             </div>
             <!-- BESTIARY -->
             <div class="tab-pane fade show active" id="tabBestiary" role="tabpanel">
-                <div class="row ">
-                    <div class="col fixed-left">
+                <div class="row">
+                    <div class="col">
                         <div id="search" class="input-group">
                             <span class="input-group-text bg-dark text-primary border-primary">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -143,32 +166,61 @@
                             <input type="text" class="form-control bg-dark border-primary"
                                 placeholder="Поиск по предметам">
                         </div>
-                        <div class="row table-height">
-                            <div class="col-2 card bg-filter">
-                                <div class="card-body">
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
-
-                                    Filters
-                                </div>
+                        <div class="row ">
+                            <div id="card-filter" class="col-auto rounded">
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <p class="text-vertical" style="margin: 250px 0px 0px 0px">Фильтр</span>
                             </div>
-                            <div class="col card bg-catalogue">
-                                <div class="card-body ">
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
-                                    <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
 
-                                </div>
-                                <div class="card-body catalogue-body">Каталог предметов</div>
+                            <div id="card-catalogue" class="col rounded">
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <img class="items rounded" src="../resources/images/items/purple_eye.jpg"></img>
+                                <h3 class="card-content">Catalogue</h3>
                             </div>
                         </div>
                     </div>
-                    <div class="col card bg-info">
-                        <div class="card-body">
-
-                            INFO
-                        </div>
+                    <div id="card-info" class="col rounded">
+                        INFO
                     </div>
                 </div>
             </div>
