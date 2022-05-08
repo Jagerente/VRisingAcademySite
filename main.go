@@ -1,6 +1,9 @@
 package main
 
 import (
+	"VRisingAcademySite/api"
+	"VRisingAcademySite/database"
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -17,10 +20,16 @@ func home_page(c *gin.Context) {
 }
 
 func handleRequest() {
+	if database.CheckIfDatabaseExists() == false {
+		database.InitializeDatabase()
+		fmt.Println("No initialized database found. Initializing new...")
+	}
+
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 	r.Static("resources/", "./resources")
 
+	api.RegisterApiHandlers(r)
 	r.GET("/", home_page)
 
 	//TLS
@@ -28,7 +37,7 @@ func handleRequest() {
 	// r.RunTLS(":10443", crtPath+"combined.crt", crtPath+"private.key")
 
 	//HTTP
-	r.Run(":8080")
+	r.Run("localhost:8080")
 }
 
 func main() {
