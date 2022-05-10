@@ -16,6 +16,7 @@ type ItemJson struct {
 }
 
 func getItemsList(ctx *gin.Context) {
+
 	var items = make([]ItemJson, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -24,7 +25,7 @@ func getItemsList(ctx *gin.Context) {
 		tables.NameField,
 		tables.DescriptionField,
 		tables.ItemTierField,
-		tables.ItemsTableName)
+		tables.ItemTableName)
 
 	fmt.Println(query)
 	rows, err := connection.Query(query)
