@@ -1,7 +1,7 @@
 package tables
 
 const (
-	TagsTableName string = "ItemTags"
+	TagsTableName string = "Tags"
 	TagValueField string = "value"
 )
 

@@ -1,7 +1,7 @@
 package tables
 
 const (
-	IdField                string = "id"
+	IdFieldName            string = "id"
 	NameField              string = "name"
 	NameFieldLength        int32  = 128
 	DescriptionField       string = "description"
