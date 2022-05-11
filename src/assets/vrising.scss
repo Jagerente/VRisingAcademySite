@@ -1,0 +1,45 @@
+// @font-face {
+//     src: url('@/assets/fonts/VTMB_Benguiat.woff2') format('woff2');
+//     font-family: 'VTMB_Benguiat';
+//     font-weight: normal;
+//     font-style: normal;
+// }
+
+// $font-family-base: 'VTMB_Benguiat';
+
+$background: #1c1b29;
+$shadow: #11111d;
+$text-color: #a8a9ae;
+
+$body-bg: $background;
+$body-color: $text-color;
+
+$nav-link-color: $text-color;
+$nav-link-hover-color: white;
+
+$nav-pills-link-active-color: white;
+$nav-pills-link-active-bg: 0;
+
+.nav-link {
+    color: white;
+}
+
+$primary: #aa1d1d;
+
+body {
+    // padding: 15px;
+    color: $text-color;
+}
+
+// .nav-link:focus,
+// .nav-link:hover {
+//     color: var(--primary)
+// }
+
+// .nav-pills .nav-link.active,
+// .nav-pills .show>.nav-link {
+//     background: var(--primary);
+// }
+
+
+@import "bootstrap/scss/bootstrap";
