@@ -9,11 +9,11 @@
         <transition-group name="items-list">
           <button
             v-for="item in sortedAndSearchedItems"
-            :key="item.id"
+            :key="item.name"
             class="btn-primary items rounded"
-            :title="item.id"
+            :title="item.name"
           >
-            {{ item.id }}
+            {{ item.name }}
           </button>
         </transition-group>
       </div>

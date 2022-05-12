@@ -16,7 +16,7 @@ export const itemsModule = {
         // },
         sortedAndSearchedItems(state, getters) {
             return [...state.items].filter(item =>
-                item.title.toLowerCase().includes(state.searchQuery.toLowerCase())
+                item.name.toLowerCase().includes(state.searchQuery.toLowerCase())
             );
         },
     },
@@ -36,7 +36,7 @@ export const itemsModule = {
             try {
                 commit('setLoading', true);
                 const response = await axios.get(
-                    "https://jsonplaceholder.typicode.com/posts",
+                    "http://localhost:8081/api/items/list",
                     // {
                     //     params: {
                     //         _page: state.page,
