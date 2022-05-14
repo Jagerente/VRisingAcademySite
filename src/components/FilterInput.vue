@@ -1,6 +1,6 @@
 <template>
-  <div class="input-group search">
-    <span class="input-group-text bg-dark text-primary border-primary">
+  <div class="input-group">
+    <span class="input-group-text bg-dark border-0">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="16"
@@ -18,7 +18,7 @@
       :model-value="searchQuery"
       @update:model-value="setSearchQuery"
       type="text"
-      class="form-control bg-dark border-primary"
+      class="form-control bg-dark border-0"
       placeholder="Search..."
       focus
     />
@@ -42,5 +42,5 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 </style>
