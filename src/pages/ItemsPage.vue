@@ -3,7 +3,7 @@
     <div class="w-50 d-flex flex-column" style="margin-right: 15px">
       <!-- SEARCH -->
       <div class="d-flex">
-        <card-search v-model="searchQuery" />
+        <card-search />
       </div>
       <!-- OTHER -->
       <!-- Why 90%? -->
