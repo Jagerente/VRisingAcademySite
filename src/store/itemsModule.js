@@ -3,8 +3,13 @@ import axios from "axios";
 export const itemsModule = {
     state: () => ({
         items: [],
+        weapons: [],
+        armour: [],
+        consumables: [],
+        reagents: [],
         isItemsLoading: false,
         searchQuery: "",
+        selectedItem: null
     }),
     getters: {
         // sortedItems(state) {
@@ -30,6 +35,9 @@ export const itemsModule = {
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },
+        setSelectedItem(state, selectedItem) {
+            state.selectedItem = selectedItem
+        }
     },
     actions: {
         async getItems({ state, commit }) {
@@ -50,6 +58,10 @@ export const itemsModule = {
             } finally {
                 commit('setLoading', false);
             }
+        },
+        selectItem({ state, commit }, name) {
+            const selectedItem = state.items.find(item => item.name === name)
+            commit('setSelectedItem', selectedItem)
         },
     },
     namespaced: true
