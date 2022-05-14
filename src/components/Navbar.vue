@@ -30,25 +30,6 @@
               >Information</a
             >
           </li>
-          <li class="nav-item">
-            <a
-              href="#tabBestiary"
-              @click="$router.push('/bestiary')"
-              class="nav-link"
-              data-bs-toggle="tab"
-            >
-              Bestiary
-            </a>
-          </li>
-          <li class="nav-item">
-            <a
-              href="#tabMap"
-              @click="$router.push('/map')"
-              class="nav-link"
-              data-bs-toggle="tab"
-              >Map</a
-            >
-          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -57,17 +38,49 @@
               role="button"
               aria-haspopup="true"
               aria-expanded="false"
+              >Catalogue</a
+            >
+            <div class="dropdown-menu">
+              <a
+                class="dropdown-item"
+                @click="$router.push('/items')"
+                href="#"
+                data-bs-toggle="tab"
+                >Items</a
+              >
+              <a class="dropdown-item disabled" href="#" data-bs-toggle="tab"
+                >Spells</a
+              >
+              <a class="dropdown-item disabled" href="#" data-bs-toggle="tab"
+                >Bestiary</a
+              >
+            </div>
+          </li>
+          <li class="nav-item">
+            <a
+              href="#"
+              @click="$router.push('/map')"
+              class="nav-link disabled"
+              data-bs-toggle="tab"
+              >Map</a
+            >
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle disabled"
+              data-bs-toggle="dropdown"
+              href="#"
+              role="button"
+              aria-haspopup="true"
+              aria-expanded="false"
               >Guides</a
             >
             <div class="dropdown-menu">
-              <a class="dropdown-item" href="#tab2Id" data-bs-toggle="tab"
+              <a class="dropdown-item" href="#" data-bs-toggle="tab"
                 >Mechanics</a
               >
-              <a class="dropdown-item" href="#tab3Id" data-bs-toggle="tab"
-                >Bosses</a
-              >
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="#tabMap" data-bs-toggle="tab"
+              <a class="dropdown-item" href="#" data-bs-toggle="tab">Bosses</a>
+              <a class="dropdown-item" href="#" data-bs-toggle="tab"
                 >Resources</a
               >
             </div>
@@ -86,7 +99,7 @@ header {
   /* height: 75px; */
   background-color: #1c1b29;
   box-shadow: 0px 5px 5px #11111d;
-  padding: 15px;
+  padding: 5px;
 }
 
 /* .nav-link.active {
