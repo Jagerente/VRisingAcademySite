@@ -9,7 +9,7 @@
       <!-- Why 90%? -->
       <div
         class="d-flex h-100 justify-content-between"
-        style="margin-top: 10px; max-height: 90%"
+        style="margin-top: 10px; max-height: 100%"
       >
         <!-- FILTER -->
         <div class="" style="margin-right: 15px">

@@ -10,8 +10,5 @@ export default {};
 </script>
 
 <style>
-/* body {
-  background-color: #1a1927;
-  color: #a9a8ae;
-} */
+
 </style>

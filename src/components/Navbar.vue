@@ -1,5 +1,8 @@
 <template>
-  <header class="navbar navbar-expand-md sticky-top">
+  <header
+    class="navbar navbar-expand-lg sticky-top"
+    style="text-transform: uppercase; letter-spacing: 0.35rem; font-size:21px"
+  >
     <nav class="container-xxl navbar-dark">
       <a class="navbar-brand" href="https://vk.com/vrising">
         <img
@@ -116,7 +119,7 @@ header {
 }
 
 .logo {
-  height: 45px;
+  height: 60px;
 }
 
 * {
