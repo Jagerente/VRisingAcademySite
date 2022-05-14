@@ -5,5 +5,6 @@ const (
 )
 
 type LocationDataModel struct {
-	GameEntityDataModel
+	EntityDataModel
+	Value string
 }

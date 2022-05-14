@@ -12,7 +12,8 @@ type RecipeDataModel struct {
 	ResultId int32
 }
 
-type RecipeItemDataModel struct {
+type RecipeIngridientDataModel struct {
 	RecipeId int32
 	ItemId   int32
+	Amount   int32
 }
