@@ -4,56 +4,48 @@ import (
 	"VRisingAcademySite/api"
 	"VRisingAcademySite/database"
 	"fmt"
-	"net/http"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-// type Page struct {
-// 	Title string `json:"title"`
-// 	Url   string `json:"url"`
-// }
-
-func home_page(c *gin.Context) {
-	// pages := initPages()
-	c.HTML(http.StatusOK, "home_page.html", nil)
-}
-
 func handleRequest() {
-	if database.CheckIfDatabaseExists() == false {
+	if !database.CheckIfDatabaseExists() {
 		database.InitializeDatabase()
 		fmt.Println("No initialized database found. Initializing new...")
 	}
 
 	r := gin.Default()
-	r.LoadHTMLGlob("templates/*")
-	r.Static("resources/", "./resources")
+
+	// CORS FULL CONFIG EXAMPLE
+	// r.Use(cors.New(cors.Config{
+	// 	AllowOrigins:     []string{"https://foo.com"},
+	// 	AllowMethods:     []string{"PUT", "PATCH"},
+	// 	AllowHeaders:     []string{"Origin"},
+	// 	ExposeHeaders:    []string{"Content-Length"},
+	// 	AllowCredentials: true,
+	// 	AllowOriginFunc: func(origin string) bool {
+	// 	  return origin == "https://github.com"
+	// 	},
+	// 	MaxAge: 12 * time.Hour,
+	//   }))
+
+	//CORS DEFAULT
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:8080"}
+
+	r.Use(cors.New(config))
 
 	api.RegisterApiHandlers(r)
-	r.GET("/", home_page)
 
 	//TLS
 	// crtPath := "ssl/"
 	// r.RunTLS(":10443", crtPath+"combined.crt", crtPath+"private.key")
 
 	//HTTP
-	r.Run("localhost:8080")
+	r.Run("localhost:8081")
 }
 
 func main() {
 	handleRequest()
 }
-
-// func initPages() []Page {
-// 	content, err := ioutil.ReadFile("./pages.json")
-// 	if err != nil {
-// 		log.Fatal("Error when opening file: ", err)
-// 	}
-
-// 	var payload []Page
-// 	err = json.Unmarshal(content, &payload)
-// 	if err != nil {
-// 		log.Fatal("Error during Unmarshal(): ", err)
-// 	}
-// 	return payload
-// }
