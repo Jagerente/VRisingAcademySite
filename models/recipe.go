@@ -5,7 +5,13 @@ const (
 )
 
 type Recipe struct {
-	Entity
-	Result      Item   `json:"result"`
-	Ingredients []Item `json:"ingredients"`
+	GameEntity
+	Result      int32              `json:"result"`
+	Time        int32              `json:"time"`
+	Ingredients []RecipeIngredient `json:"ingredients"`
+}
+
+type RecipeIngredient struct {
+	Id     int32 `json:"itemId"`
+	Amount int32 `json:"amount"`
 }
