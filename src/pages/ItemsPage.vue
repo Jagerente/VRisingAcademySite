@@ -56,8 +56,8 @@ export default {
   border-radius: 10px;
   padding-left: 15px;
   padding-right: 15px;
-  margin-left: -5px;
-  margin-right: -5px;
+  /* margin-left: -5px;
+  margin-right: -5px; */
   font-size: 26px;
   text-align: center;
 }
