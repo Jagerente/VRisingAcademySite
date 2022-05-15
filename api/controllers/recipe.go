@@ -17,9 +17,26 @@ func handleRecipeList(ctx *gin.Context) {
 
 	query := `select
     recipes.id,
-    recipes.name,
-    recipes.description,
-    recipes.resultitemid,
+	array(
+            (
+                select
+				    reciperesults.itemid
+                from
+				    reciperesults
+                where
+				    reciperesults.recipeid = recipes.id
+            )
+    ) as resultIds,
+    array(
+            (
+                select
+                    reciperesults.amount
+                from
+				    reciperesults
+                where
+				    reciperesults.recipeid = recipes.id
+            )
+    ) as resultAmounts,
     recipes.time,
     array(
             (
@@ -56,15 +73,17 @@ group by
 
 	for rows.Next() {
 		item := models.Recipe{}
+		item.Results = make([]models.RecipeResult, 0)
 		item.Ingredients = make([]models.RecipeIngredient, 0)
 		ids := make([]int32, 0)
 		amounts := make([]int32, 0)
+		resultIds := make([]int32, 0)
+		resultAmounts := make([]int32, 0)
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Name,
-			&item.Description,
-			&item.Result,
+			pq.Array(&resultIds),
+			pq.Array(&resultAmounts),
 			&item.Time,
 			pq.Array(&ids),
 			pq.Array(&amounts))
@@ -74,8 +93,12 @@ group by
 			continue
 		}
 
-		for index, _ := range ids {
+		for index := range ids {
 			item.Ingredients = append(item.Ingredients, models.RecipeIngredient{Id: ids[index], Amount: amounts[index]})
+		}
+
+		for resultIndex := range resultIds {
+			item.Results = append(item.Results, models.RecipeResult{Id: resultIds[resultIndex], Amount: resultAmounts[resultIndex]})
 		}
 
 		items = append(items, item)

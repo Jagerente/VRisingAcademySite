@@ -32,7 +32,11 @@ func getReagentList(ctx *gin.Context) {
                 rcst.recipeId = rcp.id
         )
     ) as stations,
-    rcp.id as recipeId,
+    array(
+        (select recipes.id from reciperesults
+        join recipes on recipes.id=reciperesults.recipeid
+        where reciperesults.itemid=items.id)
+    ) as recipes,
     array(
         (
             select
@@ -68,12 +72,13 @@ func getReagentList(ctx *gin.Context) {
     ) as locations
 from
     items
-    full join recipes as rcp on rcp.resultItemId = items.id
+    right join recipeingredients on recipeingredients.itemid = items.id
+    right join recipes as rcp on recipeingredients.itemid = rcp.id
 where
     items.type = 4
 group by
     items.id,
-    recipeId`
+    rcp.id`
 
 	rows, err := connection.Query(query)
 
@@ -86,6 +91,7 @@ group by
 	for rows.Next() {
 		item := models.Reagent{}
 		item.Stations = make([]int32, 0)
+		item.Recipes = make([]int32, 0)
 		item.ReagentFor = make([]int32, 0)
 		item.Tags = make([]string, 0)
 		item.Locations = make([]string, 0)
@@ -96,7 +102,7 @@ group by
 			&item.Description,
 			&item.Tier,
 			pq.Array(&item.Stations),
-			&item.Recipe,
+			pq.Array(&item.Recipes),
 			pq.Array(&item.ReagentFor),
 			pq.Array(&item.Tags),
 			pq.Array(&item.Locations))
