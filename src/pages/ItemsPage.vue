@@ -8,8 +8,8 @@
       <!-- OTHER -->
       <!-- Why 90%? -->
       <div
-        class="d-flex h-100 justify-content-between"
-        style="margin-top: 10px; max-height: 100%"
+        class="d-flex justify-content-between h-100"
+        style="margin-top: 10px;"
       >
         <!-- FILTER -->
         <div class="" style="margin-right: 15px">
@@ -66,23 +66,5 @@ export default {
   padding-top: 10px;
   padding-left: 10px;
   padding-right: 10px;
-}
-
-.items {
-  --item-size: 56px;
-  font-size: 10px;
-  font-family: sans-serif;
-  width: var(--item-size);
-  height: var(--item-size);
-  color: black;
-  box-shadow: 0 0 8px black;
-  margin-bottom: 5px;
-  -webkit-user-drag: none;
-  /* background: url("../resources/images/items/purple_eye.jpg") no-repeat; */
-  border: 0;
-  /* background-size: var(--item-size); */
-  margin-right: 5px;
-  user-select: none;
-  transition: box-shadow 0.15s ease-in-out;
 }
 </style>

@@ -11,16 +11,13 @@
         aria-labelledby="v-pills-weapons-tab"
       >
         <div class="d-flex justify-content-center flex-wrap">
-          <transition-group
-            name="items-list"
-          >
-            <button
+          <transition-group name="items-list">
+            <my-item
               v-for="item in sortedAndSearchedItems"
               :key="item.name"
-              class="btn-primary items rounded"
-              :title="item.name"
-              @click="selectItem(item.name)"
-            ></button>
+              :item="item"
+              @click="selectItem(item.name), setSelected()"
+            />
           </transition-group>
         </div>
       </div>
@@ -63,6 +60,9 @@ export default {
       selectItem: "items/selectItem",
       test: "items/test",
     }),
+    setSelected() {
+      console.log(this.$refs.itemEl);
+    },
   },
   mounted() {
     this.getItems();
@@ -74,20 +74,44 @@ export default {
     ...mapGetters({
       sortedAndSearchedItems: "items/sortedAndSearchedItems",
     }),
+    // bgImage() {
+    //   return require("@/assets/images/items" + this.backgroundImage);
+    // },
+    // inlineStyle() {
+    //   return {
+    //     backgroundImage: `url(${this.bgImage})`,
+    //   };
+    // },
   },
 };
 </script>
 
 <style scoped>
 .items {
-  background: url("@/assets/images/items/Stunlock_Icon_IronSlashers02.png"),
-    rgba(0, 0, 0, 0.5);
-  background-size: 100%;
-  background-position: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  /* background-size: 100%; */
+  /* background-position: 50%; */
+
+  /* --item-size: 85px; */
+  --item-size: 85px;
+  font-size: 10px;
+  font-family: sans-serif;
+  width: var(--item-size);
+  height: var(--item-size);
+  color: black;
+  box-shadow: 0 0 8px black;
+  margin-bottom: 5px;
+  -webkit-user-drag: none;
+  border: 0;
+  margin: 10px;
+  user-select: none;
+  transition: box-shadow 0.15s ease-in-out;
 }
+
 .items:hover {
   box-shadow: 0 0 13px var(--primary);
 }
+
 .items-list-enter-active,
 .items-list-leave-active {
   transition: all 0.45s ease;

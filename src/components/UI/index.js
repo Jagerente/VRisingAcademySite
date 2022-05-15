@@ -4,6 +4,7 @@ import MyDialog from "@/components/UI/MyDialog";
 import MySelect from "@/components/UI/MySelect";
 import BloodSelector from "@/components/UI/BloodSelector";
 import MyCard from "@/components/UI/MyCard";
+import MyItem from "@/components/UI/MyItem";
 
 export default [
     MyButton,
@@ -11,5 +12,6 @@ export default [
     MyDialog,
     MySelect,
     BloodSelector,
-    MyCard
+    MyCard,
+    MyItem
 ]
