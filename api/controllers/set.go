@@ -9,12 +9,12 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func handleTagList(ctx *gin.Context) {
-	var items = make([]models.Tag, 0)
+func handleSetList(ctx *gin.Context) {
+	var items = make([]models.Set, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
 
-	query := `select * from tags`
+	query := `select * from sets`
 
 	rows, err := connection.Query(query)
 
@@ -25,11 +25,12 @@ func handleTagList(ctx *gin.Context) {
 	defer rows.Close()
 
 	for rows.Next() {
-		item := models.Tag{}
+		item := models.Set{}
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Value)
+			&item.Name,
+			&item.Description)
 
 		if readError != nil {
 			fmt.Println(readError)
@@ -42,6 +43,6 @@ func handleTagList(ctx *gin.Context) {
 	ctx.JSON(200, items)
 }
 
-func HandleTagRequest(group *gin.RouterGroup) {
-	group.GET("/list", handleTagList)
+func HandleSetRequest(group *gin.RouterGroup) {
+	group.GET("/list", handleSetList)
 }

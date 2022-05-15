@@ -82,4 +82,16 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleRecipeRequest(recipes)
 	}
+	tags := r.Group("/api/tag")
+	{
+		controllers.HandleTagRequest(tags)
+	}
+	sets := r.Group("api/set")
+	{
+		controllers.HandleSetRequest(sets)
+	}
+	stations := r.Group("/api/station")
+	{
+		controllers.HandleStationRequest(stations)
+	}
 }

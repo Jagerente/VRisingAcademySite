@@ -32,7 +32,11 @@ func getArmourList(ctx *gin.Context) {
                 rcst.recipeId = rcp.id
         )
     ) as stations,
-    rcp.id as recipeId,
+    array(
+        (select recipes.id from reciperesults
+        join recipes on recipes.id=reciperesults.recipeid
+        where reciperesults.itemid=items.id)
+    ) as recipes,
     array(
         (
             select
@@ -58,7 +62,8 @@ func getArmourList(ctx *gin.Context) {
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.set,
+    stats.setid as setId,
+    stats.slotid,
     array(
         (
             select
@@ -83,18 +88,19 @@ func getArmourList(ctx *gin.Context) {
     ) as locations
 from
     items
-    full join recipes as rcp on rcp.resultItemId = items.id
-    full join itemstats as stats on stats.id = items.id
+    right join recipeingredients on recipeingredients.itemid = items.id
+    right join recipes as rcp on recipeingredients.itemid = rcp.id
+    right join itemstats as stats on stats.id = items.id
 where
     items.type = 2
 group by
     items.id,
-    recipeId,
+    rcp.id,
     stats.id,
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.set`
+    stats.slotid`
 
 	rows, err := connection.Query(query)
 
@@ -107,6 +113,7 @@ group by
 	for rows.Next() {
 		item := models.Armour{}
 		item.Stations = make([]int32, 0)
+		item.Recipes = make([]int32, 0)
 		item.ReagentFor = make([]int32, 0)
 		item.Tags = make([]string, 0)
 		item.BonusStats = make([]string, 0)
@@ -118,13 +125,14 @@ group by
 			&item.Description,
 			&item.Tier,
 			pq.Array(&item.Stations),
-			&item.Recipe,
+			&item.Recipes,
 			pq.Array(&item.ReagentFor),
 			pq.Array(&item.Tags),
 			&item.Durability,
 			&item.GearLevel,
 			&item.MainStat,
-			&item.Set,
+			&item.SetId,
+			&item.SlotId,
 			pq.Array(&item.BonusStats),
 			pq.Array(&item.Locations))
 

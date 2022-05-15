@@ -8,8 +8,14 @@ const (
 )
 
 type RecipeDataModel struct {
-	GameEntityDataModel
-	ResultId int32
+	Id   int32
+	Time int32
+}
+
+type RecipeResultDataModel struct {
+	RecipeId int32
+	ItemId   int32
+	Amount   int32
 }
 
 type RecipeIngridientDataModel struct {

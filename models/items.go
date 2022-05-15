@@ -9,7 +9,7 @@ type Item struct {
 	GameEntity
 	Tier       int32    `json:"tier"`
 	Tags       []string `json:"tags"`
-	Recipe     *int32   `json:"recipe"`
+	Recipes    []int32  `json:"recipes"`
 	ReagentFor []int32  `json:"reagentFor"`
 	Stations   []int32  `json:"stations"`
 	//Salvageable []SalvageableItem `json:"salavageable"`
@@ -27,7 +27,7 @@ type Weapon struct {
 	GearLevel  int32    `json:"gearLevel"`
 	MainStat   int32    `json:"mainStat"`
 	BonusStats []string `json:"bonusStats"`
-	Set        *string  `json:"set"`
+	SetId      *int32   `json:"setId"`
 }
 
 type Armour struct {
@@ -36,7 +36,8 @@ type Armour struct {
 	GearLevel  int32    `json:"gearLevel"`
 	MainStat   int32    `json:"mainStat"`
 	BonusStats []string `json:"bonusStats"`
-	Set        *string  `json:"set"`
+	SetId      *int32   `json:"setId"`
+	SlotId     int32    `json:"slotId"`
 }
 
 type Consumable struct {
