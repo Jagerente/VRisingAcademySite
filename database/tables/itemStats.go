@@ -15,10 +15,11 @@ const (
 type ItemStatsDataModel struct {
 	EntityDataModel
 	MainStat   float64
-	Set        string
+	SetId      int32
 	SetBonus   string
 	GearLevel  int32
 	Durability int32
+	SlotId     int32
 }
 
 type SecondaryStatsDataModel struct {
