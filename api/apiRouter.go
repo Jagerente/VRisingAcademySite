@@ -7,15 +7,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type basicQueryFilter struct {
+type BasicQueryFilter struct {
 	Amount            int32
 	Offset            int32
 	NameFilter        string
 	DescriptionFilter string
 }
 
-func parseQueryFilter(request *gin.Context) basicQueryFilter {
-	result := basicQueryFilter{
+func ParseQueryFilter(request *gin.Context) BasicQueryFilter {
+	result := BasicQueryFilter{
 		Amount:            10,
 		Offset:            0,
 		NameFilter:        "",
@@ -93,5 +93,9 @@ func RegisterApiHandlers(r *gin.Engine) {
 	stations := r.Group("/api/station")
 	{
 		controllers.HandleStationRequest(stations)
+	}
+	spells := r.Group("/api/spell")
+	{
+		controllers.HandleSpellRequest(spells)
 	}
 }

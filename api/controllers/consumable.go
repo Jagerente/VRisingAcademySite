@@ -72,8 +72,8 @@ func getConsumableList(ctx *gin.Context) {
     ) as locations
 from
     items
-    right join recipeingredients on recipeingredients.itemid = items.id
-    right join recipes as rcp on recipeingredients.itemid = rcp.id
+    join recipeingredients on recipeingredients.itemid = items.id
+    full join recipes as rcp on recipeingredients.itemid = rcp.id
 where
     items.type = 3
 group by
