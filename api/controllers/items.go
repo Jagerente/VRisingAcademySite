@@ -9,7 +9,7 @@ import (
 )
 
 type ItemJson struct {
-	id          int32  `json:"id"`
+	Id          int32  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Tier        int32  `json:"tier"`
@@ -34,7 +34,7 @@ func getItemsList(ctx *gin.Context) {
 
 	for rows.Next() {
 		item := ItemJson{}
-		readError := rows.Scan(&item.id, &item.Name, &item.Description, &item.Tier, &item.Type)
+		readError := rows.Scan(&item.Id, &item.Name, &item.Description, &item.Tier, &item.Type)
 		if readError != nil {
 			fmt.Print(readError)
 			continue
