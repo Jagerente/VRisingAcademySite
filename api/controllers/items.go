@@ -3,16 +3,17 @@ package controllers
 import (
 	//"net/http"
 	"VRisingAcademySite/database"
-	"VRisingAcademySite/database/tables"
 	"fmt"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ItemJson struct {
+	id          int32  `json:"id"`
 	Name        string `json:"name"`
 	Description string `json:"description"`
 	Tier        int32  `json:"tier"`
+	Type        int32  `json:"type"`
 }
 
 func getItemsList(ctx *gin.Context) {
@@ -20,12 +21,7 @@ func getItemsList(ctx *gin.Context) {
 	var items = make([]ItemJson, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
-	query := fmt.Sprintf(
-		"SELECT %s, %s, %s FROM %s",
-		tables.NameField,
-		tables.DescriptionField,
-		tables.ItemTierField,
-		tables.ItemTableName)
+	query := "select * from items"
 
 	fmt.Println(query)
 	rows, err := connection.Query(query)
@@ -38,7 +34,7 @@ func getItemsList(ctx *gin.Context) {
 
 	for rows.Next() {
 		item := ItemJson{}
-		readError := rows.Scan(&item.Name, &item.Description, &item.Tier)
+		readError := rows.Scan(&item.id, &item.Name, &item.Description, &item.Tier, &item.Type)
 		if readError != nil {
 			fmt.Print(readError)
 			continue
