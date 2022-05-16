@@ -87,9 +87,9 @@ func getWeaponList(ctx *gin.Context) {
     ) as locations
 from
     items
-    right join recipeingredients on recipeingredients.itemid = items.id
-    right join recipes as rcp on recipeingredients.itemid = rcp.id
-    right join itemstats as stats on stats.id = items.id
+    full join recipeingredients on recipeingredients.itemid = items.id
+    full join recipes as rcp on recipeingredients.itemid = rcp.id
+    join itemstats as stats on stats.id = items.id
 where
     items.type = 1
 group by
