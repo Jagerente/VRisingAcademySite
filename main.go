@@ -14,6 +14,10 @@ func handleRequest() {
 		database.InitializeDatabase()
 		fmt.Println("No initialized database found. Initializing new...")
 	}
+	if database.CheckIfDatabaseNeedsUpdate() {
+		fmt.Println(fmt.Sprintf(`Obsolete database version found. Running update to version %d`, database.DatabaseVersion))
+		database.UpdateDatabase()
+	}
 
 	r := gin.Default()
 
