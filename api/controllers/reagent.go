@@ -72,13 +72,15 @@ func getReagentList(ctx *gin.Context) {
     ) as locations
 from
     items
-    join recipeingredients on recipeingredients.itemid = items.id
+    full join recipeingredients on recipeingredients.itemid = items.id
     full join recipes as rcp on recipeingredients.itemid = rcp.id
 where
     items.type = 4
 group by
     items.id,
-    rcp.id`
+    rcp.id
+order by
+    items.id`
 
 	rows, err := connection.Query(query)
 

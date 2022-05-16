@@ -25,7 +25,7 @@ type Weapon struct {
 	Item
 	Durability int32    `json:"durability"`
 	GearLevel  int32    `json:"gearLevel"`
-	MainStat   int32    `json:"mainStat"`
+	MainStat   float64  `json:"mainStat"`
 	BonusStats []string `json:"bonusStats"`
 	SetId      *int32   `json:"setId"`
 }
@@ -34,7 +34,7 @@ type Armour struct {
 	Item
 	Durability int32    `json:"durability"`
 	GearLevel  int32    `json:"gearLevel"`
-	MainStat   int32    `json:"mainStat"`
+	MainStat   float64  `json:"mainStat"`
 	BonusStats []string `json:"bonusStats"`
 	SetId      *int32   `json:"setId"`
 	SlotId     int32    `json:"slotId"`
