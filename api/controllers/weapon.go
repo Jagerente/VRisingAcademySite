@@ -98,7 +98,9 @@ group by
     stats.id,
     stats.durability,
     stats.gearLevel,
-    stats.mainStat`
+    stats.mainStat
+order by
+    items.id`
 
 	rows, err := connection.Query(query)
 
