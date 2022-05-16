@@ -123,7 +123,7 @@ group by
 			&item.Description,
 			&item.Tier,
 			pq.Array(&item.Stations),
-			&item.Recipes,
+			pq.Array(&item.Recipes),
 			pq.Array(&item.ReagentFor),
 			pq.Array(&item.Tags),
 			&item.Durability,
