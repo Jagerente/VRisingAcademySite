@@ -5,6 +5,9 @@ import MySelect from "@/components/UI/MySelect";
 import BloodSelector from "@/components/UI/BloodSelector";
 import MyCard from "@/components/UI/MyCard";
 import MyItem from "@/components/UI/MyItem";
+import IconBar from "@/components/UI/IconBar";
+import IconCatalogue from "@/components/UI/IconCatalogue";
+import IconFilter from "@/components/UI/IconFilter";
 
 export default [
     MyButton,
@@ -13,5 +16,8 @@ export default [
     MySelect,
     BloodSelector,
     MyCard,
-    MyItem
+    MyItem,
+    IconBar,
+    IconCatalogue,
+    IconFilter
 ]

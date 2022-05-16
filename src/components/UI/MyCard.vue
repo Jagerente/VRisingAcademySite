@@ -1,9 +1,12 @@
 <template>
   <div class="d-flex flex-column h-100 card__background">
     <div class="card__header">
-      <span>
+      <slot name="left"></slot>
+      <slot v-if="custom" name="header"></slot>
+      <span v-else class="mx-2">
         {{ title }}
       </span>
+      <slot name="right"></slot>
     </div>
     <div class="card__content">
       <slot></slot>
@@ -16,6 +19,7 @@ export default {
   name: "my-card",
   props: {
     title: String,
+    custom: Boolean,
   },
 };
 </script>
@@ -36,6 +40,7 @@ export default {
   margin-right: -5px; */
   font-size: 26px;
   text-align: center;
+  user-select: none;
 }
 
 .card__content {

@@ -22,6 +22,13 @@
       placeholder="Search..."
       focus
     />
+    <span
+      class="
+        form-control-clear
+        glyphicon glyphicon-remove
+        form-control-feedback
+      "
+    ></span>
   </div>
 </template>
 
@@ -43,4 +50,7 @@ export default {
 </script>
 
 <style scoped>
+.input-group {
+  height: 39px;
+}
 </style>

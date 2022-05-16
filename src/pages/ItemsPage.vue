@@ -2,15 +2,12 @@
   <div class="d-flex mx-5 my-4 h-75">
     <div class="w-50 d-flex flex-column" style="margin-right: 15px">
       <!-- SEARCH -->
-      <div class="d-flex">
+      <!-- <div class="d-flex">
         <card-search />
-      </div>
+      </div> -->
       <!-- OTHER -->
       <!-- Why 90%? -->
-      <div
-        class="d-flex justify-content-between h-100"
-        style="margin-top: 10px;"
-      >
+      <div class="d-flex justify-content-between h-100">
         <!-- FILTER -->
         <div class="" style="margin-right: 15px">
           <card-filter />
@@ -29,14 +26,12 @@
 </template>
 
 <script>
-import CardSearch from "@/components/ItemsPage/CardSearch";
 import CardFilter from "@/components/ItemsPage/CardFilter";
 import CardCatalogue from "@/components/ItemsPage/CardCatalogue";
 import CardInformation from "@/components/ItemsPage/CardInformation";
 
 export default {
   components: {
-    CardSearch,
     CardFilter,
     CardCatalogue,
     CardInformation,

@@ -1,5 +1,8 @@
 <template>
-  <my-card title="Information">
+  <my-card title="Information" :custom="false">
+    <template #left><icon-bar :left="true" /></template>
+    <template #right><icon-bar :left="false" /></template>
+
     <div v-if="selectedItem === null">
       <h3>Select item</h3>
     </div>

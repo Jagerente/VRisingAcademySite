@@ -15,9 +15,6 @@ export default {
 </script>
 
 <style lang="scss">
-.test {
-  background-color: aqua;
-  border-color: red;
-  border: 3px dashed red;
-}
+
+
 </style>

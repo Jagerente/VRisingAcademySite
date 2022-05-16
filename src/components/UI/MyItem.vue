@@ -4,7 +4,7 @@
     class="btn-primary items rounded"
     :title="item.name"
     ref="itemEl"
-    :src="require('@/assets/images/items/weapons/' + item.name + '.png')"
+    :src="require('@/assets/images/items/all/' + item.name + '.png')"
   />
 </template>
 
@@ -41,5 +41,26 @@ export default {
 
 .items:hover {
   box-shadow: 0 0 13px var(--primary);
+}
+
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  /* background: rgba(0, 0, 0, 0.5); */
+  background-color: black;
+  background-size: 90%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  border: 1px solid white;
+  box-shadow: 0;
+}
+.btn-primary:hover {
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: 90%;
+}
+
+.btn-check:focus + .btn-primary,
+.btn-primary:focus {
+  box-shadow: none;
 }
 </style>

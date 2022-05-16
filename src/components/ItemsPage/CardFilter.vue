@@ -1,12 +1,13 @@
 <template>
-  <my-card title="Filter">
+  <my-card title="Filter" :custom="false">
+    <template #left><icon-filter /></template>
     <div
       class="nav d-flex flex-column nav-pills"
       id="v-pills-tab"
       role="tablist"
       aria-orientation="vertical"
     >
-      <button
+      <input
         class="nav-link active"
         id="v-pills-weapons-tab"
         data-bs-toggle="pill"
@@ -15,9 +16,9 @@
         role="tab"
         aria-controls="v-pills-weapons"
         aria-selected="true"
-      >
-        Weapons
-      </button>
+        value="Weapons"
+        style="cursor: pointer"
+      />
       <button
         class="nav-link"
         id="v-pills-armour-tab"
@@ -75,5 +76,6 @@
   margin-bottom: 5px;
   height: 55px;
   background-color: #14141e;
+  border: 1px solid #14141e;
 }
 </style>
