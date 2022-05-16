@@ -16,14 +16,14 @@ const (
 	postgresPassword         string = "12345678"
 	postgresHost             string = "localhost"
 	postgresPort             int32  = 5432
-	DatabaseVersion          int32  = 1
+	DatabaseVersion          int32  = 2
 )
 
 func CheckIfDatabaseNeedsUpdate() bool {
 	connection := CreateConnection()
-	var exists, version int32
+	var id, exists, version int32
 	item := connection.QueryRow(checkConnectionString)
-	readError := item.Scan(&exists, &version)
+	readError := item.Scan(&id, &exists, &version)
 
 	if readError != nil {
 		panic(readError)
@@ -35,9 +35,9 @@ func CheckIfDatabaseNeedsUpdate() bool {
 func UpdateDatabase() {
 	connection := CreateConnection()
 	defer connection.Close()
-	var exists, version int32
+	var id, exists, version int32
 	item := connection.QueryRow(checkConnectionString)
-	readError := item.Scan(&exists, &version)
+	readError := item.Scan(&id, &exists, &version)
 
 	if readError != nil {
 		panic(readError)
@@ -49,7 +49,7 @@ func UpdateDatabase() {
 
 	startIndex := version - 1
 
-	for index := startIndex; index < DatabaseVersion; index++ {
+	for index := startIndex; index < DatabaseVersion-1; index++ {
 		for _, migrationQuery := range migrations[index] {
 			connection.Exec(migrationQuery)
 		}
@@ -66,9 +66,9 @@ func CheckIfDatabaseExists() bool {
 		postgresHost,
 		postgresPort))
 
-	var result1, result2 int32
+	var id, result1, result2 int32
 	item := connection.QueryRow(checkConnectionString)
-	readError := item.Scan(&result1, &result2)
+	readError := item.Scan(&id, &result1, &result2)
 	connection.Close()
 
 	if readError != nil {
