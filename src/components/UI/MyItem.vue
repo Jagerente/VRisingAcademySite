@@ -24,7 +24,7 @@ export default {
           return "reagents";
         default:
           console.error("[MyItem] Wrong Item type:", this.item.type, item);
-          return "all";
+          return null;
       }
     },
   },

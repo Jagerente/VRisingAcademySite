@@ -121,7 +121,7 @@ export default {
           return "reagents";
         default:
           console.error("[CardInformation] Wrong Item type:", type);
-          return "all";
+          return null;
       }
     },
   },
