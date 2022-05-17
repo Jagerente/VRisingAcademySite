@@ -1,8 +1,8 @@
 <template>
-  <div class="container-fluid vh-100 p-0">
+  <main class="container-fluid vh-100 p-0 m-0">
     <navbar />
     <router-view></router-view>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -14,7 +14,5 @@ export default {
 };
 </script>
 
-<style lang="scss">
-
-
+<style>
 </style>

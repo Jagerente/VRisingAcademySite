@@ -4,7 +4,7 @@
     style="text-transform: uppercase; letter-spacing: 0.35rem; font-size:21px"
   >
     <nav class="container-xxl navbar-dark">
-      <a class="navbar-brand" href="https://vk.com/vrising">
+      <a class="navbar-brand" href="https://vk.com/vrisingacademy" target="blank">
         <img
           src="@/assets/images/ui/logo.png"
           alt=""

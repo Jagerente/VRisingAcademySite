@@ -1,18 +1,39 @@
 <template>
-  <input
+  <img
     type="image"
     class="btn-primary items rounded"
     :title="item.name"
-    ref="itemEl"
-    :src="require('@/assets/images/items/all/' + item.name + '.png')"
+    :src="
+      require('@/assets/images/items/' + getPath() + '/' + item.name + '.png')
+    "
   />
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
   name: "my-item",
   props: {
     item: Object,
+    type: Number,
+  },
+  methods: {
+    getPath() {
+      switch (this.type) {
+        case 1:
+          return "weapons";
+        case 2:
+          return "armour";
+        case 3:
+          return "consumables";
+        case 4:
+          return "reagents";
+        default:
+          console.error("Wrong Item type:", type, item);
+          return "all";
+      }
+    },
   },
 };
 </script>
