@@ -1,11 +1,12 @@
 @font-face {
-    src: url('@/assets/fonts/Constantia.woff2') format('woff2');
-    font-family: 'Constantia';
+    // src: url('@/assets/fonts/Constantia.woff2') format('woff2');
+    src: url('@/assets/fonts/DniproCity-Regular.ttf') format('ttf');
+    font-family: 'Regular';
     font-weight: normal;
     font-style: normal;
 }
 
-$font-family-base: 'Constantia';
+$font-family-base: 'Regular';
 
 $background: #1c1b29;
 $shadow: #11111d;
@@ -50,6 +51,7 @@ input {
     border: 1px dashed red;
 }
 
+.btn:focus,
 textarea:focus,
 input[type="text"]:focus,
 input[type="password"]:focus,
@@ -65,6 +67,7 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
+input[type="button"]:focus,
 .uneditable-input:focus {
     // border-color: rgba(126, 239, 104, 0.8);
     // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(41, 0, 0, 0.6);
@@ -77,9 +80,10 @@ input[type="color"]:focus,
 //     color: var(--primary)
 // }
 
-// .nav-pills .nav-link.active,
-// .nav-pills .show>.nav-link {
-//     background: var(--primary);
-// }
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: none;
+    background: none;
+}
 
 @import "bootstrap/scss/bootstrap";

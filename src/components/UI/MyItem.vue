@@ -1,26 +1,19 @@
 <template>
-  <img
-    type="image"
-    class="btn-primary items rounded"
-    :title="item.name"
-    :src="
-      require('@/assets/images/items/' + getPath() + '/' + item.name + '.png')
-    "
-  />
+  <input type="image" class="btn-primary items rounded" :title="item.name" :src="
+    require('@/assets/images/items/' + getPath() + '/' + item.name + '.png')
+  " />
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
 
 export default {
   name: "my-item",
   props: {
     item: Object,
-    type: Number,
   },
   methods: {
     getPath() {
-      switch (this.type) {
+      switch (this.item.type) {
         case 1:
           return "weapons";
         case 2:
@@ -30,7 +23,7 @@ export default {
         case 4:
           return "reagents";
         default:
-          console.error("Wrong Item type:", type, item);
+          console.error("[MyItem] Wrong Item type:", this.item.type, item);
           return "all";
       }
     },
@@ -45,14 +38,12 @@ export default {
   /* background-position: 50%; */
 
   /* --item-size: 85px; */
-  --item-size: 85px;
+  --item-size: 10em;
   font-size: 10px;
   font-family: sans-serif;
   width: var(--item-size);
   height: var(--item-size);
-  color: black;
-  box-shadow: 0 0 8px black;
-  margin-bottom: 5px;
+  color: #14131b;
   -webkit-user-drag: none;
   border: 0;
   margin: 10px;
@@ -61,26 +52,28 @@ export default {
 }
 
 .items:hover {
-  box-shadow: 0 0 13px var(--primary);
+  box-shadow: 0 0 8px black;
 }
 
-.btn-check:focus + .btn-primary,
+.btn-check:focus+.btn-primary,
 .btn-primary:focus {
   /* background: rgba(0, 0, 0, 0.5); */
-  background-color: black;
+  background-color: #14131b;
   background-size: 90%;
   background-position: 50%;
   background-repeat: no-repeat;
   border: 1px solid white;
   box-shadow: 0;
 }
+
 .btn-primary:hover {
-  background-color: black;
+  box-shadow: 0 0 8px black;
+  background-color: #14131b;
   background-repeat: no-repeat;
   background-size: 90%;
 }
 
-.btn-check:focus + .btn-primary,
+.btn-check:focus+.btn-primary,
 .btn-primary:focus {
   box-shadow: none;
 }

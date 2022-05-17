@@ -12,7 +12,6 @@
         v-for="item in sortedAndSearchedItems(type)"
         :key="item.id"
         :item="item"
-        :type="type"
         @click="selectItem(item.id)"
       />
     </transition-group>

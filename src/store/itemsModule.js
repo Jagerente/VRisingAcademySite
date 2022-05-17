@@ -3,11 +3,13 @@ import axios from "axios";
 
 export const itemsModule = {
     state: () => ({
-        items: [],
         weapons: [],
         armour: [],
         consumables: [],
         reagents: [],
+        items: [],
+        sets: [],
+        recipes: [],
         isItemsLoading: false,
         searchQuery: "",
         selectedItem: null,
@@ -44,9 +46,6 @@ export const itemsModule = {
         },
     },
     mutations: {
-        setItems(state, items) {
-            state.items = items
-        },
         setWeapons(state, weapons) {
             state.weapons = weapons
         },
@@ -58,6 +57,15 @@ export const itemsModule = {
         },
         setReagents(state, reagents) {
             state.reagents = reagents
+        },
+        setItems(state, items) {
+            state.items = items
+        },
+        setSets(state, sets) {
+            state.sets = sets
+        },
+        setRecipes(state, recipes) {
+            state.recipes = recipes
         },
         setLoadedItems(state, count) {
             state.loadedItems = count
@@ -100,13 +108,50 @@ export const itemsModule = {
             } finally {
                 const items = state.weapons.concat(state.armour, state.consumables, state.reagents);
                 commit('setItems', items);
-
                 commit('setLoading', false);
             }
         },
-        selectItem({ state, commit }, id) {
+        async getSets({ state, commit }) {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8081/api/set/list",
+                );
+
+                commit('setSets', response.data);
+            } catch (e) {
+                alert("Error: " + e);
+            } finally {
+
+            }
+        },
+        async getRecipes({ state, commit }) {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8081/api/recipe/list",
+                );
+
+                commit('setRecipes', response.data);
+            } catch (e) {
+                alert("Error: " + e);
+            } finally {
+
+            }
+        },
+        selectItem({ state, dispatch, commit }, id) {
             const selectedItem = state.items.find(item => item.id === id)
+            if (selectedItem.setId) {
+                const set = [...state.sets].find(set => set.id === selectedItem.setId)
+                if (!set.description.toLowerCase().includes("no bonus")) {
+                    selectedItem.set = set;
+                }
+            }
+            if (selectedItem.recipes) {
+                const result = [];
+                selectedItem.recipes.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
+                selectedItem.recipesInfo = result;
+            }
             commit('setSelectedItem', selectedItem)
+
         },
         updateSearchQuery({ state, commit }, query) {
             commit('setSearchQuery', query)
