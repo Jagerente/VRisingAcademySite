@@ -21,6 +21,7 @@ func getArmourList(ctx *gin.Context) {
     items.name,
     items.description,
     items.tier,
+    items.type,
     array(
         (
             select
@@ -126,6 +127,7 @@ order by
 			&item.Name,
 			&item.Description,
 			&item.Tier,
+			&item.Type,
 			pq.Array(&item.Stations),
 			pq.Array(&item.Recipes),
 			pq.Array(&item.ReagentFor),
