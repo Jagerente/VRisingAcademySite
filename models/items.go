@@ -23,6 +23,7 @@ type SalvageableItem struct {
 
 type Weapon struct {
 	Item
+	Type       int32    `json:"type"`
 	Durability int32    `json:"durability"`
 	GearLevel  int32    `json:"gearLevel"`
 	MainStat   float64  `json:"mainStat"`
@@ -32,6 +33,7 @@ type Weapon struct {
 
 type Armour struct {
 	Item
+	Type       int32    `json:"type"`
 	Durability int32    `json:"durability"`
 	GearLevel  int32    `json:"gearLevel"`
 	MainStat   float64  `json:"mainStat"`
@@ -42,8 +44,10 @@ type Armour struct {
 
 type Consumable struct {
 	Item
+	Type int32 `json:"type"`
 }
 
 type Reagent struct {
 	Item
+	Type int32 `json:"type"`
 }
