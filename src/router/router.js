@@ -1,5 +1,5 @@
 import Main from "@/pages/Main";
-import BestiaryPage from "@/pages/BestiaryPage"
+import ItemsPage from "@/pages/ItemsPage"
 
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -9,16 +9,16 @@ const routes = [
         component: Main
     },
     {
-        path: '/bestiary',
-        component: BestiaryPage
+        path: '/items',
+        component: ItemsPage
     },
     {
         path: '/map',
-        component: BestiaryPage
+        component: ItemsPage
     },
     {
         path: '/guides',
-        component: BestiaryPage
+        component: ItemsPage
     },
 ]
 

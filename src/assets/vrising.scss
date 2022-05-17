@@ -1,11 +1,12 @@
-// @font-face {
-//     src: url('@/assets/fonts/VTMB_Benguiat.woff2') format('woff2');
-//     font-family: 'VTMB_Benguiat';
-//     font-weight: normal;
-//     font-style: normal;
-// }
+@font-face {
+    // src: url('@/assets/fonts/Constantia.woff2') format('woff2');
+    src: url('@/assets/fonts/DniproCity-Regular.ttf') format('ttf');
+    font-family: 'Regular';
+    font-weight: normal;
+    font-style: normal;
+}
 
-// $font-family-base: 'VTMB_Benguiat';
+$font-family-base: 'Regular';
 
 $background: #1c1b29;
 $shadow: #11111d;
@@ -13,12 +14,13 @@ $text-color: #a8a9ae;
 
 $body-bg: $background;
 $body-color: $text-color;
+$dark: #14141e;
 
 $nav-link-color: $text-color;
 $nav-link-hover-color: white;
 
 $nav-pills-link-active-color: white;
-$nav-pills-link-active-bg: 0;
+// $nav-pills-link-active-bg: 0;
 
 .nav-link {
     color: white;
@@ -31,15 +33,57 @@ body {
     color: $text-color;
 }
 
+
+body {
+    cursor: url("@/assets/images/ui/Cursor_Arrow.png"), auto;
+    // background-image: url("@/assets/images/ui/background.webp");
+    // background-repeat: no-repeat;
+    // background-size: auto;
+}
+
+input {
+    cursor: url("@/assets/images/ui/Cursor_Crosshair.png"), default;
+}
+
+.test {
+    background-color: aqua;
+    border-color: red;
+    border: 1px dashed red;
+}
+
+.btn:focus,
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+input[type="button"]:focus,
+.uneditable-input:focus {
+    // border-color: rgba(126, 239, 104, 0.8);
+    // box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(41, 0, 0, 0.6);
+    box-shadow: none;
+    outline: 0 none;
+}
+
 // .nav-link:focus,
 // .nav-link:hover {
 //     color: var(--primary)
 // }
 
-// .nav-pills .nav-link.active,
-// .nav-pills .show>.nav-link {
-//     background: var(--primary);
-// }
-
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    background-color: none;
+    background: none;
+}
 
 @import "bootstrap/scss/bootstrap";
