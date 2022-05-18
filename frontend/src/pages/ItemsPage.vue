@@ -1,7 +1,7 @@
 <template>
   <div class="catalogue d-md-flex flex-md-wrap flex-lg-nowrap h-100 justify-content-between mx-5 d-none">
     <!-- FILTER -->
-    <div class="d-flex h-100">
+    <div class="d-flex w-100 h-100">
       <div>
         <card-filter />
       </div>
