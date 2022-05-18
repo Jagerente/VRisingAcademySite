@@ -17,46 +17,57 @@ func handleRecipeList(ctx *gin.Context) {
 
 	query := `select
     recipes.id,
-	array(
-            (
-                select
-				    reciperesults.itemid
-                from
-				    reciperesults
-                where
-				    reciperesults.recipeid = recipes.id
-            )
+    array(
+        (
+            select
+                stations.name
+            from
+                recipestations
+                join stations on stations.id = recipestations.stationid
+            where
+                recipestations.recipeid = recipes.id
+        )
+    ) as stations,
+    array(
+        (
+            select
+                reciperesults.itemid
+            from
+                reciperesults
+            where
+                reciperesults.recipeid = recipes.id
+        )
     ) as resultIds,
     array(
-            (
-                select
-                    reciperesults.amount
-                from
-				    reciperesults
-                where
-				    reciperesults.recipeid = recipes.id
-            )
+        (
+            select
+                reciperesults.amount
+            from
+                reciperesults
+            where
+                reciperesults.recipeid = recipes.id
+        )
     ) as resultAmounts,
     recipes.time,
     array(
-            (
-                select
-                    recipeingredients.itemid
-                from
-                    recipeingredients
-                where
-                    recipeingredients.recipeid = recipes.id
-            )
+        (
+            select
+                recipeingredients.itemid
+            from
+                recipeingredients
+            where
+                recipeingredients.recipeid = recipes.id
+        )
     ) as ingredientsIds,
     array(
-            (
-                select
-                    recipeingredients.amount
-                from
-                    recipeingredients
-                where
-                    recipeingredients.recipeid = recipes.id
-            )
+        (
+            select
+                recipeingredients.amount
+            from
+                recipeingredients
+            where
+                recipeingredients.recipeid = recipes.id
+        )
     ) as ingredientsAmounts
 from
     recipes
@@ -73,6 +84,7 @@ group by
 
 	for rows.Next() {
 		item := models.Recipe{}
+		item.Stations = make([]string, 0)
 		item.Results = make([]models.RecipeResult, 0)
 		item.Ingredients = make([]models.RecipeIngredient, 0)
 		ids := make([]int32, 0)
@@ -82,6 +94,7 @@ group by
 
 		readError := rows.Scan(
 			&item.Id,
+			pq.Array(&item.Stations),
 			pq.Array(&resultIds),
 			pq.Array(&resultAmounts),
 			&item.Time,

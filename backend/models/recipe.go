@@ -6,6 +6,7 @@ const (
 
 type Recipe struct {
 	Entity
+	Stations    []string           `json:"stations"`
 	Results     []RecipeResult     `json:"results"`
 	Time        int32              `json:"time"`
 	Ingredients []RecipeIngredient `json:"ingredients"`
