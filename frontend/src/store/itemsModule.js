@@ -13,7 +13,9 @@ export const itemsModule = {
         isItemsLoading: false,
         searchQuery: "",
         selectedItem: null,
-        loadedItems: 0
+        loadedItems: 0,
+        // host: "https://vrising-academy.info/api/"
+        host: "http://localhost:8087/api/"
     }),
     getters: {
         sortedItems: (state) => (type) => {
@@ -87,19 +89,19 @@ export const itemsModule = {
 
                 let response;
                 response = await axios.get(
-                    "http://localhost:8081/api/weapon/list",
+                    state.host + "weapon/list",
                 );
                 commit('setWeapons', response.data);
                 response = await axios.get(
-                    "http://localhost:8081/api/armour/list",
+                    state.host + "armour/list",
                 );
                 commit('setArmour', response.data);
                 response = await axios.get(
-                    "http://localhost:8081/api/consumable/list",
+                    state.host + "consumable/list",
                 );
                 commit('setConsumables', response.data);
                 response = await axios.get(
-                    "http://localhost:8081/api/reagent/list",
+                    state.host + "reagent/list",
                 );
                 commit('setReagents', response.data);
 
@@ -114,7 +116,7 @@ export const itemsModule = {
         async getSets({ state, commit }) {
             try {
                 const response = await axios.get(
-                    "http://localhost:8081/api/set/list",
+                    state.host + "set/list",
                 );
 
                 commit('setSets', response.data);
@@ -127,7 +129,7 @@ export const itemsModule = {
         async getRecipes({ state, commit }) {
             try {
                 const response = await axios.get(
-                    "http://localhost:8081/api/recipe/list",
+                    state.host + "recipe/list",
                 );
 
                 commit('setRecipes', response.data);
