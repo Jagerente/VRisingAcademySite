@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar navbar-expand-lg sticky-top"
+  <header class="navbar navbar-expand-lg fixed-top"
     style="text-transform: uppercase; letter-spacing: 0.35rem; font-size:21px">
     <nav class="container-xxl navbar-dark">
       <a class="navbar-brand" href="https://vk.com/vrisingacademy" target="blank">
@@ -42,6 +42,9 @@
 </template>
 
 <script>
+export default {
+  name: "my-navbar",
+};
 </script>
 
 <style scoped>

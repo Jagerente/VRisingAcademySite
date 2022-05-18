@@ -1,21 +1,21 @@
 <template>
-  <div class="container flex-column ">
+  <div class="content d-flex flex-column h-100">
     <div class="d-flex justify-content-center">
-      <img class="image" style="margin-top: 0px;margin-bottom: -135px;" draggable="false" :src="
+      <img class="image" style="margin-top:100px; margin-bottom: -135px;" draggable="false" :src="
         require('@/assets/images/ui/main_page/VAlogo.webp')
       ">
     </div>
-    <h1 class="text-center m-5">Welcome to the academy, V Academy!
+    <h3 class="text-center m-5">Welcome to the academy, V Academy!
       <br>This website is Work In Progress, and we are
       working
-      hard to fill up the
+      hard to fill up themt-auto mt-auto
       database with missing items and develop new features.
       <br>If you want to contribute or leave feedback you can do
       it in <a
         href="https://docs.google.com/forms/d/e/1FAIpQLSdNlAa_hyXcHsMTJy59alBP5hxhiWsebMHNr9M52He0s5mUsQ/viewform?usp=sf_link"
         target="blank">this form.</a>
-    </h1>
-    <div class="d-flex justify-content-center">
+    </h3>
+    <div class="d-flex justify-content-center m-5">
       <div class="mx-3">
         <div class="position-absolute orb1">
         </div>
@@ -44,7 +44,7 @@
         </a>
       </div>
     </div>
-    <div class="d-flex justify-content-center" style="translate: 0px 150px">
+    <div class="d-flex justify-content-center mt-auto">
       <p class="text-center">© 2022 V Rising Academy · Genshin Academy Team</p>
     </div>
   </div>
@@ -58,6 +58,14 @@ export default {
 <style lang="scss" scoped>
 * {
   user-select: none;
+}
+
+.content {
+  width: 75%;
+  padding-left: auto;
+  padding-right: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 $violet1: violet;
