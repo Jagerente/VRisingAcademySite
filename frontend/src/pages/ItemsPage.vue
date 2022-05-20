@@ -1,23 +1,44 @@
 <template>
-  <div class="catalogue d-md-flex flex-md-wrap flex-lg-nowrap h-100 justify-content-between mx-5 d-none">
-    <!-- FILTER -->
+  <div class="catalogue d-lg-flex flex-lg-nowrap h-100 justify-content-between mx-5 d-none">
+    <!-- LEFT -->
     <div class="d-flex w-100 h-100">
+      <!-- FILTER -->
       <div>
         <card-filter />
       </div>
       <!-- CATALOGUE -->
-      <div class="flex-fill mx-lg-3 mx-md-0 ms-md-2">
+      <div class="flex-fill mx-3">
         <card-catalogue />
       </div>
     </div>
-    <div class="p-0 m-0 d-md-none d-lg-flex">
+    <!-- RIGHT -->
+    <!-- INFORMATION -->
+    <div class="p-0 m-0 d-flex" style="height: auto;">
       <card-information style="width: 500px;" />
     </div>
-    <div class="p-0 m-0 mt-md-2 d-md-flex d-lg-none w-100">
-      <card-information style="width:100%" />
+  </div>
+
+  <div class="catalogue d-flex flex-column d-lg-none h-100 mx-5">
+    <!-- LEFT -->
+    <div class="w-100 d-flex mb-2" style="min-height:300px;">
+      <!-- FILTER -->
+      <div>
+        <card-filter />
+      </div>
+      <!-- CATALOGUE -->
+      <div class="flex-fill mx-0 ms-2">
+        <card-catalogue />
+      </div>
+    </div>
+    <!-- RIGHT -->
+    <!-- INFORMATION -->
+    <div class="p-0 m-0 d-flex w-100">
+      <card-information style="width:100%;" />
     </div>
   </div>
-  <div class="d-md-none" style="margin-top: 25%">
+
+  <!-- PHONE FILLER -->
+  <!-- <div class="d-md-none" style="margin-top: 25%">
     <svg class="mx-5" x="0px" y="0px" viewBox="0 0 122.88 106.43" fill="#a8a9ae">
       <g>
         <path class="st0" d="M11.1,0h35.63c3.05,0,5.85,1.25,7.85,3.25c2.03,2.03,3.25,4.8,3.25,7.85v31.46h-3.19V12.18H3.15v75.26l0,0
@@ -37,7 +58,7 @@
     <div class="my-4">
       <h1 class="text-center">Rotate your device, please.</h1>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <script>
