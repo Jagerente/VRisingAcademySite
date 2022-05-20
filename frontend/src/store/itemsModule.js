@@ -14,8 +14,8 @@ export const itemsModule = {
         searchQuery: "",
         selectedItem: null,
         loadedItems: 0,
-        // host: "https://vrising-academy.info/api/"
-        host: "http://localhost:8087/api/"
+        host: "https://vrising-academy.info/api/"
+        // host: "http://localhost:8087/api/"
     }),
     getters: {
         sortedItems: (state) => (type) => {
