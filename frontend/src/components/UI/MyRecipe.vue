@@ -1,9 +1,8 @@
 <template>
-    <div class="recipe__group">
-        <input class="recipe__item rounded" type="image" :title="getItemById(item.itemId).name"
-            @click="selectItem(item.itemId)"
+    <div class="recipe__group px-1 py-2">
+        <input class="recipe__item rounded" type="image" :title="getItemById.name" @click="selectItem(item.itemId)"
             :src="
-            require('@/assets/images/items/' + getPath(getItemById(item.itemId)) + '/' + getItemById(item.itemId).name + '.webp')" />
+            require('@/assets/images/items/' + getPath(getItemById) + '/' + getItemById.name + '.webp')" />
         <div class="recipe__count">{{ item.amount }}</div>
     </div>
 </template>
@@ -35,14 +34,14 @@ export default {
                     return "all";
             }
         },
-        getItemById(id) {
-            return [...this.items].find(item => item.id == id)
-        },
     },
     computed: {
         ...mapState({
             items: (state) => state.items.items
         }),
+        getItemById() {
+            return [...this.items].find(item => item.id == this.item.itemId)
+        },
     },
 };
 </script>
@@ -73,8 +72,8 @@ export default {
     height: var(--item-size);
     -webkit-user-drag: none;
     border: 0;
-    margin: 10px;
     user-select: none;
+    margin-right: 5px;
     transition: box-shadow 0.15s ease-in-out;
     color: white;
     text-align: right;
@@ -82,28 +81,5 @@ export default {
 
 .recipe__item:hover {
     box-shadow: 0 0 8px black;
-}
-
-.btn-check:focus+.btn-primary,
-.btn-primary:focus {
-    /* background: rgba(0, 0, 0, 0.5); */
-    background-color: #14131b;
-    background-size: 90%;
-    background-position: 50%;
-    background-repeat: no-repeat;
-    border: 1px solid white;
-    box-shadow: 0;
-}
-
-.btn-primary:hover {
-    box-shadow: 0 0 8px black;
-    background-color: #14131b;
-    background-repeat: no-repeat;
-    background-size: 90%;
-}
-
-.btn-check:focus+.btn-primary,
-.btn-primary:focus {
-    box-shadow: none;
 }
 </style>

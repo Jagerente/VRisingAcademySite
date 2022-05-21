@@ -8,6 +8,7 @@ import IconBar from "@/components/UI/IconBar";
 import IconCatalogue from "@/components/UI/IconCatalogue";
 import IconFilter from "@/components/UI/IconFilter";
 import MyRecipe from "@/components/UI/MyRecipe";
+import ItemPreview from "@/components/UI/ItemPreview";
 
 export default [
     MyButton,
@@ -19,5 +20,6 @@ export default [
     IconBar,
     IconCatalogue,
     IconFilter,
-    MyRecipe
+    MyRecipe,
+    ItemPreview
 ]

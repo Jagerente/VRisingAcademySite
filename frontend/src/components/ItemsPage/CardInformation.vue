@@ -15,19 +15,24 @@
     <div class="d-flex flex-column overflow p-2" v-else>
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-column">
+          <!-- Title -->
           <h1>
             {{ selectedItem.name }}
           </h1>
+          <!-- Tags -->
           <div class="d-flex flex-wrap tags mb-2">
             <input v-for="(tag, i) in selectedItem.tags" type="button" class="tag px-2" :value="tag" :key="i"
               @click="updateSearchQuery(tag)" />
           </div>
           <div v-if="selectedItem.mainStat" class="d-flex stats justify-content-between">
             <div class="d-flex flex-column w-100">
+              <!-- Gear Level -->
               <h3 style="" v-if="selectedItem.gearLevel">
                 <span class="text-white">{{ selectedItem.gearLevel }}</span> Gear Level
               </h3>
+              <!-- Main Stat -->
               <h3><span class="text-white">+{{ selectedItem.mainStat }}</span> {{ getStat(selectedItem) }}</h3>
+              <!-- Sets -->
               <div v-if="selectedItem.set" class="mb-2">
                 <h4 class="text-white my-0">
                   {{ selectedItem.set.name }}
@@ -36,6 +41,7 @@
                   {{ str }}
                 </h6>
               </div>
+              <!-- Bonus Stats -->
               <div v-if="selectedItem.bonusStats.length">
                 <h5 v-for="(stat, i) in selectedItem.bonusStats" :key="i">
                   <span class="text-white">{{ stat.split(' ')[0] }}</span>
@@ -44,12 +50,14 @@
                   </span>
                 </h5>
               </div>
+              <!-- Durability -->
               <h5>
                 <span class="text-white">Durability: {{ selectedItem.durability }}</span>
               </h5>
             </div>
           </div>
         </div>
+        <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
           <img type="image" class="item__preview rounded" draggable="false" :title="selectedItem.name" :src="
             require('@/assets/images/items/' +
@@ -60,10 +68,12 @@
           " />
         </div>
       </div>
-      <div  v-if="selectedItem.description" class="description py-2">
+      <!-- Description -->
+      <div v-if="selectedItem.description" class="description py-2">
         <h4 class="">{{ selectedItem.description }}</h4>
       </div>
       <div class="d-flex flex-column">
+        <!-- Recipes -->
         <div v-if="selectedItem.recipes.length" class="d-flex flex-column">
           <h2 class="mt-1">Recipes</h2>
           <div class="d-flex recipes mb-2" v-for="recipes in selectedItem.recipesInfo">
@@ -77,6 +87,15 @@
             </svg>
             <div class="d-flex flex-fill">
               <my-recipe v-for="input in recipes.results" :item="input" />
+            </div>
+          </div>
+        </div>
+        <!-- Reagent For -->
+        <div v-if="selectedItem.reagentFor.length" class="d-flex flex-column">
+          <h2 class="mt-1">Reagent for</h2>
+          <div class="d-flex recipes flex-wrap px-2 py-2">
+            <div class="d-flex mx-2 my-1" v-for="recipes in selectedItem.reagentForInfo">
+              <item-preview v-for="output in recipes.results" :itemId="output.itemId" :button="true" />
             </div>
           </div>
         </div>
