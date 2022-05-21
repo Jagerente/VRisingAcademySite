@@ -150,6 +150,7 @@ export const itemsModule = {
             if (selectedItem.recipes) {
                 const result = [];
                 selectedItem.recipes.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
+                selectedItem.reagentFor.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
                 selectedItem.recipesInfo = result;
             }
             commit('setSelectedItem', selectedItem)
