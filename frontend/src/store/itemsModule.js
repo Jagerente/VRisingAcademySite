@@ -42,9 +42,12 @@ export const itemsModule = {
             });
         },
         sortedAndSearchedItems: (state, getters) => (type) => {
-            return getters.sortedItems(type).filter(item =>
-                item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase()))
-            );
+            if (!state.searchQuery) {
+                return getters.sortedItems(type);
+            } else {
+                return getters.sortedItems(0).filter(item =>
+                    item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())));
+            }
         },
     },
     mutations: {
