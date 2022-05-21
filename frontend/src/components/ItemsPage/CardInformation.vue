@@ -60,7 +60,7 @@
           " />
         </div>
       </div>
-      <div class="description py-2">
+      <div  v-if="selectedItem.description" class="description py-2">
         <h4 class="">{{ selectedItem.description }}</h4>
       </div>
       <div class="d-flex flex-column">
