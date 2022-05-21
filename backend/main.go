@@ -38,7 +38,7 @@ func handleRequest() {
 	// config := cors.DefaultConfig()
 	// config.AllowOrigins = []string{"https://vrising-academy.info"}
 
-	r.Use(cors.Default())
+        r.Use(cors.Default())
 
 	api.RegisterApiHandlers(r)
 
