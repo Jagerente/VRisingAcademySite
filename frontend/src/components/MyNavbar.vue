@@ -3,7 +3,7 @@
     style="text-transform: uppercase; letter-spacing: 0.35rem; font-size:21px">
     <nav class="container-xxl navbar-dark">
       <a class="navbar-brand" href="https://vk.com/vrisingacademy" target="blank">
-        <img src="@/assets/images/ui/logo.png" alt="" class="d-inline-block align-text-top logo" />
+        <img src="@/assets/images/ui/logo.webp" alt="" class="d-inline-block align-text-top logo" />
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

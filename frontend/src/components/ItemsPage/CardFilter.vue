@@ -50,7 +50,7 @@
 
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
-  background: url("@/assets/images/ui/circle.png"), rgba(0, 0, 0, 0.5);
+  background: url("@/assets/images/ui/circle.webp"), rgba(0, 0, 0, 0.5);
   background-size: 110%;
   background-position: 50%;
   background-repeat: no-repeat;
