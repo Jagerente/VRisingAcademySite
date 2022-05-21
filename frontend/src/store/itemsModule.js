@@ -14,8 +14,8 @@ export const itemsModule = {
         searchQuery: "",
         selectedItem: null,
         loadedItems: 0,
-        // host: "https://vrising-academy.info/api/"
-        host: "http://localhost:8087/api/"
+        host: "https://vrising-academy.info/api/"
+        // host: "http://localhost:8087/api/"
     }),
     getters: {
         sortedItems: (state) => (type) => {
@@ -42,9 +42,12 @@ export const itemsModule = {
             });
         },
         sortedAndSearchedItems: (state, getters) => (type) => {
-            return getters.sortedItems(type).filter(item =>
-                item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase()))
-            );
+            if (!state.searchQuery) {
+                return getters.sortedItems(type);
+            } else {
+                return getters.sortedItems(0).filter(item =>
+                    item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())));
+            }
         },
     },
     mutations: {
@@ -150,6 +153,7 @@ export const itemsModule = {
             if (selectedItem.recipes) {
                 const result = [];
                 selectedItem.recipes.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
+                selectedItem.reagentFor.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
                 selectedItem.recipesInfo = result;
             }
             commit('setSelectedItem', selectedItem)

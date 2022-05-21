@@ -41,7 +41,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .clear {
   background: #14141e;
   border: none;

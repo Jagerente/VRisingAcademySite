@@ -1,12 +1,12 @@
 @font-face {
-    // src: url('@/assets/fonts/Constantia.woff2') format('woff2');
-    src: url('@/assets/fonts/DniproCity-Regular.ttf') format('ttf');
-    font-family: 'Regular';
+    font-family: 'DniproCity';
+    src:
+        url('@/assets/fonts/DniproCity-Regular.ttf') format('ttf');
     font-weight: normal;
     font-style: normal;
 }
 
-$font-family-base: 'Regular';
+$font-family-base: 'DniproCity';
 
 $background: #1c1b29;
 $shadow: #11111d;
@@ -35,14 +35,14 @@ body {
 
 
 body {
-    cursor: url("@/assets/images/ui/Cursor_Arrow.png"), auto;
+    cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), auto;
     // background-image: url("@/assets/images/ui/background.webp");
     // background-repeat: no-repeat;
     // background-size: auto;
 }
 
 input {
-    cursor: url("@/assets/images/ui/Cursor_Crosshair.png"), default;
+    cursor: url("@/assets/images/ui/Cursor_Crosshair.webp"), default;
 }
 
 .test {

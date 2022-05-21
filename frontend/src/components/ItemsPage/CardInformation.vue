@@ -56,17 +56,17 @@
               getPath(selectedItem.type) +
               '/' +
               selectedItem.name +
-              '.png')
+              '.webp')
           " />
         </div>
       </div>
-      <div class="description py-2">
+      <div  v-if="selectedItem.description" class="description py-2">
         <h4 class="">{{ selectedItem.description }}</h4>
       </div>
       <div class="d-flex flex-column">
         <div v-if="selectedItem.recipes.length" class="d-flex flex-column">
-          <h2>Recipe</h2>
-          <div class="d-flex recipes" v-for="recipes in selectedItem.recipesInfo">
+          <h2 class="mt-1">Recipes</h2>
+          <div class="d-flex recipes mb-2" v-for="recipes in selectedItem.recipesInfo">
             <div class="d-flex">
               <my-recipe v-for="input in recipes.ingredients" :item="input" />
             </div>
@@ -136,21 +136,67 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
+
+@include media-breakpoint-down(sm) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  h4 {
+    font-size: 1rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  .tag {
+    margin-top: 5px;
+    font-size: 0.7rem;
+  }
+
+  .item__preview {
+    --img-size: 100px;
+    width: var(--img-size);
+    height: var(--img-size);
+  }
+
+}
+
+@include media-breakpoint-up(sm) {
+  .item__preview {
+    --img-size: 200px;
+    width: var(--img-size);
+    height: var(--img-size);
+  }
+
+  .tag {
+    margin-top: 5px;
+  }
+}
+
 .tag {
   background: #ae1d1d;
   border-radius: 100px;
   text-transform: capitalize;
   margin-right: 5px;
-  margin-top: 5px;
   border: none;
   color: silver;
 }
 
 .item__preview {
-  --img-size: 200px;
-  width: var(--img-size);
-  height: var(--img-size);
   user-select: none;
 }
 
