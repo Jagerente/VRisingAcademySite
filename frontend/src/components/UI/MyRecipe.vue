@@ -3,7 +3,7 @@
         <input class="recipe__item rounded" type="image" :title="getItemById(item.itemId).name"
             @click="selectItem(item.itemId)"
             :src="
-            require('@/assets/images/items/' + getPath(getItemById(item.itemId)) + '/' + getItemById(item.itemId).name + '.png')" />
+            require('@/assets/images/items/' + getPath(getItemById(item.itemId)) + '/' + getItemById(item.itemId).name + '.webp')" />
         <div class="recipe__count">{{ item.amount }}</div>
     </div>
 </template>
