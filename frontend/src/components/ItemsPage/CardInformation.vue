@@ -56,7 +56,7 @@
               getPath(selectedItem.type) +
               '/' +
               selectedItem.name +
-              '.png')
+              '.webp')
           " />
         </div>
       </div>

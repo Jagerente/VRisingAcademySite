@@ -1,6 +1,6 @@
 <template>
   <input type="image" class="btn-primary items rounded" :title="item.name" :src="
-    require('@/assets/images/items/' + getPath() + '/' + item.name + '.png')
+    require('@/assets/images/items/' + getPath() + '/' + item.name + '.webp')
   " />
 </template>
 
