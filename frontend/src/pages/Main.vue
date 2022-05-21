@@ -8,7 +8,7 @@
     <h3 class="text-center m-5">Welcome to the academy, V Academy!
       <br>This website is Work In Progress, and we are
       working
-      hard to fill up themt-auto mt-auto
+      hard to fill up the
       database with missing items and develop new features.
       <br>If you want to contribute or leave feedback you can do
       it in <a
