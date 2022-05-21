@@ -19,6 +19,10 @@
         type="button" role="tab" aria-controls="v-pills-reagents" aria-selected="false">
         Reagents
       </button>
+      <button class="nav-link disabled" id="v-pills-structures-tab" data-bs-toggle="pill" data-bs-target="#v-pills-structures"
+        type="button" role="tab" aria-controls="v-pills-structures" aria-selected="false">
+        Structures
+      </button>
     </div>
   </my-card>
 </template>
