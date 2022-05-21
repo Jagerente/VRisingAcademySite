@@ -26,7 +26,28 @@
 <script>
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
+
+@include media-breakpoint-down(sm) {
+  $header-size: 13px;
+
+  .nav-link {
+    font-size: $header-size;
+    width: 100px;
+    height: 35px;
+
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .nav-link {
+    height: 55px;
+  }
+}
+
 .nav-pills .nav-link.active,
 .nav-pills .show>.nav-link {
   background: url("@/assets/images/ui/circle.png"), rgba(0, 0, 0, 0.5);
@@ -38,7 +59,6 @@
 
 .nav-pills .nav-link {
   margin-bottom: 5px;
-  height: 55px;
   background-color: #14141e;
   border: 1px solid #14141e;
 }
