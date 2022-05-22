@@ -4,23 +4,26 @@
       <icon-filter />
     </template>
     <div class="nav d-flex flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <input class="nav-link active" id="v-pills-weapons-tab" data-bs-toggle="pill" data-bs-target="#v-pills-weapons"
-        type="button" role="tab" aria-controls="v-pills-weapons" aria-selected="true" value="Weapons"
-        style="cursor: pointer" />
-      <button class="nav-link" id="v-pills-armour-tab" data-bs-toggle="pill" data-bs-target="#v-pills-armour"
-        type="button" role="tab" aria-controls="v-pills-armour" aria-selected="false">
+      <input class="nav-link active" @click="updateSearchQuery('')" id="v-pills-weapons-tab" data-bs-toggle="pill"
+        data-bs-target="#v-pills-weapons" type="button" role="tab" aria-controls="v-pills-weapons" aria-selected="true"
+        value="Weapons" style="cursor: pointer" />
+      <button class="nav-link" @click="updateSearchQuery('')" id="v-pills-armour-tab" data-bs-toggle="pill"
+        data-bs-target="#v-pills-armour" type="button" role="tab" aria-controls="v-pills-armour" aria-selected="false">
         Armour
       </button>
-      <button class="nav-link" id="v-pills-consumables-tab" data-bs-toggle="pill" data-bs-target="#v-pills-consumables"
-        type="button" role="tab" aria-controls="v-pills-consumables" aria-selected="false">
+      <button class="nav-link" @click="updateSearchQuery('')" id="v-pills-consumables-tab" data-bs-toggle="pill"
+        data-bs-target="#v-pills-consumables" type="button" role="tab" aria-controls="v-pills-consumables"
+        aria-selected="false">
         Consumables
       </button>
-      <button class="nav-link" id="v-pills-reagents-tab" data-bs-toggle="pill" data-bs-target="#v-pills-reagents"
-        type="button" role="tab" aria-controls="v-pills-reagents" aria-selected="false">
+      <button class="nav-link" @click="updateSearchQuery('')" id="v-pills-reagents-tab" data-bs-toggle="pill"
+        data-bs-target="#v-pills-reagents" type="button" role="tab" aria-controls="v-pills-reagents"
+        aria-selected="false">
         Reagents
       </button>
-      <button class="nav-link disabled" id="v-pills-structures-tab" data-bs-toggle="pill" data-bs-target="#v-pills-structures"
-        type="button" role="tab" aria-controls="v-pills-structures" aria-selected="false">
+      <button class="nav-link disabled" @click="updateSearchQuery('')" id="v-pills-structures-tab" data-bs-toggle="pill"
+        data-bs-target="#v-pills-structures" type="button" role="tab" aria-controls="v-pills-structures"
+        aria-selected="false">
         Structures
       </button>
     </div>
@@ -28,6 +31,15 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
+export default {
+  methods: {
+    ...mapActions({
+      updateSearchQuery: "items/updateSearchQuery",
+    }),
+  }
+}
 </script>
 
 <style scoped lang="scss">
