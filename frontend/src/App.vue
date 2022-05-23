@@ -1,7 +1,7 @@
 <template>
   <div class="container-fluid vh-100 p-0 m-0">
     <my-navbar />
-    <router-view></router-view>
+    <router-view />
   </div>
 </template>
 
