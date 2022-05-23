@@ -1,15 +1,18 @@
 <template>
-  <div class="container-fluid vh-100 p-0 m-0">
+  <div class="d-flex flex-column h-100">
     <my-navbar />
     <router-view />
+    <my-footer />
   </div>
 </template>
 
 <script>
 import MyNavbar from "@/components/MyNavbar.vue";
+import MyFooter from "./components/MyFooter.vue";
 export default {
   components: {
     MyNavbar,
+    MyFooter
   },
 };
 </script>

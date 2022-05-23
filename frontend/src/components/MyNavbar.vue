@@ -1,5 +1,5 @@
 <template>
-  <header class="navbar navbar-expand-lg fixed-top"
+  <header class="navbar navbar-expand-lg sticky-top"
     style="text-transform: uppercase; letter-spacing: 0.35rem; font-size:21px">
     <nav class="container-xxl navbar-dark">
       <a class="navbar-brand" href="https://vk.com/vrisingacademy" target="blank">
@@ -19,12 +19,13 @@
               aria-expanded="false">Catalogue</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="$router.push('/items')" href="#" data-bs-toggle="tab">Items</a>
-              <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Spells</a>
+              <a class="dropdown-item disabled" @click="$router.push('/spells')" href="#"
+                data-bs-toggle="tab">Spells</a>
               <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Bestiary</a>
             </div>
           </li>
           <li class="nav-item">
-            <a href="https://vrising-map.com/" target="blank" class="nav-link">Map</a>
+            <a href="https://mapgenie.io/v-rising/maps/vardoran" target="blank" class="nav-link">Map</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle disabled" data-bs-toggle="dropdown" href="#" role="button"
