@@ -5,6 +5,7 @@ import router from "@/router/router"
 import directives from '@/directives'
 import store from '@/store'
 // import "bootstrap/dist/css/bootstrap.css"
+import Popper from "vue3-popper";
 import "bootstrap/dist/js/bootstrap.js"
 import "@/assets/vrising.scss"
 import "@/assets/styles/va_variables.scss"
@@ -25,4 +26,5 @@ app
     .use(router)
     .use(store)
     .use(PerfectScrollbar)
+    .use(Popper)
     .mount('#app')
