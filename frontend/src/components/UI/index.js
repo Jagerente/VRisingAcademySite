@@ -1,6 +1,5 @@
 import MyButton from "@/components/UI/MyButton";
 import MyInput from "@/components/UI/MyInput";
-import MyDialog from "@/components/UI/MyDialog";
 import MySelect from "@/components/UI/MySelect";
 import MyCard from "@/components/UI/MyCard";
 import MyItem from "@/components/UI/MyItem";
@@ -13,7 +12,6 @@ import ItemPreview from "@/components/UI/ItemPreview";
 export default [
     MyButton,
     MyInput,
-    MyDialog,
     MySelect,
     MyCard,
     MyItem,
