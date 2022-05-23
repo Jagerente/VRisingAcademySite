@@ -2,7 +2,7 @@
   <div class="content h-100">
     <div class="d-flex flex-column my-auto h-100" style="padding-top: 50px;">
       <!-- Logo -->
-      <img class="mx-auto" style="width: 300px; margin-bottom: -75px;" draggable="false" :src="
+      <img class="mx-auto" draggable="false" :src="
         require('@/assets/images/ui/main_page/VAlogo.webp')
       ">
       <!-- Text -->
@@ -45,11 +45,27 @@ export default {
   .content {
     width: 90%;
   }
+
+  img {
+    width: 300px;
+    margin-bottom: -75px;
+  }
 }
 
 @include media-breakpoint-up(sm) {
   .content {
-    width: 75%;
+    width: 45%;
+  }
+
+  img {
+    width: 100%;
+    max-width: 500px;
+    margin-bottom: -175px;
+  }
+
+  h3 {
+    margin-top: 100px;
+    font-size: 2em;
   }
 }
 
