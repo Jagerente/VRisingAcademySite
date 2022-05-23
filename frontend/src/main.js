@@ -7,6 +7,7 @@ import store from '@/store'
 // import "bootstrap/dist/css/bootstrap.css"
 import "bootstrap/dist/js/bootstrap.js"
 import "@/assets/vrising.scss"
+import "@/assets/styles/va_variables.scss"
 import PerfectScrollbar from 'vue3-perfect-scrollbar';
 import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 

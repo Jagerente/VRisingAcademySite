@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex flex-column justify-content-center">
-        <div class="d-flex justify-content-center redirects">
+    <footer v-if="this.$router.currentRoute.value.path !== '/items'" class="d-flex flex-column sticky-bottom h-100">
+        <div class="d-flex justify-content-center redirects mt-auto">
             <a href="https://vk.com/vrisingacademy" target="blank">
                 <img class="image" :src="
                     require('@/assets/images/ui/main_page/VK.webp')
@@ -18,7 +18,7 @@
             </a>
         </div>
         <p class="text-center">© 2022 V Rising Academy · Genshin Academy Team</p>
-    </div>
+    </footer>
 </template>
 
 <script>

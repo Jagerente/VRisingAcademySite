@@ -1,5 +1,5 @@
 <template>
-  <div class="catalogue d-flex flex-column flex-lg-row h-100 mx-2">
+  <div class="catalogue d-flex flex-column flex-lg-row mx-2">
     <!-- LEFT -->
     <div class="w-100 d-flex mb-2 mb-lg-0 filter__card">
       <!-- FILTER -->
@@ -18,7 +18,7 @@
     </div>
     <!-- BOTTOM -->
     <!-- INFORMATION -->
-    <div class="p-0 m-0 d-flex d-lg-none">
+    <div class="p-0 m-0 d-flex d-lg-none flex-fill">
       <card-information style="width: 100%;" />
     </div>
   </div>
@@ -42,15 +42,11 @@ export default {
 @import 'bootstrap/scss/_functions.scss';
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
+@import '@/assets/styles/va_variables.scss';
 
 @include media-breakpoint-down(sm) {
   .filter__card {
     min-height: 220px;
-  }
-
-  .catalogue {
-    padding-top: 100px;
-    padding-bottom: 15px;
   }
 }
 
@@ -58,10 +54,14 @@ export default {
   .filter__card {
     min-height: 300px;
   }
+}
 
-  .catalogue {
-    padding-top: 125px;
-    padding-bottom: 50px;
-  }
+.catalogue {
+  padding-top: 15px;
+}
+
+.catalogue {
+  height: calc(100vh - ($header-height + $footer-height) + 5px);
+  min-height: calc(100vh - ($header-height + 25px));
 }
 </style>
