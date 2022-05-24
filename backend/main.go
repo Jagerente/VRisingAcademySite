@@ -35,10 +35,10 @@ func handleRequest() {
 	//   }))
 
 	//CORS DEFAULT
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	// config := cors.DefaultConfig()
+	// config.AllowOrigins = []string{"https://vrising-academy.info"}
 
-	r.Use(cors.New(config))
+        r.Use(cors.Default())
 
 	api.RegisterApiHandlers(r)
 
@@ -47,7 +47,7 @@ func handleRequest() {
 	// r.RunTLS(":10443", crtPath+"combined.crt", crtPath+"private.key")
 
 	//HTTP
-	r.Run("localhost:8081")
+	r.Run("localhost:8087")
 }
 
 func main() {

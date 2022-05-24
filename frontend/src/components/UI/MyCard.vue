@@ -24,11 +24,31 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
+
 .card__background {
   border-radius: 10px;
   background-color: #282737;
-  /* height: 100%; */
+}
+
+@include media-breakpoint-down(sm) {
+  $header-size: 18px;
+
+  .card__header {
+    font-size: $header-size;
+    height: 39px;
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  $header-size: 26px;
+
+  .card__header {
+    font-size: $header-size;
+  }
 }
 
 .card__header {
@@ -36,9 +56,6 @@ export default {
   border-radius: 10px;
   padding-left: 15px;
   padding-right: 15px;
-  /* margin-left: -5px;
-  margin-right: -5px; */
-  font-size: 26px;
   text-align: center;
   user-select: none;
 }

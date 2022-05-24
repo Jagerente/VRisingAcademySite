@@ -1,9 +1,14 @@
 import Main from "@/pages/Main";
 import ItemsPage from "@/pages/ItemsPage"
+import NotFoundPage from "@/pages/NotFoundPage"
 
 import { createRouter, createWebHistory } from "vue-router";
 
 const routes = [
+    {
+        path: '/:pathMatch(.*)*',
+        redirect: '/404'
+    },
     {
         path: '/',
         component: Main
@@ -19,6 +24,11 @@ const routes = [
     {
         path: '/guides',
         component: ItemsPage
+    },
+    {
+        path: '/404',
+        name: '404',
+        component: NotFoundPage
     },
 ]
 

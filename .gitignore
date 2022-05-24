@@ -2,8 +2,7 @@
 node_modules
 /dist
 
-images/
-fonts/
+main
 
 # local env files
 .env.local
