@@ -10,6 +10,7 @@ type Recipe struct {
 	Results     []RecipeResult     `json:"results"`
 	Time        int32              `json:"time"`
 	Ingredients []RecipeIngredient `json:"ingredients"`
+	Knowledge   *int               `json:"knowledge"`
 }
 
 type RecipeResult struct {

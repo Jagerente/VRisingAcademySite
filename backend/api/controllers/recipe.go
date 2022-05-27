@@ -17,6 +17,7 @@ func handleRecipeList(ctx *gin.Context) {
 
 	query := `select
     recipes.id,
+    recipes.knowledgeid,
     array(
         (
             select
@@ -94,6 +95,7 @@ group by
 
 		readError := rows.Scan(
 			&item.Id,
+			&item.Knowledge,
 			pq.Array(&item.Stations),
 			pq.Array(&resultIds),
 			pq.Array(&resultAmounts),

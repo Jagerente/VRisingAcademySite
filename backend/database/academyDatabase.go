@@ -16,7 +16,7 @@ const (
 	postgresPassword         string = "83"
 	postgresHost             string = "localhost"
 	postgresPort             int32  = 5432
-	DatabaseVersion          int32  = 2
+	DatabaseVersion          int32  = 3
 )
 
 func CheckIfDatabaseNeedsUpdate() bool {
@@ -263,7 +263,7 @@ func InitializeDatabase() {
 		tables.RecipeIdFieldName, tables.ItemIdFieldName))
 
 	//Заполнение поля о существовании таблицы
-	connection.Exec(fmt.Sprintf("INSERT INTO CheckTable(Exists, Version) VALUES (1, %d);", DatabaseVersion))
+	connection.Exec("INSERT INTO CheckTable(Exists, Version) VALUES (1, 1);")
 
 	connection.Close()
 

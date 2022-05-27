@@ -78,7 +78,7 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleReagentRequest(reagents)
 	}
-	recipes := r.Group("api/recipe")
+	recipes := r.Group("/api/recipe")
 	{
 		controllers.HandleRecipeRequest(recipes)
 	}
@@ -86,7 +86,7 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleTagRequest(tags)
 	}
-	sets := r.Group("api/set")
+	sets := r.Group("/api/set")
 	{
 		controllers.HandleSetRequest(sets)
 	}
@@ -97,5 +97,13 @@ func RegisterApiHandlers(r *gin.Engine) {
 	spells := r.Group("/api/spell")
 	{
 		controllers.HandleSpellRequest(spells)
+	}
+	quests := r.Group("/api/quest")
+	{
+		controllers.HandleQuestRequest(quests)
+	}
+	knowledges := r.Group("/api/knowledge")
+	{
+		controllers.HandleKnowledgeRequest(knowledges)
 	}
 }
