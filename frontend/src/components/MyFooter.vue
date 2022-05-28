@@ -1,5 +1,5 @@
 <template>
-    <footer v-if="this.$router.currentRoute.value.path !== '/items'" class="d-flex flex-column sticky-bottom h-100">
+    <footer class="d-flex flex-column sticky-bottom h-100">
         <div class="d-flex mb-1 justify-content-center mt-auto">
             <my-link content="Join VK!" link="https://vk.com/vrisingacademy" icon="vk" />
             <my-link content="Join Telegram!" link="https://t.me/vrisingacademy" icon="tg" />
