@@ -50,15 +50,16 @@ func handleSpellList(request *gin.Context) {
     spells.id,
     spells.name,
     spells.description,
-	spellschools.id,
+	spellschools.id as spellschoolid,
     spellschools.name,
     spelltypes.title,
     spells.cooldown,
     spells.casttime,
-    spells.charges
+    spells.charges,
+	spells.knowledgeId
 from spells
 join spellschools on spellschools.id=spells.schoolid
-join spelltypes on spelltypes.id=spells.id`
+join spelltypes on spelltypes.id=spells.typeid`
 
 	if filter.School > 0 {
 		query += fmt.Sprintf(" where spellschools.id=%d", filter.School)
@@ -91,7 +92,8 @@ join spelltypes on spelltypes.id=spells.id`
 				&item.Type,
 				&item.Cooldown,
 				&item.CastTime,
-				&item.Charges)
+				&item.Charges,
+				&item.Knowledge)
 
 			if readError != nil {
 				fmt.Println(readError)

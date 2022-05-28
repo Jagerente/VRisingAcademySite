@@ -21,13 +21,20 @@ func handleStationList(ctx *gin.Context) {
     stations.description,
     array(
         (
+            with rctst as (
+                select
+                    recipes.id as recipeid
+                from
+                    recipestations
+                    join recipes on recipes.id = recipestations.recipeid
+                where
+                    recipestations.stationid = stations.id
+            )
             select
-                recipes.id
+                reciperesults.itemid
             from
                 reciperesults
-                join recipes on reciperesults.itemid = recipes.id
-            where
-                reciperesults.itemid = stations.id
+                join rctst on reciperesults.recipeid = rctst.recipeid
         )
     ) as recipes,
     array(
@@ -40,8 +47,20 @@ func handleStationList(ctx *gin.Context) {
             where
                 recipestations.stationid = stations.id
         )
-    ) as stationRecipes
-    from stations`
+    ) as stationRecipes,
+    array(
+        (
+            select
+                recipes.knowledgeid
+            from
+                recipestations
+                join recipes on recipes.id = recipestations.recipeid
+            where
+                recipestations.stationid = stations.id
+        )
+    ) as knowledges
+from
+    stations`
 
 	rows, err := connection.Query(query)
 
@@ -55,13 +74,15 @@ func handleStationList(ctx *gin.Context) {
 		item := models.Station{}
 		item.Recipes = make([]int32, 0)
 		item.StationRecipes = make([]int32, 0)
+		item.Knowledges = make([]int32, 0)
 
 		readError := rows.Scan(
 			&item.Id,
 			&item.Name,
 			&item.Description,
 			pq.Array(&item.Recipes),
-			pq.Array(&item.StationRecipes))
+			pq.Array(&item.StationRecipes),
+			pq.Array(&item.Knowledges))
 
 		if readError != nil {
 			fmt.Println(readError)

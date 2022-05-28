@@ -26,3 +26,14 @@ npm run build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### ---- Linux related ----
+GOLang server is launched as systemd daemon (service). Path to service: `/etc/systemd/system/academy-go-server`
+It should be COMPILED with `go build` and placed into directory `/home/academy/VRisingAcademySite` as `main`
+Possible to change the directory by editing `ExecStart` in systemd service
+
+### Commands related to go server
+To enable (Add go server as systemd service): systemctl enable academy-go-server
+To disable (Disable go server as systemd service): systemctl disable academy-go-server
+To start GO server: systemctl start academy-go-server
+To stop GO server: systemctl stop academy-go-server
