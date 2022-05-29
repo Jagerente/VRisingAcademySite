@@ -14,3 +14,12 @@ type SpellWithSchoolId struct {
 	Spell
 	SchoolId int32 `json:"schoolId"`
 }
+
+type SpellType struct {
+	Entity
+	Title string `json:"title"`
+}
+
+type SpellSchool struct {
+	GameEntity
+}
