@@ -106,4 +106,8 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleKnowledgeRequest(knowledges)
 	}
+	structures := r.Group("/api/structure")
+	{
+		controllers.HandleStructureRequest(structures)
+	}
 }
