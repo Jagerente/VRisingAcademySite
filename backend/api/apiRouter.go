@@ -110,4 +110,8 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleStructureRequest(structures)
 	}
+	locations := r.Group("/api/location")
+	{
+		controllers.HandleLocationRequest(locations)
+	}
 }
