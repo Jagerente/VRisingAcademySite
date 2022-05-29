@@ -17,7 +17,62 @@ type SpellFilter struct {
 }
 
 func parseFilter(request *gin.Context) {
+}
 
+func handleSchoolList(request *gin.Context) {
+	var items = make([]models.SpellSchool, 0)
+	connection := database.CreateConnection()
+	defer connection.Close()
+	query := "select * from spellschools"
+
+	fmt.Println(query)
+	rows, err := connection.Query(query)
+
+	if err != nil {
+		fmt.Print(err)
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		item := models.SpellSchool{}
+		readError := rows.Scan(&item.Id, &item.Name, &item.Description)
+		if readError != nil {
+			fmt.Print(readError)
+			continue
+		}
+		items = append(items, item)
+	}
+
+	request.JSON(200, items)
+}
+
+func handleTypeRequest(request *gin.Context) {
+	var items = make([]models.SpellType, 0)
+	connection := database.CreateConnection()
+	defer connection.Close()
+	query := "select * from spelltypes"
+
+	fmt.Println(query)
+	rows, err := connection.Query(query)
+
+	if err != nil {
+		fmt.Print(err)
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		item := models.SpellType{}
+		readError := rows.Scan(&item.Id, &item.Title)
+		if readError != nil {
+			fmt.Print(readError)
+			continue
+		}
+		items = append(items, item)
+	}
+
+	request.JSON(200, items)
 }
 
 func handleSpellList(request *gin.Context) {
@@ -137,4 +192,6 @@ join spelltypes on spelltypes.id=spells.typeid`
 
 func HandleSpellRequest(group *gin.RouterGroup) {
 	group.GET("/list", handleSpellList)
+	group.GET("/schools", handleSchoolList)
+	group.GET("/types", handleTypeRequest)
 }
