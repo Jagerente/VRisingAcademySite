@@ -120,7 +120,8 @@ join spelltypes on spelltypes.id=spells.typeid`
 				&item.Type,
 				&item.Cooldown,
 				&item.CastTime,
-				&item.Charges)
+				&item.Charges,
+				&item.Knowledge)
 
 			if readError != nil {
 				fmt.Println(readError)
