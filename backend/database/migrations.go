@@ -43,7 +43,7 @@ var (
 			`ALTER TABLE locations
 			ADD COLUMN description varchar(512) NOT NULL DEFAULT ''`,
 			`ALTER TABLE locations
-			ADD COLUMN regionid NULL RERERENCES regions(id) ON DELETE CASCADE;`,
+			ADD COLUMN regionid INTEGER REFERENCES regions(id) ON DELETE CASCADE NULL`,
 			`ALTER TABLE locations
 			ADD COLUMN mapgenieid INTEGER NOT NULL DEFAULT 0`,
 			`ALTER TABLE locations

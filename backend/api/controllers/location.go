@@ -51,7 +51,7 @@ func getLocationList(ctx *gin.Context) {
     array_agg(itemlocations.itemid)
 from
     locations
-    join regions on regions.id = locations.id
+    join regions on regions.id = locations.regionid
     join itemlocations on itemlocations.locationid = locations.id
 group by
     locations.id,
