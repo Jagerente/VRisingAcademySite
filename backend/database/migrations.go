@@ -33,5 +33,9 @@ var (
 			`ALTER TABLE spells
 			ADD knowledgeId INTEGER NULL REFERENCES knowledges(id) ON DELETE CASCADE;`,
 			`ALTER TABLE recipes
-			ADD knowledgeId INTEGER NULL REFERENCES knowledges(id) ON DELETE CASCADE;`}}
+			ADD knowledgeId INTEGER NULL REFERENCES knowledges(id) ON DELETE CASCADE;`},
+		[]string{
+			`CREATE TABLE structurevariants (
+				structureid INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE,
+				variantid INTEGER NOT NULL REFERENCES items(id) ON DELETE CASCADE);`}}
 )
