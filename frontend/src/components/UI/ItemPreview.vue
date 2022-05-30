@@ -1,5 +1,5 @@
 <template>
-  <input type="image" class="item rounded m-0 p-0"  @click="selectItem(getItemById.id)" :title="getItemById.name" :src="
+  <input type="image" class="item rounded m-0 p-0" @click="selectItem(getItemById.id)" :title="getItemById.name" :src="
     require('@/assets/images/items/' + getPath(getItemById.type) + '/' + getItemById.name + '.webp')
   " />
 </template>
