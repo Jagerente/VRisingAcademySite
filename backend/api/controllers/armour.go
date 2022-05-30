@@ -79,7 +79,7 @@ func getArmourList(ctx *gin.Context) {
     array(
         (
             select
-                lc.value
+                lc.name
             from
                 itemlocations as itl
                 join locations as lc on itl.locationId = lc.id

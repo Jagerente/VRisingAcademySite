@@ -19,7 +19,7 @@
               aria-expanded="false">Catalogue</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="$router.push('/items')" href="#" data-bs-toggle="tab">Items</a>
-              <a class="dropdown-item disabled" @click="$router.push('/spells')" href="#"
+              <a class="dropdown-item" @click="$router.push('/spells')" href="#"
                 data-bs-toggle="tab">Spells</a>
               <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Bestiary</a>
             </div>

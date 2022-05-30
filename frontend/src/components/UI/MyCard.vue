@@ -8,7 +8,7 @@
       </span>
       <slot name="right"></slot>
     </div>
-    <div class="card__content">
+    <div class="card__content h-100">
       <slot></slot>
     </div>
   </div>
