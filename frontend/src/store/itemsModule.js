@@ -1,4 +1,3 @@
-import { walkIdentifiers } from "@vue/compiler-core";
 import axios from "axios";
 
 export const itemsModule = {
