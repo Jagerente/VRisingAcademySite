@@ -25,27 +25,10 @@
 import FilterInput from "@/components/ItemsPage/FilterInput.vue";
 import ItemsList from "@/components/ItemsPage/ItemsList.vue";
 
-import { mapActions } from "vuex";
-
 export default {
   components: { FilterInput, ItemsList },
-  methods: {
-    ...mapActions({
-      getItems: "items/getItems",
-      getSets: "items/getSets",
-      getRecipes: "items/getRecipes",
-    }),
-  },
-  mounted() {
-    this.getItems();
-    this.getSets();
-    this.getRecipes();
-  },
 };
 </script>
 
 <style scoped>
-.ps {
-  height: 100%;
-}
 </style>
