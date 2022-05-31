@@ -7,25 +7,34 @@
                         <div class="d-flex flex-column w-50">
                             <!-- Title -->
                             <h1>{{ this.selectedSpell.name }}</h1>
+                            <!-- Type -->
                             <h4>{{ this.selectedSpell.type.replace(/[0-9]/g, '') }}</h4>
-                            <h4>Cooldown: <span class="text-white">{{ this.selectedSpell.cooldown }}s</span></h4>
+                            <!-- Cooldown -->
+                            <h4 v-if="this.selectedSpell.cooldown">Cooldown: <span class="text-white">{{
+                                    this.selectedSpell.cooldown
+                            }}s</span></h4>
+                            <!-- Cast Time -->
                             <h4 v-if="this.selectedSpell.castTime">Cast Time: <span class="text-white">{{
                                     this.selectedSpell.castTime
                             }}s</span></h4>
+                            <!-- Charges -->
                             <h4 v-if="this.selectedSpell.charges > 1">Charges: <span class="text-white">{{
                                     this.selectedSpell.charges
                             }}</span></h4>
                         </div>
+                        <!-- Preview -->
                         <div class="d-flex justify-content-center flex-fill mx-2 w-50">
                             <img class="image__preview rounded" draggable="false" :title="selectedSpell.name" :src="
                                 require(`@/assets/images/spells/${selectedSpell.school.toLowerCase()}/${selectedSpell.name}.webp`)
                             " />
                         </div>
                     </div>
+                    <!-- Description -->
                     <div v-if="selectedSpell.description" class="description py-2 my-3">
                         <h4 class="">{{ selectedSpell.description }}</h4>
                     </div>
                 </div>
+                <!-- If none is selected -->
                 <div v-else>
                     <h1 class="text-center">Select spell.</h1>
                     <h5 class="text-center">This module is still W.I.P.</h5>
