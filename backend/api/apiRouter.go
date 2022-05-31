@@ -57,7 +57,7 @@ func ParseQueryFilter(request *gin.Context) BasicQueryFilter {
 }
 
 func RegisterApiHandlers(r *gin.Engine) {
-	items := r.Group("/api/items")
+	items := r.Group("/api/item")
 	{
 		controllers.HandleItemsRequest(items)
 	}

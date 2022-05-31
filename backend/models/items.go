@@ -5,6 +5,31 @@ const (
 	ItemTierField string = "tier"
 )
 
+type ItemType struct {
+	Entity
+	Title string `json:"title"`
+}
+
+type NewItem struct {
+	GameEntity
+	Tier        int32    `json:"tier"`
+	Type        int32    `json:"typeid"`
+	TypeName    string   `json:"type"`
+	KnowledgeId *int32   `json:"knowledgeid"`
+	Stations    []int32  `json:"stations"`
+	Recipes     []int32  `json:"recipes"`
+	ReagentFor  []int32  `json:"reagentFor"`
+	Tags        []string `json:"tags"`
+	Durability  *int32   `json:"durability"`
+	GearLevel   *int32   `json:"gearLevel"`
+	MainStat    *float64 `json:"mainStat"`
+	BonusStats  []string `json:"bonusStats"`
+	SetId       *int32   `json:"setId"`
+	Set         *string  `json:"set"`
+	SlotId      *int32   `json:"slotId"`
+	Locations   []string `json:"locations"`
+}
+
 type Item struct {
 	GameEntity
 	Tier       int32    `json:"tier"`
