@@ -51,7 +51,7 @@
                 </h5>
               </div>
               <!-- Durability -->
-              <h5>
+              <h5 v-if="selectedItem.durability">
                 <span class="text-white">Durability: {{ selectedItem.durability }}</span>
               </h5>
             </div>

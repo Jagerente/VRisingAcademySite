@@ -49,7 +49,7 @@ export default {
 }
 
 .spell {
-  background: rgba(0, 0, 0, 0.5);
+  background: none;
   -webkit-user-drag: none;
   user-select: none;
   transition: opacity 0.15s ease-in-out;
@@ -74,27 +74,33 @@ export default {
 
 .spell-ultimate {
   border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
 }
 
 .spell-ultimate:hover {
   border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
   box-shadow: 0 0 28px black;
 }
 
 .spell-ultimate:focus {
   border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
 }
 
 .spell-travel {
   border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
 }
 
 .spell-travel:hover {
   border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
   box-shadow: 0 0 28px black;
 }
 
 .spell-travel:focus {
   border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
 }
 </style>
