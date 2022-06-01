@@ -1,5 +1,11 @@
 package models
 
+type FullSpell struct {
+	Spell
+	SchoolId int32 `json:"schoolId"`
+	TypeId   int32 `json:"typeId"`
+}
+
 type Spell struct {
 	GameEntity
 	School    string  `json:"school"`
