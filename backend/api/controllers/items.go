@@ -21,7 +21,40 @@ type ItemJson struct {
 type ListResponse struct {
 }
 
-func getItemTypesList(ctx *gin.Context) {
+func getItemTypesList() []models.ItemType {
+	var items = make([]models.ItemType, 0)
+	connection := database.CreateConnection()
+	defer connection.Close()
+
+	query := `select * from itemtypes`
+
+	rows, err := connection.Query(query)
+
+	if err != nil {
+		fmt.Print(err)
+		panic(err)
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		item := models.ItemType{}
+
+		readError := rows.Scan(
+			&item.Id,
+			&item.Title)
+
+		if readError != nil {
+			fmt.Println(readError)
+			continue
+		}
+
+		items = append(items, item)
+	}
+
+	return items
+}
+
+func handleItemTypesList(ctx *gin.Context) {
 
 	var items = make([]models.ItemType, 0)
 	connection := database.CreateConnection()
@@ -55,10 +88,26 @@ func getItemTypesList(ctx *gin.Context) {
 }
 
 func getItemsList(ctx *gin.Context) {
+	type ResponseItem map[string][]models.NewItem
+	type GroupedResponse map[string]*ResponseItem
+	const UnsetTypeId int32 = -1
 
-	var response = map[string][]models.NewItem{}
-	var setMap = map[int32]string{
-		-1: "Unset"}
+	types := getItemTypesList()
+
+	var response = GroupedResponse{}
+	for _, item := range types {
+		response[item.Title] = &ResponseItem{}
+	}
+
+	var setMap = map[int32]string{}
+
+	sets := getSetsList()
+	for _, item := range sets {
+		if _, ok := setMap[item.Id]; !ok {
+			setMap[item.Id] = item.Name
+		}
+	}
+	setMap[UnsetTypeId] = "Unset"
 
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -162,18 +211,8 @@ group by
     sets.name
 order by
     items.id,
-    items.type`
-
-	sets := getSetsList()
-	for _, item := range sets {
-		if _, ok := setMap[item.Id]; !ok {
-			setMap[item.Id] = item.Name
-		}
-	}
-
-	for _, value := range setMap {
-		response[value] = make([]models.NewItem, 0)
-	}
+    items.type,
+    stats.setid`
 
 	rows, err := connection.Query(newQuery)
 
@@ -216,17 +255,24 @@ order by
 			fmt.Print(readError)
 			continue
 		}
-		var key int32 = -1
+
+		var key int32 = UnsetTypeId
 		if item.SetId != nil {
 			key = *item.SetId
 		}
-		response[setMap[key]] = append(response[setMap[key]], item)
+		var responseItem *ResponseItem = response[item.TypeName]
+		if _, ok := (*responseItem)[setMap[key]]; ok {
+			updatedArray := append((*responseItem)[setMap[key]], item)
+			(*responseItem)[setMap[key]] = updatedArray
+		} else {
+			arayToAdd := []models.NewItem{item}
+			(*responseItem)[setMap[key]] = arayToAdd
+		}
 	}
-
 	ctx.JSON(200, response)
 }
 
 func HandleItemsRequest(ctx *gin.RouterGroup) {
 	ctx.GET("/list", getItemsList)
-	ctx.GET("/types", getItemTypesList)
+	ctx.GET("/types", handleItemTypesList)
 }
