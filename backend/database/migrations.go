@@ -53,5 +53,13 @@ var (
 			`ALTER TABLE items
 			ADD COLUMN knowledgeid INTEGER REFERENCES knowledges(id) DEFAULT NULL;`,
 			`ALTER TABLE items
-			ADD FOREIGN KEY (type) REFERENCES itemtypes(id) NOT VALID;`}}
+			ADD FOREIGN KEY (type) REFERENCES itemtypes(id) NOT VALID;`},
+		[]string{ //v7
+			`ALTER TABLE items
+			ADD COLUMN setid INTEGER NULL REFERENCES sets(id);`,
+			`UPDATE items
+			SET setid=itemstats.setid
+			FROM itemstats WHERE itemstats.id=items.id`,
+			`ALTER TABLE itemstats
+			DROP COLUMN setid`}}
 )
