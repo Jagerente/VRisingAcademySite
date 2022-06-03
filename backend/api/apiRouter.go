@@ -57,27 +57,26 @@ func ParseQueryFilter(request *gin.Context) BasicQueryFilter {
 }
 
 func RegisterApiHandlers(r *gin.Engine) {
-	items := r.Group("/api/items")
+	items := r.Group("/api/item")
 	{
 		controllers.HandleItemsRequest(items)
 	}
-
-	weapons := r.Group("/api/weapon")
-	{
-		controllers.HandleWeaponsRequest(weapons)
-	}
-	armours := r.Group("/api/armour")
-	{
-		controllers.HandleArmourRequest(armours)
-	}
-	consumables := r.Group("/api/consumable")
-	{
-		controllers.HandleConsumableRequest(consumables)
-	}
-	reagents := r.Group("/api/reagent")
-	{
-		controllers.HandleReagentRequest(reagents)
-	}
+	// weapons := r.Group("/api/weapon")
+	// {
+	// 	controllers.HandleWeaponsRequest(weapons)
+	// }
+	// armours := r.Group("/api/armour")
+	// {
+	// 	controllers.HandleArmourRequest(armours)
+	// }
+	// consumables := r.Group("/api/consumable")
+	// {
+	// 	controllers.HandleConsumableRequest(consumables)
+	// }
+	// reagents := r.Group("/api/reagent")
+	// {
+	// 	controllers.HandleReagentRequest(reagents)
+	// }
 	recipes := r.Group("/api/recipe")
 	{
 		controllers.HandleRecipeRequest(recipes)
