@@ -7,7 +7,7 @@
         <card-filter />
       </div>
       <!-- CATALOGUE -->
-      <div class="flex-fill mx-0 ms-2 mx-lg-3">
+      <div class="flex-fill mx-0 ms-1 mx-lg-2">
         <card-catalogue />
       </div>
     </div>

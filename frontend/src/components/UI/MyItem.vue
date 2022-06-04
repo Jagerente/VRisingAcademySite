@@ -1,32 +1,21 @@
 <template>
   <input type="image" class="btn-primary items rounded" :title="item.name" :src="
-    require('@/assets/images/items/' + getPath() + '/' + item.name + '.webp')
+    require('@/assets/images/items/' + item.type.toLowerCase() + '/' + (item.type.toLowerCase() !== 'blueprints' ? item.name : (item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : item.tags[1])) + '.webp')
   " />
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 
 export default {
   name: "my-item",
   props: {
     item: Object,
   },
-  methods: {
-    getPath() {
-      switch (this.item.type) {
-        case 1:
-          return "weapons";
-        case 2:
-          return "armour";
-        case 3:
-          return "consumables";
-        case 4:
-          return "reagents";
-        default:
-          console.error("[MyItem] Wrong Item type:", this.item.type, item);
-          return null;
-      }
-    },
+  computed: {
+    ...mapGetters({
+      imagePath: "items/imagePath",
+    })
   },
 };
 </script>

@@ -1,8 +1,8 @@
 <template>
     <div class="recipe__group px-1 py-2">
-        <input class="recipe__item rounded" type="image" :title="getItemById.name" @click="selectItem(item.itemId)"
+        <input class="recipe__item rounded" type="image" :title="getItemById.name" @click="selectItem(getItemById)"
             :src="
-            require('@/assets/images/items/' + getPath(getItemById) + '/' + getItemById.name + '.webp')" />
+            require('@/assets/images/items/' + getItemById.type.toLowerCase() + '/' + (getItemById.type.toLowerCase() !== 'blueprints' ? getItemById.name : (getItemById.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : getItemById.tags[1])) + '.webp')" />
         <div class="recipe__count">{{ item.amount }}</div>
     </div>
 </template>
@@ -19,28 +19,15 @@ export default {
         ...mapActions({
             selectItem: "items/selectItem",
         }),
-        getPath(item) {
-            switch (item.type) {
-                case 1:
-                    return "weapons";
-                case 2:
-                    return "armour";
-                case 3:
-                    return "consumables";
-                case 4:
-                    return "reagents";
-                default:
-                    console.error("Wrong Item type:", this.item.type, item);
-                    return "all";
-            }
-        },
     },
     computed: {
         ...mapState({
-            items: (state) => state.items.items
+            itemsList: (state) => state.items.itemsList
         }),
         getItemById() {
-            return [...this.items].find(item => item.id == this.item.itemId)
+            return this.itemsList.find(item => {
+                return item.id == this.item.itemId;
+            })
         },
     },
 };
@@ -54,6 +41,7 @@ export default {
 }
 
 .recipe__count {
+    pointer-events: none;
     position: absolute;
     bottom: 8px;
     right: 16px;

@@ -2,68 +2,41 @@ import axios from "axios";
 
 export const itemsModule = {
     state: () => ({
-        weapons: [],
-        armour: [],
-        consumables: [],
-        reagents: [],
         items: [],
+        itemsList: [],
+        types: [],
         sets: [],
         recipes: [],
-        isItemsLoading: false,
+        isItemsLoading: true,
         searchQuery: "",
         selectedItem: null,
         loadedItems: 0,
-        host: "https://vrising-academy.info/api/"
-        // host: "http://localhost:8087/api/"
+        // host: "https://vrising-academy.info/api/"
+        host: "http://localhost:8087/api/"
     }),
     getters: {
-        sortedItems: (state) => (type) => {
-            let items;
-            switch (type) {
-                case 1:
-                    items = [...state.weapons];
-                    break;
-                case 2:
-                    items = [...state.armour];
-                    break;
-                case 3:
-                    items = [...state.consumables];
-                    break;
-                case 4:
-                    items = [...state.reagents];
-                    break;
-                default:
-                    items = [...state.items];
-                    break;
-            }
-            return items.sort((item1, item2) => {
+        imagePath: (state) => (item) => {
+            return '@/assets/images/items/' + item.type.toLowerCase() + '/' + (item.type.toLowerCase() !== 'blueprints' ? item.name : (item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : item.tags[1])) + '.webp';
+        },
+        sortedItems: (state) => {
+            return state.itemsList.sort((item1, item2) => {
                 return item1.tier - item2.tier;
             });
         },
-        sortedAndSearchedItems: (state, getters) => (type) => {
-            if (!state.searchQuery) {
-                return getters.sortedItems(type);
-            } else {
-                return getters.sortedItems(0).filter(item =>
-                    item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())));
-            }
+        sortedAndSearchedItems: (state, getters) => {
+            return getters.sortedItems.filter(item =>
+                item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())));
         },
     },
     mutations: {
-        setWeapons(state, weapons) {
-            state.weapons = weapons
-        },
-        setArmour(state, armour) {
-            state.armour = armour
-        },
-        setConsumables(state, consumables) {
-            state.consumables = consumables
-        },
-        setReagents(state, reagents) {
-            state.reagents = reagents
-        },
         setItems(state, items) {
             state.items = items
+        },
+        setItemsList(state, items) {
+            state.itemsList = items
+        },
+        setTypes(state, types) {
+            state.types = types
         },
         setSets(state, sets) {
             state.sets = sets
@@ -86,34 +59,33 @@ export const itemsModule = {
     },
     actions: {
         async getItems({ state, commit }) {
-            try {
-                commit('setLoading', true);
-
-                let response;
-                response = await axios.get(
-                    state.host + "weapon/list",
-                );
-                commit('setWeapons', response.data);
-                response = await axios.get(
-                    state.host + "armour/list",
-                );
-                commit('setArmour', response.data);
-                response = await axios.get(
-                    state.host + "consumable/list",
-                );
-                commit('setConsumables', response.data);
-                response = await axios.get(
-                    state.host + "reagent/list",
-                );
-                commit('setReagents', response.data);
-
-            } catch (e) {
-                alert("Error: " + e);
-            } finally {
-                const items = state.weapons.concat(state.armour, state.consumables, state.reagents);
-                commit('setItems', items);
-                commit('setLoading', false);
-            }
+            commit('setLoading', true);
+            await axios
+                .get(
+                    state.host + "item/list",
+                )
+                .then(response => {
+                    commit('setItems', response.data)
+                    let itemsList = [];
+                    Object.keys(response.data).forEach(type => {
+                        Object.keys(response.data[type]).forEach(set => {
+                            itemsList = itemsList.concat(response.data[type][set])
+                        })
+                    })
+                    commit('setItemsList', itemsList)
+                })
+                .catch(error => alert("Error: " + error))
+                .finally(() => {
+                    commit('setLoading', false)
+                });
+            await axios
+                .get(
+                    state.host + "item/types",
+                )
+                .then(response => {
+                    commit('setTypes', response.data)
+                })
+                .catch(error => alert("Error: " + error));
         },
         async getSets({ state, commit }) {
             try {
@@ -141,12 +113,12 @@ export const itemsModule = {
 
             }
         },
-        selectItem({ state, dispatch, commit }, id) {
-            const selectedItem = state.items.find(item => item.id === id)
+        selectItem({ state, dispatch, commit }, item) {
+            const selectedItem = item;
             if (selectedItem.setId) {
                 const set = [...state.sets].find(set => set.id === selectedItem.setId)
                 if (!set.description.toLowerCase().includes("no bonus")) {
-                    selectedItem.set = set;
+                    selectedItem.setInfo = set;
                 }
             }
             if (selectedItem.recipes) {

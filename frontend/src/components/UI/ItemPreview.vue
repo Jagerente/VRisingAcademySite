@@ -1,7 +1,6 @@
 <template>
-  <input type="image" class="item rounded m-0 p-0" @click="selectItem(getItemById.id)" :title="getItemById.name" :src="
-    require('@/assets/images/items/' + getPath(getItemById.type) + '/' + getItemById.name + '.webp')
-  " />
+  <input type="image" class="item rounded m-0 p-0" @click="selectItem(getItemById)" :title="getItemById.name" :src="
+    require('@/assets/images/items/' + getItemById.type.toLowerCase() + '/' + (getItemById.type.toLowerCase() !== 'blueprints' ? getItemById.name : (getItemById.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : getItemById.tags[1])) + '.webp')" />
 </template>
 
 <script>
@@ -17,28 +16,15 @@ export default {
     ...mapActions({
       selectItem: "items/selectItem",
     }),
-    getPath(type) {
-      switch (type) {
-        case 1:
-          return "weapons";
-        case 2:
-          return "armour";
-        case 3:
-          return "consumables";
-        case 4:
-          return "reagents";
-        default:
-          console.error("Wrong Item type:", type);
-          return null;
-      }
-    },
   },
   computed: {
     ...mapState({
-      items: (state) => state.items.items
+      itemsList: (state) => state.items.itemsList
     }),
     getItemById() {
-      return [...this.items].find(item => item.id == this.itemId);
+      return this.itemsList.find(item => {
+        return item.id == this.itemId;
+      })
     },
   },
 };
@@ -48,10 +34,6 @@ export default {
 <style scoped>
 .item {
   background: rgba(0, 0, 0, 0.5);
-  /* background-size: 100%; */
-  /* background-position: 50%; */
-
-  /* --item-size: 85px; */
   --item-size: 48px;
   font-family: sans-serif;
   width: var(--item-size);
