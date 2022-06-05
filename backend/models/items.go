@@ -7,7 +7,7 @@ const (
 
 type ItemTypeObject struct {
 	Entity
-	Title string `json:"name"`
+	Name string `json:"name"`
 }
 
 type ItemSetObject struct {
