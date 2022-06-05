@@ -62,7 +62,10 @@ var (
 			FROM itemstats WHERE itemstats.id=items.id`,
 			`ALTER TABLE itemstats
 			DROP COLUMN setid`},
-		[]string{
+		[]string{ //v8
 			`ALTER TABLE items
-			ADD COLUMN ownerid REFERENCES items(id) DEFAULT NULL;`}}
+			ADD COLUMN ownerid INTEGER REFERENCES items(id) DEFAULT NULL;`},
+		[]string{ //v9
+			`ALTER TABLE items
+			DROP COLUMN ownerid;`}}
 )
