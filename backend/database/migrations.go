@@ -61,5 +61,8 @@ var (
 			SET setid=itemstats.setid
 			FROM itemstats WHERE itemstats.id=items.id`,
 			`ALTER TABLE itemstats
-			DROP COLUMN setid`}}
+			DROP COLUMN setid`},
+		[]string{
+			`ALTER TABLE items
+			ADD COLUMN ownerid REFERENCES items(id) DEFAULT NULL;`}}
 )
