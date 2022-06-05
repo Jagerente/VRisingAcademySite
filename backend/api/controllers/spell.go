@@ -197,8 +197,8 @@ order by spellschools.id`
 	for _, value := range responseMap {
 		for _, valueValue := range *value {
 			var newVal SpellResponseItem = SpellResponseItem{
-				Id:      valueValue[0].School.Id,
-				Name:    valueValue[0].School.Name,
+				Id:      valueValue[0].Type.Id,
+				Name:    valueValue[0].Type.Name,
 				Schools: make([]models.Spell, 0)}
 
 			for _, itemValue := range valueValue {

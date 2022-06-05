@@ -26,7 +26,7 @@ func getItemTypesList() []models.ItemTypeObject {
 	connection := database.CreateConnection()
 	defer connection.Close()
 
-	query := `select * from itemtypes`
+	query := `select * from itemtypes order by itemtypes.id`
 
 	rows, err := connection.Query(query)
 
@@ -41,7 +41,7 @@ func getItemTypesList() []models.ItemTypeObject {
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Title)
+			&item.Name)
 
 		if readError != nil {
 			fmt.Println(readError)
@@ -75,7 +75,7 @@ func handleItemTypesList(ctx *gin.Context) {
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Title)
+			&item.Name)
 
 		if readError != nil {
 			fmt.Println(readError)
@@ -235,7 +235,7 @@ order by
 			&item.Description,
 			&item.Tier,
 			&item.Type.Id,
-			&item.Type.Title,
+			&item.Type.Name,
 			&item.KnowledgeId,
 			pq.Array(&item.Stations),
 			pq.Array(&item.Recipes),
@@ -286,7 +286,7 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 	for _, item := range types {
 		toAdd := Response{
 			Id:   item.Id,
-			Name: item.Title,
+			Name: item.Name,
 			Sets: make([]ResponseItem, 0)}
 		response = append(response, toAdd)
 	}
@@ -297,7 +297,7 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 
 	var responseMap = ResponseMap{}
 	for _, item := range types {
-		responseMap[item.Title] = &ResponseMapItem{}
+		responseMap[item.Name] = &ResponseMapItem{}
 	}
 
 	var setMap = map[int32]string{}
@@ -324,12 +324,12 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
     array(
         (
             select
-                stcns.id
+                distinct stcns.id
             from
                 recipestations as rcst
                 join stations as stcns on rcst.stationId = stcns.id
             where
-                rcst.recipeId = rcp.id
+                rcst.recipeId = any(array_agg((select recipeingredients.recipeId where recipeingredients.itemId=items.id)))
         )
     ) as stations,
     array(
@@ -342,7 +342,7 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
             where
                 reciperesults.itemid = items.id
         )
-    ) as recipes,
+    ) as itemRecipes,
     array(
         (
             select
@@ -408,11 +408,12 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
     ) as variants
 from
     items
-    join itemtypes on itemtypes.id = items.type full
-    join recipeingredients on recipeingredients.itemid = items.id full
-    join recipes as rcp on recipeingredients.itemid = rcp.id full
-    join itemstats as stats on stats.id = items.id full
-    join sets on sets.id = items.setid
+    join itemtypes on itemtypes.id = items.type 
+    full join recipeingredients on recipeingredients.itemid = items.id
+    full join recipes as rcp on recipeingredients.itemid = rcp.id
+    full join itemstats as stats on stats.id = items.id
+    full join sets on sets.id = items.setid
+where items.id IS NOT NULL
 group by
     items.id,
     itemtypes.title,
@@ -456,7 +457,7 @@ order by
 			&item.Description,
 			&item.Tier,
 			&item.Type.Id,
-			&item.Type.Title,
+			&item.Type.Name,
 			&item.KnowledgeId,
 			pq.Array(&item.Stations),
 			pq.Array(&item.Recipes),
@@ -487,7 +488,7 @@ order by
 				Description: *setDesc}
 		}
 
-		var responseItem *ResponseMapItem = responseMap[item.Type.Title]
+		var responseItem *ResponseMapItem = responseMap[item.Type.Name]
 		if _, ok := (*responseItem)[setMap[key]]; ok {
 			updatedArray := append((*responseItem)[setMap[key]], item)
 			(*responseItem)[setMap[key]] = updatedArray
