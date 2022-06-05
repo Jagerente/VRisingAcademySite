@@ -59,7 +59,7 @@ func getSpellTypesList() []models.SpellType {
 
 	for rows.Next() {
 		item := models.SpellType{}
-		readError := rows.Scan(&item.Id, &item.Title)
+		readError := rows.Scan(&item.Id, &item.Name)
 		if readError != nil {
 			fmt.Print(readError)
 			continue
@@ -97,13 +97,33 @@ func getSpellSchoolsList() []models.SpellSchool {
 }
 
 func handleGroupedList(request *gin.Context) {
-	type SpellResponseItem map[string][]models.FullSpell
-	type SpellResponse map[string]*SpellResponseItem
+	type SpellResponseItem struct {
+		Id      int32          `json:"id"`
+		Name    string         `json:"name"`
+		Schools []models.Spell `json:"spells"`
+	}
+	type SpellResponse struct {
+		Id    int32               `json:"id"`
+		Name  string              `json:"name"`
+		Types []SpellResponseItem `json:"types"`
+	}
 
-	response := SpellResponse{}
+	type SpellResponseMapItem map[string][]models.Spell
+	type SpellResponseMap map[string]*SpellResponseMapItem
+
+	var response = make([]SpellResponse, 0)
 	schools := getSpellSchoolsList()
+
 	for _, item := range schools {
-		response[item.Name] = &SpellResponseItem{}
+		toAdd := SpellResponse{
+			Id:    item.Id,
+			Name:  item.Name,
+			Types: make([]SpellResponseItem, 0)}
+		response = append(response, toAdd)
+	}
+	responseMap := SpellResponseMap{}
+	for _, item := range schools {
+		responseMap[item.Name] = &SpellResponseMapItem{}
 	}
 
 	connection := database.CreateConnection()
@@ -136,16 +156,16 @@ order by spellschools.id`
 	defer rows.Close()
 
 	for rows.Next() {
-		item := models.FullSpell{}
+		item := models.Spell{}
 
 		readError := rows.Scan(
 			&item.Id,
 			&item.Name,
 			&item.Description,
 			&item.SchoolId,
-			&item.School,
+			&item.SchoolName,
 			&item.TypeId,
-			&item.Type,
+			&item.TypeName,
 			&item.Cooldown,
 			&item.CastTime,
 			&item.Charges,
@@ -155,14 +175,38 @@ order by spellschools.id`
 			fmt.Println(readError)
 			continue
 		}
-		var responseItem *SpellResponseItem = response[item.School]
-		if _, ok := (*responseItem)[item.Type]; ok {
-			updatedArray := append((*responseItem)[item.Type], item)
-			(*responseItem)[item.Type] = updatedArray
+
+		item.School = models.SpellSchoolObject{
+			Id:   item.SchoolId,
+			Name: item.SchoolName}
+		item.Type = models.SpellTypeObject{
+			Id:   item.TypeId,
+			Name: item.TypeName}
+
+		var responseItem *SpellResponseMapItem = responseMap[item.SchoolName]
+		if _, ok := (*responseItem)[item.TypeName]; ok {
+			updatedArray := append((*responseItem)[item.TypeName], item)
+			(*responseItem)[item.TypeName] = updatedArray
 		} else {
-			arayToAdd := []models.FullSpell{item}
-			(*responseItem)[item.Type] = arayToAdd
+			arayToAdd := []models.Spell{item}
+			(*responseItem)[item.TypeName] = arayToAdd
 		}
+	}
+
+	var i int32 = 0
+	for _, value := range responseMap {
+		for _, valueValue := range *value {
+			var newVal SpellResponseItem = SpellResponseItem{
+				Id:      valueValue[0].School.Id,
+				Name:    valueValue[0].School.Name,
+				Schools: make([]models.Spell, 0)}
+
+			for _, itemValue := range valueValue {
+				newVal.Schools = append(newVal.Schools, itemValue)
+			}
+			response[i].Types = append(response[i].Types, newVal)
+		}
+		i++
 	}
 
 	request.JSON(200, response)
@@ -189,6 +233,7 @@ func handleSpellList(request *gin.Context) {
     spells.description,
 	spellschools.id as spellschoolid,
     spellschools.name,
+	spells.typeid,
     spelltypes.title,
     spells.cooldown,
     spells.casttime,
@@ -202,6 +247,9 @@ join spelltypes on spelltypes.id=spells.typeid`
 		query += fmt.Sprintf(" where spellschools.id=%d", filter.School)
 	}
 	if filter.Type > 0 {
+		if filter.School > 0 {
+			query += " and"
+		}
 		query += fmt.Sprintf(" where spelltypes.id=%d", filter.Type)
 	}
 
@@ -214,62 +262,38 @@ join spelltypes on spelltypes.id=spells.typeid`
 	}
 	defer rows.Close()
 
-	if filter.IncludeSchoolId > 0 {
+	var items = make([]models.Spell, 0)
+	for rows.Next() {
+		item := models.Spell{}
 
-		var items = make([]models.SpellWithSchoolId, 0)
-		for rows.Next() {
-			item := models.SpellWithSchoolId{}
+		readError := rows.Scan(
+			&item.Id,
+			&item.Name,
+			&item.Description,
+			&item.SchoolId,
+			&item.SchoolName,
+			&item.TypeId,
+			&item.TypeName,
+			&item.Cooldown,
+			&item.CastTime,
+			&item.Charges,
+			&item.Knowledge)
 
-			readError := rows.Scan(
-				&item.Id,
-				&item.Name,
-				&item.Description,
-				&item.SchoolId,
-				&item.School,
-				&item.Type,
-				&item.Cooldown,
-				&item.CastTime,
-				&item.Charges,
-				&item.Knowledge)
-
-			if readError != nil {
-				fmt.Println(readError)
-				continue
-			}
-
-			items = append(items, item)
+		if readError != nil {
+			fmt.Println(readError)
+			continue
 		}
+		item.School = models.SpellSchoolObject{
+			Id:   item.SchoolId,
+			Name: item.SchoolName}
+		item.Type = models.SpellTypeObject{
+			Id:   item.TypeId,
+			Name: item.TypeName}
 
-		request.JSON(200, items)
-	} else {
-
-		var items = make([]models.Spell, 0)
-		for rows.Next() {
-			item := models.Spell{}
-			var id int32
-
-			readError := rows.Scan(
-				&item.Id,
-				&item.Name,
-				&item.Description,
-				&id,
-				&item.School,
-				&item.Type,
-				&item.Cooldown,
-				&item.CastTime,
-				&item.Charges,
-				&item.Knowledge)
-
-			if readError != nil {
-				fmt.Println(readError)
-				continue
-			}
-
-			items = append(items, item)
-		}
-
-		request.JSON(200, items)
+		items = append(items, item)
 	}
+
+	request.JSON(200, items)
 }
 
 func HandleSpellRequest(group *gin.RouterGroup) {
