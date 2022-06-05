@@ -6,8 +6,8 @@
         require('@/assets/images/ui/main_page/VAlogo.webp')
       ">
       <!-- Text -->
-      <div class="d-flex info mx-auto">
-        <h3 class="text-center">Welcome to the academy, V Academy!
+      <div class="d-flex flex-column info mx-auto">
+        <p class="text-center">Welcome to the academy, V Academy!
           <br>This website is Work In Progress, and we are
           working
           hard to fill up the
@@ -16,14 +16,56 @@
           it in <a
             href="https://docs.google.com/forms/d/e/1FAIpQLSdNlAa_hyXcHsMTJy59alBP5hxhiWsebMHNr9M52He0s5mUsQ/viewform?usp=sf_link"
             target="blank">this form.</a>
-        </h3>
+        </p>
+
+        <div class="d-flex w-100 justify-content-center">
+          <button @click="gotoBoosty()" class="btn btn-primary">Support
+            Us!</button>
+        </div>
+        <p class="text-center text-white">Support us monetarily to pay for server hosting and keep this site ad-free.
+        </p>
+
+        <p>
+        <h3>Changelog</h3>
+        <h5 class="my-2">24/05/2022</h5>
+        <br>— added a variety (34) of hats and capes (big thanks to u/Difinitus)
+        <br>— added Blood Key
+        <br>— some minor fixes to tags of particular items
+        <h5 class="my-2">31/05/2022 Spells Update!</h5>
+        <br>— Compete catalogue of all spells including weapon abilities
+        <br>— For each spell their cooldown, cast time and number of charges is specified (according to the ingame
+        tooltip).
+        <br>— For vampire spells cast times were determined manually by recording a video of spell cast and counting
+        frames, approximate values are shown on the website.
+        <h5 class="my-2">21/05/2022</h5>
+        <br>— Launched the website with the folowing features:
+        <br>— items catalouge excluding sturctures and the majority of hats and cloaks
+        <br>— search items by name
+        <br>— search items by tags
+        <br>— clickable tags to initiate and instant search by tag name
+        <br>— display all recipes that a chosen item can be crafted from
+        <br>— display all items that a chosen item is reagent for
+        <br>— clickable items in the "recipe" and "reagent for" sections to display their information
+        </p>
       </div>
     </div>
   </div>
+  <my-footer />
+
 </template>
 
 <script>
+import MyFooter from "@/components/MyFooter.vue";
+
 export default {
+  components: {
+    MyFooter,
+  },
+  methods: {
+    gotoBoosty() {
+      window.open('https://boosty.to/vrisingacademy', '_blank')
+    }
+  },
 };
 </script>
 

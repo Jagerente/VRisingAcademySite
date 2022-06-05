@@ -4,48 +4,30 @@
       <filter-input></filter-input>
     </template>
     <div class="tab-content d-flex justify-content-center flex-wrap" id="v-pills-tabContent">
-      <div class="tab-pane fade show active" id="v-pills-weapons" role="tabpanel" aria-labelledby="v-pills-weapons-tab">
-        <items-list :type="1"></items-list>
-      </div>
-      <div class="tab-pane fade" id="v-pills-armour" role="tabpanel" aria-labelledby="v-pills-armour-tab">
-        <items-list :type="2"></items-list>
-      </div>
-      <div class="tab-pane fade" id="v-pills-consumables" role="tabpanel" aria-labelledby="v-pills-consumables-tab">
-        <items-list :type="3"></items-list>
-      </div>
-      <div class="tab-pane fade" id="v-pills-reagents" role="tabpanel" aria-labelledby="v-pills-reagents-tab">
-        <items-list :type="4"></items-list>
+      <div v-for="(type, i) in types" class="tab-pane fade show w-100" :class="i == 0 ? 'active' : ''"
+        :id="`v-pills-${type.title.toLowerCase()}`" role="tabpanel"
+        :aria-labelledby="`v-pills-${type.title.toLowerCase()}-tab`">
+        <items-list :items="this.items[type.title]"></items-list>
       </div>
     </div>
-    <div style="height: 15px"></div>
   </my-card>
 </template>
 
 <script>
 import FilterInput from "@/components/ItemsPage/FilterInput.vue";
 import ItemsList from "@/components/ItemsPage/ItemsList.vue";
-
-import { mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
   components: { FilterInput, ItemsList },
-  methods: {
-    ...mapActions({
-      getItems: "items/getItems",
-      getSets: "items/getSets",
-      getRecipes: "items/getRecipes",
+  computed: {
+    ...mapState({
+      types: (state) => state.items.types,
+      items: (state) => state.items.items,
     }),
-  },
-  mounted() {
-    this.getItems();
-    this.getSets();
-    this.getRecipes();
   },
 };
 </script>
 
 <style scoped>
-.ps {
-  height: 100%;
-}
 </style>

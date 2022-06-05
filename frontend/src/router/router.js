@@ -1,5 +1,6 @@
 import Main from "@/pages/Main";
 import ItemsPage from "@/pages/ItemsPage"
+import SpellsPage from "@/pages/SpellsPage"
 import NotFoundPage from "@/pages/NotFoundPage"
 
 import { createRouter, createWebHistory } from "vue-router";
@@ -16,6 +17,10 @@ const routes = [
     {
         path: '/items',
         component: ItemsPage
+    },
+    {
+        path: '/spells',
+        component: SpellsPage
     },
     {
         path: '/map',

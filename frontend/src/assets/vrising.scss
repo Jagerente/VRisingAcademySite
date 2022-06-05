@@ -35,16 +35,16 @@ body {
 }
 
 
-body {
+* {
     cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), auto;
     // background-image: url("@/assets/images/ui/background.webp");
     // background-repeat: no-repeat;
     // background-size: auto;
 }
 
-input {
-    cursor: url("@/assets/images/ui/Cursor_Crosshair.webp"), default;
-}
+// input {
+//     cursor: url("@/assets/images/ui/Cursor_Crosshair.webp"), default;
+// }
 
 .test {
     background-color: aqua;

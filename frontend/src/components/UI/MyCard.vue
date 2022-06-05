@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column h-100 card__background">
-    <div class="card__header">
+    <div class="d-flex card__header justify-content-center">
       <slot name="left"></slot>
       <slot v-if="custom" name="header"></slot>
       <span v-else class="mx-2">
@@ -8,7 +8,7 @@
       </span>
       <slot name="right"></slot>
     </div>
-    <div class="card__content">
+    <div class="card__content h-100">
       <slot></slot>
     </div>
   </div>

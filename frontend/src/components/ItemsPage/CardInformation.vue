@@ -1,11 +1,11 @@
 <template>
   <my-card title="Information" :custom="false">
-    <template #left>
+    <!-- <template #left>
       <icon-bar :left="true" />
     </template>
     <template #right>
       <icon-bar :left="false" />
-    </template>
+    </template> -->
 
     <div v-if="selectedItem === null">
       <div></div>
@@ -21,7 +21,7 @@
           </h1>
           <!-- Tags -->
           <div class="d-flex flex-wrap tags mb-2">
-            <input v-for="(tag, i) in selectedItem.tags" type="button" class="tag px-2" :value="tag" :key="i"
+            <input v-for="(tag, i) in selectedItem.tags" type="image" class="tag px-2" :value="tag" :key="i"
               @click="updateSearchQuery(tag)" />
           </div>
           <div v-if="selectedItem.mainStat" class="d-flex stats justify-content-between">
@@ -33,11 +33,11 @@
               <!-- Main Stat -->
               <h3><span class="text-white">+{{ selectedItem.mainStat }}</span> {{ getStat(selectedItem) }}</h3>
               <!-- Sets -->
-              <div v-if="selectedItem.set" class="mb-2">
+              <div v-if="selectedItem.setInfo" class="mb-2">
                 <h4 class="text-white my-0">
-                  {{ selectedItem.set.name }}
+                  {{ selectedItem.setInfo.name }}
                 </h4>
-                <h6 class="my-0" v-for="str in selectedItem.set.description.split('\\n')">
+                <h6 class="my-0" v-for="str in selectedItem.setInfo.description.split('\\n')">
                   {{ str }}
                 </h6>
               </div>
@@ -51,7 +51,7 @@
                 </h5>
               </div>
               <!-- Durability -->
-              <h5>
+              <h5 v-if="selectedItem.durability">
                 <span class="text-white">Durability: {{ selectedItem.durability }}</span>
               </h5>
             </div>
@@ -60,11 +60,7 @@
         <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
           <img type="image" class="item__preview rounded" draggable="false" :title="selectedItem.name" :src="
-            require('@/assets/images/items/' +
-              getPath(selectedItem.type) +
-              '/' +
-              selectedItem.name +
-              '.webp')
+            require('@/assets/images/items/' + this.selectedItem.type.toLowerCase() + '/' + (this.selectedItem.type.toLowerCase() !== 'blueprints' ? this.selectedItem.name : (this.selectedItem.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.selectedItem.tags[1])) + '.webp')
           " />
         </div>
       </div>
@@ -113,18 +109,19 @@ export default {
       updateSearchQuery: "items/updateSearchQuery",
     }),
     getStat(item) {
-      switch (item.type) {
+      switch (item.typeid) {
         case 1:
           return "Physical Power";
         case 2:
-          switch (item.slotId) {
-            case 7:
-              return "Spell Power"
-            default:
-              return "Max Health"
-          }
+        case 5:
+          return "Max Health"
+        case 3:
+          return "Spell Power"
+        // switch (item.slotId) {
+        //   default:
+        // }
         default:
-          console.error("Wrong Item type:", selectedItem.type, item);
+          console.error("Wrong Item type:", item.typeid, item);
           return '';
       }
     },
@@ -213,6 +210,11 @@ export default {
   margin-right: 5px;
   border: none;
   color: silver;
+}
+
+.tag:hover {
+  box-shadow: 0 0 5px black;
+  transition: box-shadow 0.05s ease-in-out;
 }
 
 .item__preview {

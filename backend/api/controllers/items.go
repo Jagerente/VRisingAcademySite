@@ -167,7 +167,7 @@ func getItemsList(ctx *gin.Context) {
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.setid,
+    items.setid,
     sets.name as setname,
     stats.slotid,
     array(
@@ -198,7 +198,7 @@ from
     full join recipeingredients on recipeingredients.itemid = items.id
     full join recipes as rcp on recipeingredients.itemid = rcp.id 
     full join itemstats as stats on stats.id = items.id
-    full join sets on sets.id = stats.setid
+    full join sets on sets.id = items.setid
 group by
     items.id,
     itemtypes.title,
@@ -207,12 +207,12 @@ group by
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.setid,
+    items.setid,
     sets.name
 order by
     items.id,
     items.type,
-    stats.setid`
+    items.setid`
 
 	rows, err := connection.Query(newQuery)
 
