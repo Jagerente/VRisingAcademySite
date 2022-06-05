@@ -260,7 +260,7 @@ order by
 			item.Set = &models.ItemSetObject{
 				Id:          *item.SetId,
 				Name:        *setName,
-				Description: *setDesc}
+				Description: setDesc}
 		}
 		response = append(response, item)
 	}
@@ -485,7 +485,7 @@ order by
 			item.Set = &models.ItemSetObject{
 				Id:          key,
 				Name:        *setName,
-				Description: *setDesc}
+				Description: setDesc}
 		}
 
 		var responseItem *ResponseMapItem = responseMap[item.Type.Name]
