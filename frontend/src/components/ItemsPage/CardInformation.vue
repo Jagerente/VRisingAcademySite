@@ -22,7 +22,7 @@
           </p>
           <!-- Tags -->
           <div class="d-flex flex-wrap tags mb-2">
-            <input v-for="(tag, i) in selectedItem.tags" type="image" class="tag px-2" :value="tag" :key="i"
+            <input v-for="(tag, i) in selectedItem.tags" type="button" class="tag px-2" :value="tag" :key="i"
               @click="updateSearchQuery({ query: tag, type: 2 })" />
           </div>
           <div v-if="selectedItem.mainStat" class="d-flex stats justify-content-between">
@@ -79,23 +79,26 @@
       <div class="d-flex flex-column">
         <!-- Recipes -->
         <div v-if="selectedItem.recipes.length" class="d-flex flex-column">
-          <p class="h-2 mt-1">Recipes</p>
-          <div class="d-flex block" :class="i < selectedItem.recipes.length - 1 ? 'mb-2' : ''"
-            v-for="(recipeId, i) in selectedItem.recipes">
-            <div class="d-flex">
-              <my-recipe v-for="input in this.recipes.find(recipe => { return recipe.id == recipeId }).ingredients"
-                :item="input" />
-            </div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#a8a9ae" class="m-2"
-              viewBox="0 0 16 16">
-              <path
-                d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-            </svg>
-            <div class="d-flex flex-fill">
-              <my-recipe v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
-                :item="output" />
+          <div class="d-flex justify-content-between mt-1">
+            <p class="h-2 mb-auto">Recipes</p>
+            <div class="d-flex flex-column mt-auto">
+              <div class="form-check form-switch">
+                <input @click="this.updateMatchingFloor" class="form-check-input" :checked="this.matchingFloor"
+                  type="checkbox" id="flexSwitchMatchingFloor">
+                <label class="form-check-label" for="flexSwitchMatchingFloor" style="user-select: none;">Matching
+                  Floor</label>
+              </div>
+              <div class="form-check form-switch">
+                <input @click="this.updateConfinedRoom" class="form-check-input" :checked="this.confinedRoom"
+                  type="checkbox" id="flexSwitchConfinedRoom">
+                <label class="form-check-label" for="flexSwitchConfinedRoom" style="user-select: none;">Confined Room</label>
+              </div>
             </div>
           </div>
+
+          <my-recipe :class="i < selectedItem.recipes.length - 1 ? 'mb-2' : ''"
+            v-for="(recipeId, i) in selectedItem.recipes"
+            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })" />
         </div>
         <!-- Reagent For -->
         <div v-if="selectedItem.reagentFor.length" class="d-flex flex-column">
@@ -120,6 +123,8 @@ export default {
   methods: {
     ...mapActions({
       updateSearchQuery: "items/updateSearchQuery",
+      updateMatchingFloor: "items/updateMatchingFloor",
+      updateConfinedRoom: "items/updateConfinedRoom",
     }),
     getStat(item) {
       switch (item.type.id) {
@@ -141,7 +146,9 @@ export default {
       selectedItem: (state) => state.items.selectedItem,
       searchQuery: (state) => state.items.searchQuery,
       items: (state) => state.items.items,
-      recipes: (state) => state.items.recipes
+      recipes: (state) => state.items.recipes,
+      matchingFloor: (state) => state.items.matchingFloor,
+      confinedRoom: (state) => state.items.confinedRoom,
     }),
   },
 
@@ -153,42 +160,9 @@ export default {
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
 
-@include media-breakpoint-down(sm) {
-  .tag {
-    margin-top: 5px;
-    font-size: 0.7rem;
-  }
-}
-
-p {
-  margin: 0;
-  padding: 0;
-}
-
-.h-1 {
-  font-size: 2rem;
-}
-
-.h-2 {
-  font-size: 1.5rem;
-}
-
-.h-3 {
-  font-size: 1rem;
-}
-
 .tag {
   margin-top: 5px;
   font-size: 0.8rem;
-}
-
-@include media-breakpoint-up(sm) {
-  .tag {
-    margin-top: 5px;
-  }
-}
-
-.tag {
   background: #ae1d1d;
   border-radius: 100px;
   text-transform: capitalize;
@@ -209,5 +183,14 @@ p {
   margin-right: -10px;
   padding-left: 15px;
   padding-right: 15px;
+}
+
+.form-check-input {
+  background-color: #14131b;
+  border: 1px solid rgb(77, 77, 77);
+}
+
+.form-check-input:focus {
+  box-shadow: none;
 }
 </style>

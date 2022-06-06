@@ -11,6 +11,8 @@ export const itemsModule = {
         isItemsLoading: true,
         searchQuery: "",
         selectedItem: null,
+        matchingFloor: true,
+        confinedRoom: true,
         // host: "https://vrising-academy.info/api/"
         host: "http://localhost:8087/api/"
     }),
@@ -58,6 +60,12 @@ export const itemsModule = {
         },
         setSelectedItem(state, selectedItem) {
             state.selectedItem = selectedItem
+        },
+        setMatchingFloor(state, matchingFloor) {
+            state.matchingFloor = matchingFloor
+        },
+        setConfinedRoom(state, confinedRoom) {
+            state.confinedRoom = confinedRoom
         }
     },
     actions: {
@@ -91,6 +99,7 @@ export const itemsModule = {
 
             commit('setLoading', false)
         },
+
         selectItem({ commit }, item) {
             commit('setSelectedItem', item)
         },
@@ -99,6 +108,14 @@ export const itemsModule = {
             commit('setSearchType', type)
             commit('setSearchQuery', query)
         },
+        updateMatchingFloor({ state, commit }) {
+            commit('setMatchingFloor', !state.matchingFloor);
+            if (state.matchingFloor) commit('setConfinedRoom', true);
+        },
+        updateConfinedRoom({ state, commit }) {
+            commit('setConfinedRoom', !state.confinedRoom);
+        },
+
     },
     namespaced: true
 }
