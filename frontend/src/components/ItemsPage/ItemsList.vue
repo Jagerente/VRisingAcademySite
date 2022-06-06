@@ -2,19 +2,16 @@
   <div class="d-flex flex-wrap">
     <div class="d-flex flex-column w-100 ">
       <transition-group name="items-list">
-        <div v-if="!searchQuery" class="d-flex flex-column" v-for="(set, i) in Object.keys(this.items)" :key="i">
-          <h1>{{ set }}</h1>
+        <div v-if="!searchQuery" class="d-flex flex-column" v-for="set in this.sets" :key="set.id">
+          <h1>{{ set.name }}</h1>
           <div class="d-flex flex-wrap">
-            <my-item v-for="item in this.items[set]" :key="item.id" :item="item" @click="selectItem(item)" />
+            <my-item v-for="item in set.items" :key="item.id" :item="item" />
           </div>
         </div>
         <div v-else>
           <transition-group name="items-list">
-
-            <my-item v-for="item in this.sortedAndSearchedItems" :key="item.id" :item="item"
-              @click="selectItem(item)" />
+            <my-item v-for="item in this.sortedAndSearchedItems" :key="item.id" :item="item" />
           </transition-group>
-
         </div>
       </transition-group>
     </div>
@@ -27,7 +24,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   name: "items-list",
   props: {
-    items: Object
+    sets: Object
   },
   methods: {
     ...mapActions({

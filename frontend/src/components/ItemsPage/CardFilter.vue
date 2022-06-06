@@ -4,10 +4,10 @@
       <icon-filter />
     </template>
     <div class="nav d-flex flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-      <button v-for="(type, i) in this.types" @click="updateSearchQuery('')" class="items__tab rounded"
-        :class="i == 0 ? 'active' : ''" data-bs-toggle="pill" :data-bs-target="`#v-pills-${type.title.toLowerCase()}`"
-        type="button" role="tab" :aria-controls="`v-pills-${type.title.toLowerCase()}`" aria-selected="false">
-        {{ type.title }}
+      <button v-for="type in this.types" @click="updateSearchQuery('')" class="items__tab rounded"
+        :class="type.id === 1 ? 'active' : ''" data-bs-toggle="pill" :data-bs-target="`#v-pills-${type.name.toLowerCase()}`"
+        type="button" role="tab" :aria-controls="`v-pills-${type.name.toLowerCase()}`" aria-selected="false">
+        {{ type.name }}
       </button>
     </div>
   </my-card>
@@ -25,7 +25,6 @@ export default {
   computed: {
     ...mapState({
       types: (state) => state.items.types,
-      items: (state) => state.items.items,
     }),
   },
 }
