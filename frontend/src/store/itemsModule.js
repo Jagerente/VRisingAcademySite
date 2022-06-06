@@ -27,7 +27,7 @@ export const itemsModule = {
                 case 2:
                     return getters.sortedItems.filter(item => { return item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
                 default:
-                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())) });
+                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
             }
         },
     },
@@ -95,7 +95,7 @@ export const itemsModule = {
             commit('setSelectedItem', item)
         },
 
-        updateSearchQuery({ commit }, { query = '', type = 1 }) {
+        updateSearchQuery({ commit }, { query = '', type = 0 }) {
             commit('setSearchType', type)
             commit('setSearchQuery', query)
         },
