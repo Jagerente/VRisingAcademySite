@@ -1,0 +1,27 @@
+p {
+    margin: 0;
+    padding: 0;
+}
+
+.h-1 {
+    font-size: 2rem;
+}
+
+.h-2 {
+    font-size: 1.5rem;
+}
+
+.h-3 {
+    font-size: 1rem;
+}
+
+:root {
+    --popper-theme-background-color: #171722d5;
+    --popper-theme-background-color-hover: #14131b;
+    --popper-theme-text-color: #ffffff;
+    --popper-theme-border-width: 0px;
+    --popper-theme-border-style: solid;
+    --popper-theme-border-radius: 6px;
+    --popper-theme-padding: 15px;
+    --popper-theme-box-shadow: 0 6px 30px -6px rgba(0, 0, 0, 0.25);
+}
