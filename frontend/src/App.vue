@@ -18,18 +18,14 @@ export default {
   },
   methods: {
     ...mapActions({
-      getItems: "items/getItems",
-      getSets: "items/getSets",
-      getRecipes: "items/getRecipes",
+      fetchItems: "items/fetchItems",
       getSchools: "spells/getSchools",
       getTypes: "spells/getTypes",
       getSpells: "spells/getSpells",
     })
   },
   mounted() {
-    this.getItems();
-    this.getSets();
-    this.getRecipes();
+    this.fetchItems();
     this.getSchools();
     this.getTypes();
     this.getSpells();
