@@ -17,61 +17,71 @@
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-column">
           <!-- Title -->
-          <h1>
+          <p class="h-1">
             {{ selectedItem.name }}
-          </h1>
+          </p>
           <!-- Tags -->
           <div class="d-flex flex-wrap tags mb-2">
             <input v-for="(tag, i) in selectedItem.tags" type="image" class="tag px-2" :value="tag" :key="i"
-              @click="updateSearchQuery({query: tag, type: 2})" />
+              @click="updateSearchQuery({ query: tag, type: 2 })" />
           </div>
           <div v-if="selectedItem.mainStat" class="d-flex stats justify-content-between">
             <div class="d-flex flex-column w-100">
               <!-- Gear Level -->
-              <h3 style="" v-if="selectedItem.gearLevel">
+              <p class="h-2" v-if="selectedItem.gearLevel">
                 <span class="text-white">{{ selectedItem.gearLevel }}</span> Gear Level
-              </h3>
+              </p>
               <!-- Main Stat -->
-              <h3><span class="text-white">+{{ selectedItem.mainStat }}</span> {{ getStat(selectedItem) }}</h3>
+              <p class="h-3"><span class="text-white">+{{ selectedItem.mainStat }}</span> {{ getStat(selectedItem) }}
+              </p>
               <!-- Sets -->
-              <div v-if="selectedItem.set.description" class="mb-2">
-                <h4 class="text-white my-0">
+              <div v-if="selectedItem.set.description" class="my-2">
+                <p class="h-3 text-white">
                   {{ selectedItem.set.name }}
-                </h4>
-                <h6 class="my-0" v-for="str in selectedItem.set.description.split('\\n')">
+                </p>
+                <p class="h-3" v-for="str in selectedItem.set.description.split('\\n')">
                   {{ str }}
-                </h6>
+                </p>
               </div>
               <!-- Bonus Stats -->
               <div v-if="selectedItem.bonusStats.length">
-                <h5 v-for="(stat, i) in selectedItem.bonusStats" :key="i">
+                <p class="h-3" v-for="(stat, i) in selectedItem.bonusStats" :key="i">
                   <span class="text-white">{{ stat.split(' ')[0] }}</span>
                   <span>
                     {{ ' ' + stat.split(' ').slice(1).join(' ') }}
                   </span>
-                </h5>
+                </p>
               </div>
               <!-- Durability -->
-              <h5 v-if="selectedItem.durability">
+              <p class="h-3" v-if="selectedItem.durability">
                 <span class="text-white">Durability: {{ selectedItem.durability }}</span>
-              </h5>
+              </p>
             </div>
           </div>
         </div>
         <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
-          <item-preview class="preview-info" draggable="false" :item="selectedItem" />
+          <item-preview class="preview-lg" :item="selectedItem" :button="false" />
         </div>
       </div>
       <!-- Description -->
-      <div v-if="selectedItem.description" class="description py-2">
-        <h4 class="">{{ selectedItem.description }}</h4>
+      <div v-if="selectedItem.description" class="block mt-2 py-2">
+        <p class="h-3">{{ selectedItem.description }}</p>
+      </div>
+      <!-- Variants -->
+      <div class="d-flex flex-column" v-if="selectedItem.variants.length">
+        <p class="h-2">Variants</p>
+        <div class="d-flex flex-wrap block py-2">
+          <item-preview v-for="itemId in selectedItem.variants" class="preview-sm m-1"
+            :item="this.items.find(item => { return item.id == itemId })" :button="true" />
+        </div>
       </div>
       <div class="d-flex flex-column">
         <!-- Recipes -->
         <div v-if="selectedItem.recipes.length" class="d-flex flex-column">
-          <h2 class="mt-1">Recipes</h2>
-          <div class="d-flex recipes mb-2" v-for="recipeId in selectedItem.recipes">
+          <p class="h-2 mt-1">Recipes</p>
+          <div class="d-flex block" :class="i < selectedItem.recipes.length - 1 ? 'mb-2' : ''"
+            v-for="(recipeId, i) in selectedItem.recipes">
             <div class="d-flex">
               <my-recipe v-for="input in this.recipes.find(recipe => { return recipe.id == recipeId }).ingredients"
                 :item="input" />
@@ -89,13 +99,12 @@
         </div>
         <!-- Reagent For -->
         <div v-if="selectedItem.reagentFor.length" class="d-flex flex-column">
-          <h2 class="mt-1">Reagent for</h2>
-          <div class="d-flex recipes flex-wrap px-2 py-2">
-            <div class="mx-2 my-1" v-for="recipeId in selectedItem.reagentFor">
-              <item-preview class="preview-recipe"
+          <p class="h-2">Reagent for</p>
+          <div class="d-flex block flex-wrap">
+            <div v-for="recipeId in selectedItem.reagentFor">
+              <item-preview class="preview-sm m-1"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
-                :item="this.items.find(item => { return item.id == output.itemId })" :button="true"
-                @click="selectItem(this.items.find(item => { return item.id == output.itemId }))" />
+                :item="this.items.find(item => { return item.id == output.itemId })" :button="true" />
             </div>
           </div>
         </div>
@@ -105,13 +114,12 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
 
 export default {
   methods: {
     ...mapActions({
       updateSearchQuery: "items/updateSearchQuery",
-      selectItem: "items/selectItem",
     }),
     getStat(item) {
       switch (item.type.id) {
@@ -146,46 +154,35 @@ export default {
 @import 'bootstrap/scss/_mixins.scss';
 
 @include media-breakpoint-down(sm) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  h2 {
-    font-size: 1.5rem;
-  }
-
-  h3 {
-    font-size: 1rem;
-  }
-
-  h4 {
-    font-size: 1rem;
-  }
-
-  h5 {
-    font-size: 1rem;
-  }
-
   .tag {
     margin-top: 5px;
     font-size: 0.7rem;
   }
+}
 
-  .item__preview {
-    --img-size: 100px;
-    width: var(--img-size);
-    height: var(--img-size);
-  }
+p {
+  margin: 0;
+  padding: 0;
+}
 
+.h-1 {
+  font-size: 2rem;
+}
+
+.h-2 {
+  font-size: 1.5rem;
+}
+
+.h-3 {
+  font-size: 1rem;
+}
+
+.tag {
+  margin-top: 5px;
+  font-size: 0.8rem;
 }
 
 @include media-breakpoint-up(sm) {
-  .item__preview {
-    --img-size: 200px;
-    width: var(--img-size);
-    height: var(--img-size);
-  }
-
   .tag {
     margin-top: 5px;
   }
@@ -205,22 +202,9 @@ export default {
   transition: box-shadow 0.05s ease-in-out;
 }
 
-.item__preview {
-  user-select: none;
-}
-
-.description {
+.block {
   background: #14131b;
   border-radius: 10px;
-  margin-left: -10px;
-  margin-right: -10px;
-  padding-left: 15px;
-  padding-right: 15px;
-}
-
-.recipes {
-  background: #14131b;
-  border-radius: 15px;
   margin-left: -10px;
   margin-right: -10px;
   padding-left: 15px;

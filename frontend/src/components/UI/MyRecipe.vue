@@ -1,24 +1,19 @@
 <template>
     <div class="recipe__group px-1 py-2">
-        <item-preview class="preview-recipe" :item="this.items.find(item => { return item.id == this.item.itemId })"
-            :button="true" @click="selectItem(this.items.find(item => { return item.id == this.item.itemId }))" />
+        <item-preview class="preview-sm" :item="this.items.find(item => { return item.id == this.item.itemId })"
+            :button="true" />
 
         <div class="recipe__count">{{ item.amount }}</div>
     </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     name: "my-recipe",
     props: {
         item: Object,
-    },
-    methods: {
-        ...mapActions({
-            selectItem: "items/selectItem",
-        }),
     },
     computed: {
         ...mapState({

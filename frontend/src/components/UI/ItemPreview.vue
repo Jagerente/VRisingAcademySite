@@ -1,19 +1,29 @@
 <template>
-  <img class="rounded" :title="item.name" :src="
-  require('@/' + this.imagePath)" />
+  <img class="rounded" :disabled="button" draggable="false" :title="item.name" :src="require('@/' + this.imagePath)"
+    @click="selectItem(this.items.find(item => { return item.id == this.item.id }))" />
 </template>
 
 <script>
+import { mapState, mapActions, mapMutations } from "vuex";
+
 export default {
   name: "item-preview",
   props: {
     item: Object,
     button: Boolean,
   },
+  methods: {
+    ...mapActions({
+      selectItem: "items/selectItem",
+    }),
+  },
   computed: {
     imagePath() {
       return 'assets/images/items/' + this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[1])) + '.webp';
-    }
+    },
+    ...mapState({
+      items: (state) => state.items.items,
+    }),
   },
 };
 </script>
@@ -25,7 +35,7 @@ export default {
 @import 'bootstrap/scss/_mixins.scss';
 
 @include media-breakpoint-down(sm) {
-  .preview-item {
+  .preview-md {
     $size: 3em;
     $margin: 2px;
     width: $size;
@@ -33,7 +43,7 @@ export default {
     margin: $margin;
   }
 
-  .preview-info {
+  .preview-lg {
     $size: 100px;
     width: $size;
     height: $size;
@@ -42,7 +52,7 @@ export default {
 
 @include media-breakpoint-up(sm) {
 
-  .preview-item {
+  .preview-md {
     $size: 5em;
     $margin: 5px;
     width: $size;
@@ -50,14 +60,14 @@ export default {
     margin: $margin;
   }
 
-  .preview-info {
+  .preview-lg {
     $size: 200px;
     width: $size;
     height: $size;
   }
 }
 
-.preview-recipe {
+.preview-sm {
   $size: 48px;
   background: rgba(0, 0, 0, 0.5);
   font-family: sans-serif;
@@ -71,21 +81,20 @@ export default {
   text-align: right;
 }
 
-.preview-recipe:hover {
+.preview-sm:hover {
   box-shadow: 0 0 8px black;
 }
 
-.preview-item {
+.preview-md {
   background: rgba(0, 0, 0, 0.5);
   font-family: sans-serif;
-  color: #14131b;
   -webkit-user-drag: none;
   border: 0;
   user-select: none;
   transition: box-shadow 0.15s ease-in-out;
 }
 
-.preview-item:hover {
+.preview-md:hover {
   box-shadow: 0 0 8px black;
 }
 

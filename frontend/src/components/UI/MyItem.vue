@@ -1,5 +1,5 @@
 <template>
-  <item-preview class="preview-item rounded"
+  <item-preview class="preview-md rounded"
     :class="this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''" :item="item"
     @click="selectItem(item)" />
 </template>
