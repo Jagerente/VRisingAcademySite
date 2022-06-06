@@ -74,4 +74,7 @@ export default {
   border: none;
   color: silver;
 }
+.tag:hover {
+  box-shadow: 0 0 8px black;
+}
 </style>
