@@ -18,26 +18,27 @@
             target="blank">this form.</a>
         </p>
 
-        <div class="d-flex w-100 justify-content-center">
-          <button @click="gotoBoosty()" class="btn btn-primary">Support
+        <div class="d-flex flex-column w-100 justify-content-center">
+          <!-- <Popper hover content="<3"> -->
+          <button @click="gotoBoosty()" class="btn btn-primary my-2">Support
             Us!</button>
+          <p class="text-center text-white">Support us monetarily to pay for server hosting and keep this site
+            ad-free.</p>
+          <!-- </Popper> -->
         </div>
-        <p class="text-center text-white">Support us monetarily to pay for server hosting and keep this site ad-free.
-        </p>
-
         <p>
-        <h3>Changelog</h3>
-        <h5 class="my-2">24/05/2022</h5>
-        <br>— added a variety (34) of hats and capes (big thanks to u/Difinitus)
-        <br>— added Blood Key
-        <br>— some minor fixes to tags of particular items
-        <h5 class="my-2">31/05/2022 Spells Update!</h5>
+        <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-0 text-white">31/05/2022 Spells Update!</h5>
         <br>— Compete catalogue of all spells including weapon abilities
         <br>— For each spell their cooldown, cast time and number of charges is specified (according to the ingame
         tooltip).
         <br>— For vampire spells cast times were determined manually by recording a video of spell cast and counting
         frames, approximate values are shown on the website.
-        <h5 class="my-2">21/05/2022</h5>
+        <h5 class="mt-2 mb-0 text-white">24/05/2022</h5>
+        <br>— added a variety (34) of hats and capes (big thanks to u/Difinitus)
+        <br>— added Blood Key
+        <br>— some minor fixes to tags of particular items
+        <h5 class="mt-2 mb-0 text-white">21/05/2022</h5>
         <br>— Launched the website with the folowing features:
         <br>— items catalouge excluding sturctures and the majority of hats and cloaks
         <br>— search items by name
