@@ -63,26 +63,6 @@ export default {
 @import 'bootstrap/scss/_mixins.scss';
 
 @include media-breakpoint-down(sm) {
-    h1 {
-        font-size: 1.5rem;
-    }
-
-    h2 {
-        font-size: 1.5rem;
-    }
-
-    h3 {
-        font-size: 1rem;
-    }
-
-    h4 {
-        font-size: 1rem;
-    }
-
-    h5 {
-        font-size: 1rem;
-    }
-
     .tag {
         margin-top: 5px;
         font-size: 0.7rem;
@@ -115,5 +95,10 @@ export default {
     margin-right: -10px;
     padding-left: 15px;
     padding-right: 15px;
+}
+
+p {
+    margin: 0;
+    padding: 0;
 }
 </style>
