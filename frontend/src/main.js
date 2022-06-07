@@ -7,7 +7,6 @@ import Popper from "vue3-popper";
 import "bootstrap/dist/js/bootstrap.js"
 import "@/assets/vrising.scss"
 import "@/assets/styles/va_variables.scss";
-import '@/assets/styles/va_styles.scss';
 
 const app = createApp(App)
 

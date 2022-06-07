@@ -160,6 +160,9 @@ export default {
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
 
+@import '@/assets/styles/va_styles.scss';
+
+
 .tag {
   margin-top: 5px;
   font-size: 0.8rem;

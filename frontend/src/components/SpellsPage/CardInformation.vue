@@ -62,6 +62,9 @@ export default {
 @import 'bootstrap/scss/_variables.scss';
 @import 'bootstrap/scss/_mixins.scss';
 
+@import '@/assets/styles/va_styles.scss';
+
+
 @include media-breakpoint-down(sm) {
     .tag {
         margin-top: 5px;
