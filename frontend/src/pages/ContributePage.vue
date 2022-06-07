@@ -4,7 +4,7 @@
       <h1 class="mt-3 text-center">
         Contribute
       </h1>
-      <div class="mx-auto description" style="width: 600px">
+      <div class="mx-auto description">
         <p>
           90% of the ingame data is already done by ourselves but it will take some time before we implement it and
           display
@@ -59,7 +59,7 @@
         </div>
       </div>
       <div class="d-flex flex-column">
-        <div class="description mx-auto my-5" style="width: 800px;">
+        <div class="description mx-auto my-5">
           We are also looking for players that can help us gather info on mosters, their behaviour, loot drops and their
           locations. If you are interested, please reach out to <a href="#"
             @click="$router.push('/credits/bobrokrot/discord')">Bobrokrot#0111</a> on Discord.
