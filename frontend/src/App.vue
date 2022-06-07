@@ -9,7 +9,7 @@
 <script>
 import MyNavbar from "@/components/MyNavbar.vue";
 import MyFooter from "./components/MyFooter.vue";
-import { mapGetters, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
   components: {
