@@ -192,6 +192,7 @@ from
     join recipes as rcp on recipeingredients.itemid = rcp.id full
     join itemstats as stats on stats.id = items.id full
     join sets on sets.id = items.setid
+where items.id IS NOT NULL
 group by
     items.id,
     itemtypes.title,
@@ -268,18 +269,18 @@ order by
 	ctx.JSON(200, response)
 }
 
-type ResponseItem struct {
+type ItemGroupedListResponseItem struct {
 	Id    int32         `json:"id"`
 	Name  string        `json:"name"`
 	Items []models.Item `json:"items"`
 }
-type Response struct {
-	Id   int32          `json:"id"`
-	Name string         `json:"name"`
-	Sets []ResponseItem `json:"sets"`
+type ItemGroupedListResponse struct {
+	Id   int32                         `json:"id"`
+	Name string                        `json:"name"`
+	Sets []ItemGroupedListResponseItem `json:"sets"`
 }
 
-func findSetIndex(sets []ResponseItem, set int32) int32 {
+func findSetIndex(sets []ItemGroupedListResponseItem, set int32) int32 {
 	for index, item := range sets {
 		if item.Id == set {
 			return int32(index)
@@ -288,7 +289,7 @@ func findSetIndex(sets []ResponseItem, set int32) int32 {
 	return -2
 }
 
-func findWeaponIndex(response []Response, weaponType int32) int32 {
+func findWeaponIndex(response []ItemGroupedListResponse, weaponType int32) int32 {
 	for index, item := range response {
 		if item.Id == weaponType {
 			return int32(index)
@@ -299,35 +300,20 @@ func findWeaponIndex(response []Response, weaponType int32) int32 {
 
 func handleGroupedItemsListRequest(ctx *gin.Context) {
 
-	var response = make([]Response, 0)
+	var response = make([]ItemGroupedListResponse, 0)
 	types := getItemTypesList()
 
 	for _, item := range types {
-		toAdd := Response{
+		toAdd := ItemGroupedListResponse{
 			Id:   item.Id,
 			Name: item.Name,
-			Sets: make([]ResponseItem, 0)}
+			Sets: make([]ItemGroupedListResponseItem, 0)}
 		response = append(response, toAdd)
 	}
 
 	type ResponseMapItem map[int32][]models.Item
 	type ResponseMap map[int32]*ResponseMapItem
 	const UnsetTypeId int32 = -1
-
-	var responseMap = ResponseMap{}
-	for _, item := range types {
-		responseMap[item.Id] = &ResponseMapItem{}
-	}
-
-	var setMap = map[int32]string{}
-
-	sets := getSetsList()
-	for _, item := range sets {
-		if _, ok := setMap[item.Id]; !ok {
-			setMap[item.Id] = item.Name
-		}
-	}
-	setMap[UnsetTypeId] = "Unset"
 
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -508,94 +494,29 @@ order by
 		}
 
 		weaponIndex := findWeaponIndex(response, item.Type.Id)
-		rit := response[weaponIndex]
-		typeIndex := findSetIndex(rit.Sets, key)
+		responseWeapon := response[weaponIndex]
+		typeIndex := findSetIndex(responseWeapon.Sets, key)
 		if typeIndex == -2 {
-			var newItem ResponseItem
+			var newItem ItemGroupedListResponseItem
 			if key == UnsetTypeId {
-				newItem = ResponseItem{
+				newItem = ItemGroupedListResponseItem{
 					Id:    UnsetTypeId,
 					Name:  "Unset",
 					Items: make([]models.Item, 0),
 				}
 			} else {
-				newItem = ResponseItem{
+				newItem = ItemGroupedListResponseItem{
 					Id:    item.Set.Id,
 					Name:  item.Set.Name,
 					Items: make([]models.Item, 0),
 				}
 			}
-			rit.Sets = append(rit.Sets, newItem)
-			typeIndex = findSetIndex(rit.Sets, key)
+			responseWeapon.Sets = append(responseWeapon.Sets, newItem)
+			typeIndex = findSetIndex(responseWeapon.Sets, key)
 		}
-		rit.Sets[typeIndex].Items = append(rit.Sets[typeIndex].Items, item)
-		response[weaponIndex] = rit
-
-		// var responseItem *ResponseMapItem = responseMap[item.Type.Id]
-		// if _, ok := (*responseItem)[key]; !ok {
-		// 	(*responseItem)[key] = make([]models.Item, 0)
-		// }
-		// updatedArray := append((*responseItem)[key], item)
-		// (*responseItem)[key] = updatedArray
+		responseWeapon.Sets[typeIndex].Items = append(responseWeapon.Sets[typeIndex].Items, item)
+		response[weaponIndex] = responseWeapon
 	}
-
-	// for index, weaponType := range response {
-	// 	if _, ok := responseMap[weaponType.Id]; ok {
-	// 		var item ResponseMapItem = *responseMap[weaponType.Id]
-	// 		for _, value := range item {
-	// 			var responseItem ResponseItem
-	// 			var hasSets bool = false
-	// 			var localArray []models.Item = make([]models.Item, 0)
-	// 			for _, realItem := range value {
-	// 				if !hasSets {
-	// 					if realItem.SetId == nil {
-	// 						responseItem = ResponseItem{
-	// 							Id:    1000,
-	// 							Name:  "Unset",
-	// 							Items: make([]models.Item, 0),
-	// 						}
-	// 					} else {
-	// 						responseItem = ResponseItem{
-	// 							Id:    realItem.Set.Id,
-	// 							Name:  realItem.Set.Name,
-	// 							Items: make([]models.Item, 0),
-	// 						}
-	// 					}
-	// 					hasSets = true
-	// 				}
-	// 				localArray = append(localArray, realItem)
-	// 			}
-	// 			if hasSets {
-	// 				responseItem.Items = localArray
-	// 				fmt.Print(responseItem.Id)
-	// 				fmt.Println(" " + responseItem.Name)
-	// 				response[index].Sets = append(response[index].Sets, responseItem)
-	// 			}
-	// 		}
-	// 	}
-	// }
-
-	// var i int32 = 0
-	// for _, value := range responseMap {
-	// 	for _, valueValue := range *value {
-	// 		var newVal ResponseItem = ResponseItem{
-	// 			Id:   -1,
-	// 			Name: "Unset",
-	// 		}
-	// 		if valueValue[0].SetId != nil {
-	// 			newVal = ResponseItem{
-	// 				Id:    valueValue[0].Set.Id,
-	// 				Name:  valueValue[0].Set.Name,
-	// 				Items: make([]models.Item, 0)}
-	// 		}
-	// 		for _, itemValue := range valueValue {
-	// 			newVal.Items = append(newVal.Items, itemValue)
-	// 		}
-	// 		response[i].Sets = append(response[i].Sets, newVal)
-	// 	}
-	// 	i++
-	// }
-
 	ctx.JSON(200, response)
 }
 

@@ -96,34 +96,45 @@ func getSpellSchoolsList() []models.SpellSchool {
 	return items
 }
 
+type SpellGroupedListResponseItem struct {
+	Id     int32          `json:"id"`
+	Name   string         `json:"name"`
+	Spells []models.Spell `json:"spells"`
+}
+type SpellGroupedListResponse struct {
+	Id    int32                          `json:"id"`
+	Name  string                         `json:"name"`
+	Types []SpellGroupedListResponseItem `json:"types"`
+}
+
+func findSpellTypeIndex(sets []SpellGroupedListResponseItem, spellType int32) int32 {
+	for index, item := range sets {
+		if item.Id == spellType {
+			return int32(index)
+		}
+	}
+	return -2
+}
+
+func findSchoolIndex(response []SpellGroupedListResponse, spellSchool int32) int32 {
+	for index, item := range response {
+		if item.Id == spellSchool {
+			return int32(index)
+		}
+	}
+	return -1
+}
+
 func handleGroupedList(request *gin.Context) {
-	type SpellResponseItem struct {
-		Id      int32          `json:"id"`
-		Name    string         `json:"name"`
-		Schools []models.Spell `json:"spells"`
-	}
-	type SpellResponse struct {
-		Id    int32               `json:"id"`
-		Name  string              `json:"name"`
-		Types []SpellResponseItem `json:"types"`
-	}
-
-	type SpellResponseMapItem map[string][]models.Spell
-	type SpellResponseMap map[string]*SpellResponseMapItem
-
-	var response = make([]SpellResponse, 0)
+	var response = make([]SpellGroupedListResponse, 0)
 	schools := getSpellSchoolsList()
 
 	for _, item := range schools {
-		toAdd := SpellResponse{
+		toAdd := SpellGroupedListResponse{
 			Id:    item.Id,
 			Name:  item.Name,
-			Types: make([]SpellResponseItem, 0)}
+			Types: make([]SpellGroupedListResponseItem, 0)}
 		response = append(response, toAdd)
-	}
-	responseMap := SpellResponseMap{}
-	for _, item := range schools {
-		responseMap[item.Name] = &SpellResponseMapItem{}
 	}
 
 	connection := database.CreateConnection()
@@ -183,30 +194,19 @@ order by spellschools.id`
 			Id:   item.TypeId,
 			Name: item.TypeName}
 
-		var responseItem *SpellResponseMapItem = responseMap[item.SchoolName]
-		if _, ok := (*responseItem)[item.TypeName]; ok {
-			updatedArray := append((*responseItem)[item.TypeName], item)
-			(*responseItem)[item.TypeName] = updatedArray
-		} else {
-			arayToAdd := []models.Spell{item}
-			(*responseItem)[item.TypeName] = arayToAdd
+		schoolIndex := findSchoolIndex(response, item.School.Id)
+		responseType := response[schoolIndex]
+		typeIndex := findSpellTypeIndex(responseType.Types, item.Type.Id)
+		if typeIndex == -2 {
+			var newItem SpellGroupedListResponseItem = SpellGroupedListResponseItem{
+				Id:     item.Type.Id,
+				Name:   item.Type.Name,
+				Spells: make([]models.Spell, 0)}
+			responseType.Types = append(responseType.Types, newItem)
+			typeIndex = findSpellTypeIndex(responseType.Types, item.Type.Id)
 		}
-	}
-
-	var i int32 = 0
-	for _, value := range responseMap {
-		for _, valueValue := range *value {
-			var newVal SpellResponseItem = SpellResponseItem{
-				Id:      valueValue[0].Type.Id,
-				Name:    valueValue[0].Type.Name,
-				Schools: make([]models.Spell, 0)}
-
-			for _, itemValue := range valueValue {
-				newVal.Schools = append(newVal.Schools, itemValue)
-			}
-			response[i].Types = append(response[i].Types, newVal)
-		}
-		i++
+		responseType.Types[typeIndex].Spells = append(responseType.Types[typeIndex].Spells, item)
+		response[schoolIndex] = responseType
 	}
 
 	request.JSON(200, response)
