@@ -9,7 +9,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func handleSetList(ctx *gin.Context) {
+func getSetsList() []models.Set {
 	var items = make([]models.Set, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -39,7 +39,11 @@ func handleSetList(ctx *gin.Context) {
 
 		items = append(items, item)
 	}
+	return items
+}
 
+func handleSetList(ctx *gin.Context) {
+	items := getSetsList()
 	ctx.JSON(200, items)
 }
 

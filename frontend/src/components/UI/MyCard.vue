@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column h-100 card__background">
-    <div class="card__header">
+    <div class="d-flex card__header justify-content-center">
       <slot name="left"></slot>
       <slot v-if="custom" name="header"></slot>
       <span v-else class="mx-2">

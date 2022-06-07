@@ -1,5 +1,10 @@
 <template>
-  <div class="catalogue d-flex flex-column flex-lg-row mx-2">
+  <div v-if="this.isItemsLoading">
+    <div class="position-absolute top-50 start-50 translate-middle" role="status">
+      <span class="h1">Loading...</span>
+    </div>
+  </div>
+  <div v-else class="catalogue d-flex flex-column flex-lg-row mx-2">
     <!-- LEFT -->
     <div class="w-100 d-flex mb-2 mb-lg-0 filter__card">
       <!-- FILTER -->
@@ -7,7 +12,7 @@
         <card-filter />
       </div>
       <!-- CATALOGUE -->
-      <div class="flex-fill mx-0 ms-2 mx-lg-3">
+      <div class="flex-fill mx-0 ms-1 mx-lg-2">
         <card-catalogue />
       </div>
     </div>
@@ -29,12 +34,27 @@ import CardFilter from "@/components/ItemsPage/CardFilter";
 import CardCatalogue from "@/components/ItemsPage/CardCatalogue";
 import CardInformation from "@/components/ItemsPage/CardInformation";
 
+import { mapState, mapActions } from "vuex"
+
 export default {
   components: {
     CardFilter,
     CardCatalogue,
     CardInformation,
   },
+  methods: {
+    ...mapActions({
+      fetchItems: "items/fetchItems",
+    })
+  },
+  computed: {
+    ...mapState({
+      isItemsLoading: (state) => state.items.isItemsLoading,
+    })
+  },
+  mounted() {
+    this.fetchItems();
+  }
 };
 </script>
 

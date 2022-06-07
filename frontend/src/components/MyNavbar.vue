@@ -12,15 +12,14 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="nav nav-pills" role="tablist">
           <li class="nav-item">
-            <a @click="$router.push('/')" href="#tabInfo" class="nav-link" data-bs-toggle="tab">Information</a>
+            <a @click="$router.push('/')" href="#tabHome" class="nav-link" data-bs-toggle="tab">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true"
               aria-expanded="false">Catalogue</a>
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="$router.push('/items')" href="#" data-bs-toggle="tab">Items</a>
-              <a class="dropdown-item" @click="$router.push('/spells')" href="#"
-                data-bs-toggle="tab">Spells</a>
+              <a class="dropdown-item" @click="$router.push('/spells')" href="#" data-bs-toggle="tab">Spells</a>
               <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Bestiary</a>
             </div>
           </li>

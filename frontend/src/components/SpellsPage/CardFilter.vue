@@ -4,8 +4,7 @@
       <template #left>
         <icon-filter />
       </template>
-      <div v-if="!isSpellsLoading" class="nav d-flex flex-column" id="v-pills-tab" role="tablist"
-        aria-orientation="vertical">
+      <div class="nav d-flex flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
         <button v-for="(school, i) in this.spells" @click="selectSchool(i)" class="spells__tab"
           :class="i == 0 ? 'active' : ''" data-bs-toggle="pill"
           :data-bs-target="`#v-pills-${school.name.toLowerCase()}`" type="button" role="tab"
@@ -31,7 +30,6 @@ export default {
       spellTabs: "spells/spellTabs",
     }),
     ...mapState({
-      isSpellsLoading: (state) => state.spells.isSpellsLoading,
       spells: (state) => state.spells.spells
     }),
   },

@@ -1,11 +1,20 @@
 <template>
-  <div class="d-flex justify-content-center flex-wrap">
-    <div v-if="isItemsLoading" class="spinner-border text-primary position-absolute" role="status">
-      <span class="sr-only"></span>
+  <div class="d-flex flex-wrap">
+    <div class="d-flex flex-column w-100 ">
+      <transition-group name="items-list">
+        <div v-if="!searchQuery" class="d-flex flex-column" v-for="set in this.sets" :key="set.id">
+          <h1>{{ set.name }}</h1>
+          <div class="d-flex flex-wrap">
+            <my-item v-for="item in set.items" :key="item.id" :item="item" />
+          </div>
+        </div>
+        <div v-else>
+          <transition-group name="items-list">
+            <my-item v-for="item in this.sortedAndSearchedItems" :key="item.id" :item="item" />
+          </transition-group>
+        </div>
+      </transition-group>
     </div>
-    <transition-group v-else name="items-list">
-      <my-item v-for="item in sortedAndSearchedItems(type)" :key="item.id" :item="item" @click="selectItem(item.id)" />
-    </transition-group>
   </div>
 </template>
 
@@ -15,7 +24,7 @@ import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   name: "items-list",
   props: {
-    type: Number,
+    sets: Object
   },
   methods: {
     ...mapActions({
@@ -24,7 +33,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isItemsLoading: (state) => state.items.isItemsLoading,
+      searchQuery: (state) => state.items.searchQuery,
     }),
     ...mapGetters({
       sortedAndSearchedItems: "items/sortedAndSearchedItems",
@@ -49,9 +58,9 @@ export default {
   transition: transform 0.35s ease;
 }
 
-/* .items-list-leave-active {
+.items-list-leave-active {
   position: absolute;
-} */
+}
 
 .input-group {
   height: 39px;
