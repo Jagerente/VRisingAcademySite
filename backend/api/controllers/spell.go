@@ -96,18 +96,18 @@ func getSpellSchoolsList() []models.SpellSchool {
 	return items
 }
 
-type SpellResponseItem struct {
+type SpellGroupedListResponseItem struct {
 	Id     int32          `json:"id"`
 	Name   string         `json:"name"`
 	Spells []models.Spell `json:"spells"`
 }
-type SpellResponse struct {
-	Id    int32               `json:"id"`
-	Name  string              `json:"name"`
-	Types []SpellResponseItem `json:"types"`
+type SpellGroupedListResponse struct {
+	Id    int32                          `json:"id"`
+	Name  string                         `json:"name"`
+	Types []SpellGroupedListResponseItem `json:"types"`
 }
 
-func findSpellTypeIndex(sets []SpellResponseItem, spellType int32) int32 {
+func findSpellTypeIndex(sets []SpellGroupedListResponseItem, spellType int32) int32 {
 	for index, item := range sets {
 		if item.Id == spellType {
 			return int32(index)
@@ -116,7 +116,7 @@ func findSpellTypeIndex(sets []SpellResponseItem, spellType int32) int32 {
 	return -2
 }
 
-func findSchoolIndex(response []SpellResponse, spellSchool int32) int32 {
+func findSchoolIndex(response []SpellGroupedListResponse, spellSchool int32) int32 {
 	for index, item := range response {
 		if item.Id == spellSchool {
 			return int32(index)
@@ -126,14 +126,14 @@ func findSchoolIndex(response []SpellResponse, spellSchool int32) int32 {
 }
 
 func handleGroupedList(request *gin.Context) {
-	var response = make([]SpellResponse, 0)
+	var response = make([]SpellGroupedListResponse, 0)
 	schools := getSpellSchoolsList()
 
 	for _, item := range schools {
-		toAdd := SpellResponse{
+		toAdd := SpellGroupedListResponse{
 			Id:    item.Id,
 			Name:  item.Name,
-			Types: make([]SpellResponseItem, 0)}
+			Types: make([]SpellGroupedListResponseItem, 0)}
 		response = append(response, toAdd)
 	}
 
@@ -198,7 +198,7 @@ order by spellschools.id`
 		responseType := response[schoolIndex]
 		typeIndex := findSpellTypeIndex(responseType.Types, item.Type.Id)
 		if typeIndex == -2 {
-			var newItem SpellResponseItem = SpellResponseItem{
+			var newItem SpellGroupedListResponseItem = SpellGroupedListResponseItem{
 				Id:     item.Type.Id,
 				Name:   item.Type.Name,
 				Spells: make([]models.Spell, 0)}
