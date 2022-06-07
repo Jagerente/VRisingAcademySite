@@ -80,7 +80,6 @@ export default {
             confinedRoom: (state) => state.items.confinedRoom,
         }),
         confined() {
-            // return !(this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase())) || (this.recipe.stations.length === 1 && this.recipe.stations[0].toLowerCase() === 'character menu'))
             return this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase()))
         },
         time() {
@@ -94,7 +93,7 @@ export default {
             return time;
         },
         confinedTime() {
-            var multiplier = 0.75;
+            var multiplier = 0.8;
             var minutes = Math.floor(this.recipe.time * multiplier / 60)
             var seconds = this.recipe.time * multiplier - (minutes * 60)
             var time = {
