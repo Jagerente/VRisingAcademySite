@@ -30,23 +30,24 @@
         <h3 class="text-white">Changelog</h3>
         <h5 class="mt-2 mb-0 text-white">07/06/2022 Items Update</h5>
         <br>— Added Structures and Blueprints (Books)
-        <br>— Structures display their Variants which are structures with the same recipe and essentially represent the
-        same
-        <br>structure but with a different color/look and are unlocked simultaneously.
+        <br>— Structures display their Variants which essentially represent the same structure with the same recipe and
+        is unlocked at the same time but with a different color/look.
         <br>— Reworked Items Catalogue. Items now are split into more distinct categories.
         <br>— Items are divided into what we call Sets for easier navigation.
         <br>— Added Recipes' crafting times.
         <br>— Added options to display Recipes' time and cost discounts in Confined Rooms and with Matching Floor.
         <br>— Reworked search behaviour. Search by tag now is only enabled when the full name of tags is written. You
-        can
-        now also search by tag only ignoring names by clicking on the tag in the Information section.
-        <br>— Added several missing items, including Soul Shards, Acorn, Razer Hood.
+        can now also search by tag only ignoring names by clicking on the tag in the Information section.
         <br>— Some minor fixes to ordering of several items. Notably, now cloak are ordered by their tier and
-        alphabetically
-        within their tier, hats are also order alphabetically, fish is ordered by their tier (as per their salvage
-        returns).
-        <br>— A couple of fixes to items' information like Explosive Boxes had their images swapped and some other minor
-        errors.
+        alphabetically within their tier, hats are also order alphabetically, fish is ordered by their tier (as per
+        their salvage returns).
+        <br>— Added several missing items, including Soul Shards, Acorn, Razer Hood.
+        <br>— Several major fixes to items' information:
+        <br>— Major Explosive Box and Minor Explosive Box had their images swapped.
+        <br>— Copper Castle Key and General's Soul Reaper recipes displayed discounted amount of resources instead of
+        base which was inconsitent with the other recipes (now users have the option to display both base and discounted
+        versions).
+        <br>— Siege Golem Stone had an incorrect amount of resources in its recipe.
         <br>— Added Contribute page.
         <h5 class="mt-2 mb-0 text-white">31/05/2022 Spells Update!</h5>
         <br>— Compete catalogue of all spells including weapon abilities
