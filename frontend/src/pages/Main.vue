@@ -28,6 +28,26 @@
 
         <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-0 text-white">07/06/2022 Items Update</h5>
+        <br>— Added Structures and Blueprints (Books)
+        <br>— Structures display their Variants which are structures with the same recipe and essentially represent the
+        same
+        <br>structure but with a different color/look and are unlocked simultaneously.
+        <br>— Reworked Items Catalogue. Items now are split into more distinct categories.
+        <br>— Items are divided into what we call Sets for easier navigation.
+        <br>— Added Recipes' crafting times.
+        <br>— Added options to display Recipes' time and cost discounts in Confined Rooms and with Matching Floor.
+        <br>— Reworked search behaviour. Search by tag now is only enabled when the full name of tags is written. You
+        can
+        now also search by tag only ignoring names by clicking on the tag in the Information section.
+        <br>— Added several missing items, including Soul Shards, Acorn, Razer Hood.
+        <br>— Some minor fixes to ordering of several items. Notably, now cloak are ordered by their tier and
+        alphabetically
+        within their tier, hats are also order alphabetically, fish is ordered by their tier (as per their salvage
+        returns).
+        <br>— A couple of fixes to items' information like Explosive Boxes had their images swapped and some other minor
+        errors.
+        <br>— Added Contribute page.
         <h5 class="mt-2 mb-0 text-white">31/05/2022 Spells Update!</h5>
         <br>— Compete catalogue of all spells including weapon abilities
         <br>— For each spell their cooldown, cast time and number of charges is specified (according to the ingame
