@@ -32,6 +32,8 @@
         <br>— Added Structures and Blueprints (Books)
         <br>— Structures display their Variants which essentially represent the same structure with the same recipe and
         is unlocked at the same time but with a different color/look.
+        <br>— Please note that currently Variants do not have recipes displayed. Please reference the recipe of their
+        "parent" Variant.
         <br>— Reworked Items Catalogue. Items now are split into more distinct categories.
         <br>— Items are divided into what we call Sets for easier navigation.
         <br>— Added Recipes' crafting times.
