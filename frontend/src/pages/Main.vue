@@ -12,21 +12,21 @@
           working
           hard to fill up the
           database with missing items and develop new features.
-          <br>If you want to contribute or leave feedback you can do
-          it in <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdNlAa_hyXcHsMTJy59alBP5hxhiWsebMHNr9M52He0s5mUsQ/viewform?usp=sf_link"
-            target="blank">this form.</a>
         </p>
 
-        <div class="d-flex flex-column w-100 justify-content-center">
-          <!-- <Popper hover content="<3"> -->
-          <button @click="gotoBoosty()" class="btn btn-primary my-2">Support
+        <div class="d-flex flex-column justify-content-center">
+          <button @click="gotoBoosty()" class="btn btn-primary my-2 mx-auto">Support
             Us!</button>
-          <p class="text-center text-white">Support us monetarily to pay for server hosting and keep this site
+          <p class="text-center">Support us monetarily to pay for server hosting and keep this site
             ad-free.</p>
-          <!-- </Popper> -->
         </div>
-        <p>
+        <div class="d-flex flex-column w-100 justify-content-center">
+          <button @click="$router.push('/contribute')" class="btn btn-primary my-2 mx-auto">Contribute</button>
+          <p class="text-center">If you want to help fill up the database, there is a number of topics we
+            seek data about.</p>
+        </div>
+
+        <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
         <h5 class="mt-2 mb-0 text-white">31/05/2022 Spells Update!</h5>
         <br>— Compete catalogue of all spells including weapon abilities
@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  <my-footer />
+  <my-footer class="mt-2" />
 
 </template>
 
