@@ -1,5 +1,10 @@
 <template>
-    <div v-if="!isSpellsLoading" class="catalogue d-flex flex-column flex-lg-row w-100 py-3 px-2">
+    <div v-if="this.isSpellsLoading">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <span class="h1">Loading...</span>
+        </div>
+    </div>
+    <div v-else class="catalogue d-flex flex-column flex-lg-row w-100 py-3 px-2">
         <!-- LEFT -->
         <!-- UP -->
         <div class="d-flex w-100 mb-2 mb-lg-0">
@@ -19,12 +24,6 @@
             <card-information style="width: 100%;"></card-information>
         </div>
     </div>
-    <div class="d-flex h-100 justify-content-center" v-else>
-        <div class="d-flex flex-column justify-content-center">
-            <div class="spinner-border text-primary position-absolute" role="status">
-            </div>
-        </div>
-    </div>
 </template>
 
 <script>
@@ -32,7 +31,7 @@ import CardFilter from '@/components/SpellsPage/CardFilter.vue'
 import CardInformation from '@/components/SpellsPage/CardInformation.vue'
 import CardCatalogue from '@/components/SpellsPage/CardCatalogue.vue'
 
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
     components: {
@@ -45,6 +44,14 @@ export default {
             isSpellsLoading: (state) => state.spells.isSpellsLoading,
         }),
     },
+    methods: {
+        ...mapActions({
+            fetchSpells: "spells/fetchSpells",
+        })
+    },
+    mounted() {
+        this.fetchSpells();
+    }
 
 }
 </script>

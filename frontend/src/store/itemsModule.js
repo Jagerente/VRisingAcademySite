@@ -13,8 +13,8 @@ export const itemsModule = {
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
-        host: "https://vrising-academy.info/api/"
-        // host: "http://localhost:8087/api/"
+        // host: "https://vrising-academy.info/api/"
+        host: "http://localhost:8087/api/"
     }),
     getters: {
         sortedItems: (state) => {

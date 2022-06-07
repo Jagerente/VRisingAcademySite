@@ -5,7 +5,7 @@
         <icon-filter />
       </template>
       <div class="nav d-flex flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <button v-for="(school, i) in this.spells" @click="selectSchool(i)" class="spells__tab"
+        <button v-for="(school, i) in this.schools" @click="selectSchool(i)" class="spells__tab"
           :class="i == 0 ? 'active' : ''" data-bs-toggle="pill"
           :data-bs-target="`#v-pills-${school.name.toLowerCase()}`" type="button" role="tab"
           :aria-controls="`v-pills-${school.name.toLowerCase()}`" aria-selected="false">
@@ -26,11 +26,8 @@ export default {
     })
   },
   computed: {
-    ...mapGetters({
-      spellTabs: "spells/spellTabs",
-    }),
     ...mapState({
-      spells: (state) => state.spells.spells
+      schools: (state) => state.spells.schools
     }),
   },
 }

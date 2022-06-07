@@ -5,11 +5,12 @@ export const spellsModule = {
         schools: [],
         types: [],
         spells: [],
+        spellsGrouped: [],
         isSpellsLoading: true,
         selectedSpell: null,
         selectedSchool: 1,
-        host: "https://vrising-academy.info/api/"
-        // host: "http://localhost:8087/api/"
+        // host: "https://vrising-academy.info/api/"
+        host: "http://localhost:8087/api/"
     }),
     getters: {
 
@@ -24,6 +25,9 @@ export const spellsModule = {
         setSpells(state, spells) {
             state.spells = spells
         },
+        setSpellsGrouped(state, spellsGrouped) {
+            state.spellsGrouped = spellsGrouped
+        },
         setSpellsLoading(state, bool) {
             state.isSpellsLoading = bool
         },
@@ -35,45 +39,52 @@ export const spellsModule = {
         },
     },
     actions: {
-        async getSchools({ state, commit }) {
+        async fetchSpells({ state, commit }) {
+            commit('setSpellsLoading', true)
+
             await axios
                 .get(state.host + "spell/schools")
                 .then(response => commit('setSchools', response.data))
                 .catch(error => alert("Error: " + error));
 
-        },
-        async getTypes({ state, commit }) {
             await axios
                 .get(state.host + "spell/types")
                 .then(response => commit('setTypes', response.data))
                 .catch(error => alert("Error: " + error));
 
-        },
-        async getSpells({ state, commit }) {
             await axios
                 .get(state.host + "spell/list")
-                .then(response => {
-                    let spells = [];
-                    state.schools.forEach((school, i) => {
-                        spells.push({ name: school.name, types: [] });
-                        state.types.forEach((type, j) => {
-                            spells[i].types.push({ title: type.title, spells: [] })
-                            response.data.forEach(spell => {
-                                if (spell.school === school.name && spell.type === type.title) {
-                                    spells[i].types[j].spells.push(spell);
-                                }
-                            });
-                        });
-                    });
-                    commit('setSpells', spells);
-                })
+                .then(response => commit('setSpells', response.data))
                 .catch(error => alert("Error: " + error))
-                .finally(commit('setSpellsLoading', false));
+
+            // await axios
+            //     .get(state.host + "spell/grouplist")
+            //     .then(response => commit('setSpellsGrouped', response.data))
+            //     .catch(error => alert("Error: " + error))
+
+            // --Remove after fix--
+            let spells = [];
+            state.schools.forEach((school, i) => {
+                spells.push({ name: school.name, types: [] });
+                state.types.forEach((type, j) => {
+                    spells[i].types.push({ title: type.title, spells: [] })
+                    state.spells.forEach(spell => {
+                        if (spell.school.name === school.name && spell.type.name === type.title) {
+                            spells[i].types[j].spells.push(spell);
+                        }
+                    });
+                });
+            })
+            commit('setSpellsGrouped', spells)
+            // --Remove after fix--
+            
+            commit('setSpellsLoading', false)
         },
+
         selectSchool({ commit }, id) {
             commit('setSelectedSchool', id);
         },
-        selectSpell({ state, commit }, spell) {
+        selectSpell({ commit }, spell) {
             commit('setSelectedSpell', spell);
         },
     },

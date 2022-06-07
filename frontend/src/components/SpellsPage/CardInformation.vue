@@ -6,32 +6,32 @@
                     <div class="d-flex">
                         <div class="d-flex flex-column w-50">
                             <!-- Title -->
-                            <h1>{{ this.selectedSpell.name }}</h1>
+                            <p class="h-1">{{ this.selectedSpell.name }}</p>
                             <!-- Type -->
-                            <h4>{{ this.selectedSpell.type.replace(/[0-9]/g, '') }}</h4>
+                            <p class="h-2">{{ this.selectedSpell.type.name.replace(/[0-9]/g, '') }}</p>
                             <!-- Cooldown -->
-                            <h4 v-if="this.selectedSpell.cooldown">Cooldown: <span class="text-white">{{
+                            <p class="h-3" v-if="this.selectedSpell.cooldown">Cooldown: <span class="text-white">{{
                                     this.selectedSpell.cooldown
-                            }}s</span></h4>
+                            }}s</span></p>
                             <!-- Cast Time -->
-                            <h4 v-if="this.selectedSpell.castTime">Cast Time: <span class="text-white">{{
+                            <p class="h-3" v-if="this.selectedSpell.castTime">Cast Time: <span class="text-white">{{
                                     this.selectedSpell.castTime
-                            }}s</span></h4>
+                            }}s</span></p>
                             <!-- Charges -->
-                            <h4 v-if="this.selectedSpell.charges > 1">Charges: <span class="text-white">{{
+                            <p class="h-3" v-if="this.selectedSpell.charges > 1">Charges: <span class="text-white">{{
                                     this.selectedSpell.charges
-                            }}</span></h4>
+                            }}</span></p>
                         </div>
                         <!-- Preview -->
                         <div class="d-flex justify-content-center flex-fill mx-2 w-50">
                             <img class="image__preview rounded" draggable="false" :title="selectedSpell.name" :src="
-                                require(`@/assets/images/spells/${selectedSpell.school.toLowerCase()}/${selectedSpell.name}.webp`)
+                                require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
                             " />
                         </div>
                     </div>
                     <!-- Description -->
                     <div v-if="selectedSpell.description" class="description py-2 my-3">
-                        <h4 class="">{{ selectedSpell.description }}</h4>
+                        <p class="h-2">{{ selectedSpell.description }}</p>
                     </div>
                 </div>
                 <!-- If none is selected -->
