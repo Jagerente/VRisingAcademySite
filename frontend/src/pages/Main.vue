@@ -12,32 +12,56 @@
           working
           hard to fill up the
           database with missing items and develop new features.
-          <br>If you want to contribute or leave feedback you can do
-          it in <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSdNlAa_hyXcHsMTJy59alBP5hxhiWsebMHNr9M52He0s5mUsQ/viewform?usp=sf_link"
-            target="blank">this form.</a>
         </p>
 
-        <div class="d-flex w-100 justify-content-center">
-          <button @click="gotoBoosty()" class="btn btn-primary">Support
+        <div class="d-flex flex-column justify-content-center">
+          <button @click="gotoBoosty()" class="btn btn-primary my-2 mx-auto">Support
             Us!</button>
+          <p class="text-center">Support us monetarily to pay for server hosting and keep this site
+            ad-free.</p>
         </div>
-        <p class="text-center text-white">Support us monetarily to pay for server hosting and keep this site ad-free.
-        </p>
+        <div class="d-flex flex-column w-100 justify-content-center">
+          <button @click="$router.push('/contribute')" class="btn btn-primary my-2 mx-auto">Contribute</button>
+          <p class="text-center">If you want to help fill up the database, there is a number of topics we
+            seek data about.</p>
+        </div>
 
-        <p>
-        <h3>Changelog</h3>
-        <h5 class="my-2">24/05/2022</h5>
-        <br>— added a variety (34) of hats and capes (big thanks to u/Difinitus)
-        <br>— added Blood Key
-        <br>— some minor fixes to tags of particular items
-        <h5 class="my-2">31/05/2022 Spells Update!</h5>
+        <p class="mt-5">
+        <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-0 text-white">07/06/2022 Items Update</h5>
+        <br>— Added Structures and Blueprints (Books)
+        <br>— Structures display their Variants which essentially represent the same structure with the same recipe and
+        is unlocked at the same time but with a different color/look.
+        <br>— Please note that currently Variants do not have recipes displayed. Please reference the recipe of their
+        "parent" Variant.
+        <br>— Reworked Items Catalogue. Items now are split into more distinct categories.
+        <br>— Items are divided into what we call Sets for easier navigation.
+        <br>— Added Recipes' crafting times.
+        <br>— Added options to display Recipes' time and cost discounts in Confined Rooms and with Matching Floor.
+        <br>— Reworked search behaviour. Search by tag now is only enabled when the full name of tags is written. You
+        can now also search by tag only ignoring names by clicking on the tag in the Information section.
+        <br>— Some minor fixes to ordering of several items. Notably, now cloak are ordered by their tier and
+        alphabetically within their tier, hats are also order alphabetically, fish is ordered by their tier (as per
+        their salvage returns).
+        <br>— Added several missing items, including Soul Shards, Acorn, Razer Hood.
+        <br>— Several major fixes to items' information:
+        <br>— Major Explosive Box and Minor Explosive Box had their images swapped.
+        <br>— Copper Castle Key and General's Soul Reaper recipes displayed discounted amount of resources instead of
+        base which was inconsitent with the other recipes (now users have the option to display both base and discounted
+        versions).
+        <br>— Siege Golem Stone had an incorrect amount of resources in its recipe.
+        <br>— Added Contribute page.
+        <h5 class="mt-2 mb-0 text-white">31/05/2022 Spells Update!</h5>
         <br>— Compete catalogue of all spells including weapon abilities
         <br>— For each spell their cooldown, cast time and number of charges is specified (according to the ingame
         tooltip).
         <br>— For vampire spells cast times were determined manually by recording a video of spell cast and counting
         frames, approximate values are shown on the website.
-        <h5 class="my-2">21/05/2022</h5>
+        <h5 class="mt-2 mb-0 text-white">24/05/2022</h5>
+        <br>— added a variety (34) of hats and capes (big thanks to u/Difinitus)
+        <br>— added Blood Key
+        <br>— some minor fixes to tags of particular items
+        <h5 class="mt-2 mb-0 text-white">21/05/2022</h5>
         <br>— Launched the website with the folowing features:
         <br>— items catalouge excluding sturctures and the majority of hats and cloaks
         <br>— search items by name
@@ -50,7 +74,7 @@
       </div>
     </div>
   </div>
-  <my-footer />
+  <my-footer class="mt-2" />
 
 </template>
 

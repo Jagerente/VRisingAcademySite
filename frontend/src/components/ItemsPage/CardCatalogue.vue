@@ -4,10 +4,10 @@
       <filter-input></filter-input>
     </template>
     <div class="tab-content d-flex justify-content-center flex-wrap" id="v-pills-tabContent">
-      <div v-for="(type, i) in types" class="tab-pane fade show w-100" :class="i == 0 ? 'active' : ''"
-        :id="`v-pills-${type.title.toLowerCase()}`" role="tabpanel"
-        :aria-labelledby="`v-pills-${type.title.toLowerCase()}-tab`">
-        <items-list :items="this.items[type.title]"></items-list>
+      <div v-for="type in this.itemsGrouped" class="tab-pane fade show w-100" :class="type.id === 1 ? 'active' : ''"
+        :id="`v-pills-${type.name.toLowerCase()}`" role="tabpanel"
+        :aria-labelledby="`v-pills-${type.name.toLowerCase()}-tab`">
+        <items-list :sets="type.sets"></items-list>
       </div>
     </div>
   </my-card>
@@ -22,8 +22,7 @@ export default {
   components: { FilterInput, ItemsList },
   computed: {
     ...mapState({
-      types: (state) => state.items.types,
-      items: (state) => state.items.items,
+      itemsGrouped: (state) => state.items.itemsGrouped,
     }),
   },
 };

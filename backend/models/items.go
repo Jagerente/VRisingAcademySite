@@ -11,9 +11,9 @@ type ItemTypeObject struct {
 }
 
 type ItemSetObject struct {
-	Id          int32  `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Id          int32   `json:"id"`
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
 }
 
 type Item struct {
