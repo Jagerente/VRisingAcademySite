@@ -16,7 +16,7 @@ const (
 	postgresPassword         string = "83"
 	postgresHost             string = "localhost"
 	postgresPort             int32  = 5432
-	DatabaseVersion          int32  = 9
+	DatabaseVersion          int32  = 10
 )
 
 func CheckIfDatabaseNeedsUpdate() bool {
