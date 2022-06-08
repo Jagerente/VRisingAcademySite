@@ -1,6 +1,6 @@
 <template>
   <input @click="selectSpell(spell)" type="image" class="spell rounded"
-    :class="spell.type === 'Ultimate' ? 'spell-ultimate' : spell.type === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
+    :class="spell.type.name === 'Ultimate' ? 'spell-ultimate' : spell.type.name === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
     :title="spell.name" :src="
       require(`@/assets/images/spells/${spell.school.name.toLowerCase()}/${spell.name}.webp`)
     " />

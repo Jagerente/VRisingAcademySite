@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-column">
-    <div class="d-flex justify-content-evenly my-3 flex-wrap" v-for="stype in this.clearTypes">
+    <div class="d-flex justify-content-evenly my-3 flex-wrap" v-for="stype in this.types">
       <my-spell v-for="spell in stype.spells" :spell="spell"></my-spell>
     </div>
   </div>
@@ -17,13 +17,6 @@ export default {
   props: {
     types: Array
   },
-  // --Remove after fix--
-  computed: {
-    clearTypes() {
-      return this.types.filter(type => type.spells.length > 0)
-    }
-  },
-  // --Remove after fix--
 };
 </script>
 
