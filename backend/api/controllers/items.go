@@ -149,7 +149,7 @@ func handleListRequest(ctx *gin.Context) {
     stats.mainStat,
     items.setid,
     sets.name,
-	sets.description,
+    sets.description,
     stats.slotid,
     array(
         (
@@ -184,7 +184,27 @@ func handleListRequest(ctx *gin.Context) {
             order by
                 structurevariants.variantid
         )
-    ) as variants
+    ) as variants,
+    array (
+        (
+            select
+                salvageables.id
+            from
+                salvageables
+            where
+                salvageables.itemid = items.id
+        )
+    ) as salvageables,
+    array (
+        (
+            select
+                salvageableresults.salvageableid
+            from
+                salvageableresults
+            where
+                salvageableresults.itemid = items.id
+        )
+    ) as salvageableOf
 from
     items
     join itemtypes on itemtypes.id = items.type full
@@ -192,7 +212,8 @@ from
     join recipes as rcp on recipeingredients.itemid = rcp.id full
     join itemstats as stats on stats.id = items.id full
     join sets on sets.id = items.setid
-where items.id IS NOT NULL
+where
+    items.id IS NOT NULL
 group by
     items.id,
     itemtypes.title,
@@ -218,14 +239,16 @@ order by
 	defer rows.Close()
 	for rows.Next() {
 		item := models.Item{
-			Stations:   make([]int32, 0),
-			Recipes:    make([]int32, 0),
-			ReagentFor: make([]int32, 0),
-			Tags:       make([]string, 0),
-			BonusStats: make([]string, 0),
-			Locations:  make([]int32, 0),
-			Variants:   make([]int32, 0),
-			Type:       models.ItemTypeObject{}}
+			Stations:      make([]int32, 0),
+			Recipes:       make([]int32, 0),
+			ReagentFor:    make([]int32, 0),
+			Tags:          make([]string, 0),
+			BonusStats:    make([]string, 0),
+			Locations:     make([]int32, 0),
+			Variants:      make([]int32, 0),
+			Salvageables:  make([]int32, 0),
+			SalvageableOf: make([]int32, 0),
+			Type:          models.ItemTypeObject{}}
 
 		var setName *string
 		var setDesc *string
@@ -251,7 +274,9 @@ order by
 			&item.SlotId,
 			pq.Array(&item.BonusStats),
 			pq.Array(&item.Locations),
-			pq.Array(&item.Variants))
+			pq.Array(&item.Variants),
+			pq.Array(&item.Salvageables),
+			pq.Array(&item.SalvageableOf))
 
 		if readError != nil {
 			fmt.Print(readError)
@@ -329,12 +354,12 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
     array(
         (
             select
-                distinct stcns.id
+                stcns.id
             from
                 recipestations as rcst
                 join stations as stcns on rcst.stationId = stcns.id
             where
-                rcst.recipeId = any(array_agg((select recipeingredients.recipeId where recipeingredients.itemId=items.id)))
+                rcst.recipeId = rcp.id
         )
     ) as stations,
     array(
@@ -347,7 +372,7 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
             where
                 reciperesults.itemid = items.id
         )
-    ) as itemRecipes,
+    ) as recipes,
     array(
         (
             select
@@ -375,7 +400,7 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
     stats.mainStat,
     items.setid,
     sets.name,
-	sets.description,
+    sets.description,
     stats.slotid,
     array(
         (
@@ -410,15 +435,36 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
             order by
                 structurevariants.variantid
         )
-    ) as variants
+    ) as variants,
+    array (
+        (
+            select
+                salvageables.id
+            from
+                salvageables
+            where
+                salvageables.itemid = items.id
+        )
+    ) as salvageables,
+    array (
+        (
+            select
+                salvageableresults.salvageableid
+            from
+                salvageableresults
+            where
+                salvageableresults.itemid = items.id
+        )
+    ) as salvageableOf
 from
     items
-    join itemtypes on itemtypes.id = items.type 
-    full join recipeingredients on recipeingredients.itemid = items.id
-    full join recipes as rcp on recipeingredients.itemid = rcp.id
-    full join itemstats as stats on stats.id = items.id
-    full join sets on sets.id = items.setid
-where items.id IS NOT NULL
+    join itemtypes on itemtypes.id = items.type full
+    join recipeingredients on recipeingredients.itemid = items.id full
+    join recipes as rcp on recipeingredients.itemid = rcp.id full
+    join itemstats as stats on stats.id = items.id full
+    join sets on sets.id = items.setid
+where
+    items.id IS NOT NULL
 group by
     items.id,
     itemtypes.title,
@@ -444,14 +490,16 @@ order by
 	defer rows.Close()
 	for rows.Next() {
 		item := models.Item{
-			Stations:   make([]int32, 0),
-			Recipes:    make([]int32, 0),
-			ReagentFor: make([]int32, 0),
-			Tags:       make([]string, 0),
-			BonusStats: make([]string, 0),
-			Locations:  make([]int32, 0),
-			Variants:   make([]int32, 0),
-			Type:       models.ItemTypeObject{}}
+			Stations:      make([]int32, 0),
+			Recipes:       make([]int32, 0),
+			ReagentFor:    make([]int32, 0),
+			Tags:          make([]string, 0),
+			BonusStats:    make([]string, 0),
+			Locations:     make([]int32, 0),
+			Variants:      make([]int32, 0),
+			Salvageables:  make([]int32, 0),
+			SalvageableOf: make([]int32, 0),
+			Type:          models.ItemTypeObject{}}
 
 		var setName *string
 		var setDesc *string
@@ -477,7 +525,9 @@ order by
 			&item.SlotId,
 			pq.Array(&item.BonusStats),
 			pq.Array(&item.Locations),
-			pq.Array(&item.Variants))
+			pq.Array(&item.Variants),
+			pq.Array(&item.Salvageables),
+			pq.Array(&item.SalvageableOf))
 
 		if readError != nil {
 			fmt.Print(readError)
