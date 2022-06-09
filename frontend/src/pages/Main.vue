@@ -28,6 +28,17 @@
 
         <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-0 text-white">09/06/2022 Salvage Update</h5>        
+        <br>— Salvageable items now display items that they can be salvaged into. Now you can witness the true power of
+        The Fish!
+        <br> Items now also display whether you can obtain them from salvaging other items.
+        <br>— Note that weapons, amrour and jewellery are not included since their salvage results depend on their
+        durability.
+        <br>— Other fixes:
+        <br>— Sanguine Crossbow's crafting time is fixed.
+        <br>— Royal Braziers's recipes had all incorretly required Regular Amethyst. This has been fixed.
+        <br>— Tainted Heart, Unsullied Heart and Exquisite Heart's descriptions have been updated to include the phrase
+        "Refined into X by using a Blood Press" that were added into the game in Patch 0.5.41237.
         <h5 class="mt-2 mb-0 text-white">07/06/2022 Items Update</h5>
         <br>— Added Structures and Blueprints (Books)
         <br>— Structures display their Variants which essentially represent the same structure with the same recipe and

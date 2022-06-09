@@ -8,7 +8,7 @@
             <my-item v-for="item in set.items" :key="item.id" :item="item" />
           </div>
         </div>
-        <div v-else>
+        <div class="d-flex flex-wrap" v-else>
           <transition-group name="items-list">
             <my-item v-for="item in this.sortedAndSearchedItems" :key="item.id" :item="item" />
           </transition-group>

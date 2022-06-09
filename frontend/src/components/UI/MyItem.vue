@@ -1,7 +1,7 @@
 <template>
-  <item-preview class="preview-md rounded"
-    :class="this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''" :item="item"
-    @click="selectItem(item)" />
+  <item-preview
+    :style="`preview-md rounded ${this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''}`"
+    :item="item" @click="selectItem(item)" />
 </template>
 
 <script>

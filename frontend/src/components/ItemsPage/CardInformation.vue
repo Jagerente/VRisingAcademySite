@@ -32,7 +32,9 @@
                 <span class="text-white">{{ this.selectedItem.gearLevel }}</span> Gear Level
               </p>
               <!-- Main Stat -->
-              <p class="h-3"><span class="text-white">+{{ this.selectedItem.mainStat }}</span> {{ getStat(this.selectedItem) }}
+              <p class="h-3"><span class="text-white">+{{ this.selectedItem.mainStat }}</span> {{
+                  getStat(this.selectedItem)
+              }}
               </p>
               <!-- Sets -->
               <div v-if="this.selectedItem.set.description" class="my-2">
@@ -61,7 +63,7 @@
         </div>
         <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
-          <item-preview class="preview-lg" :item="this.selectedItem" :button="false" />
+          <item-preview :style="'preview-lg'" :item="this.selectedItem" :button="false" />
         </div>
       </div>
       <!-- Description -->
@@ -72,31 +74,12 @@
       <div class="d-flex flex-column" v-if="this.selectedItem.variants.length">
         <p class="h-2">Variants</p>
         <div class="d-flex flex-wrap block py-2">
-          <item-preview v-for="itemId in selectedItem.variants" class="preview-sm m-1"
+          <item-preview v-for="itemId in selectedItem.variants" class="m-1" :style="'preview-sm'"
             :item="this.items.find(item => { return item.id === itemId })" :button="true" />
         </div>
       </div>
-      <!-- Salvageables -->
+      <!-- Recipes -->
       <div class="d-flex flex-column">
-        <div v-if="this.selectedItem.salvageables.length">
-          <p class="h-2 mb-auto">Salvageable For</p>
-          <div class="d-flex block">
-            <item-preview class="preview-sm m-1"
-              v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
-              :item="this.items.find(item => { return item.id === output.itemId })" :button="true" />
-          </div>
-        </div>
-        <div v-if="this.selectedItem.salvageableOf	.length">
-          <p class="h-2 mb-auto">Salvageable From</p>
-          <div class="d-flex block">
-            <item-preview class="preview-sm m-1"
-              v-for="input in this.selectedItem.salvageableOf	"
-              :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })" :button="true" />
-          </div>
-        </div>
-      </div>
-      <div class="d-flex flex-column">
-        <!-- Recipes -->
         <div v-if="this.selectedItem.recipes.length" class="d-flex flex-column">
           <div class="d-flex justify-content-between mt-1">
             <p class="h-2 mb-auto">Recipes</p>
@@ -124,11 +107,31 @@
         <div v-if="this.selectedItem.reagentFor.length" class="d-flex flex-column">
           <p class="h-2">Reagent for</p>
           <div class="d-flex block flex-wrap">
-            <div v-for="recipeId in selectedItem.reagentFor">
-              <item-preview class="preview-sm m-1"
+            <div class="d-flex" v-for="recipeId in selectedItem.reagentFor">
+              <item-preview class="m-1" :style="'preview-sm'"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
                 :item="this.items.find(item => { return item.id == output.itemId })" :button="true" />
             </div>
+          </div>
+        </div>
+      </div>
+      <!-- Salvageables -->
+      <div class="d-flex flex-column">
+        <div v-if="this.selectedItem.salvageables.length">
+          <p class="h-2 mb-auto">Salvageable For</p>
+          <div class="d-flex block ">
+            <item-preview class="m-1" :style="'preview-sm'"
+              v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
+              :item="this.items.find(item => { return item.id === output.itemId })" :text="output.amount"
+              :button="true" />
+          </div>
+        </div>
+        <div v-if="this.selectedItem.salvageableOf.length">
+          <p class="h-2 mb-auto">Salvageable From</p>
+          <div class="d-flex block">
+            <item-preview class="m-1" :style="'preview-sm'" v-for="input in this.selectedItem.salvageableOf	"
+              :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
+              :button="true" />
           </div>
         </div>
       </div>
@@ -207,6 +210,8 @@ export default {
   margin-right: -10px;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 .form-check-input {

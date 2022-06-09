@@ -1,6 +1,6 @@
 <template>
-    <div class="d-flex flex-column block">
-        <div class="d-flex justify-content-between mt-1">
+    <div class="d-flex flex-column block ">
+        <div class="d-flex justify-content-between">
             <div class="d-flex">
                 <span v-for="(station, i) in recipe.stations" class="h-3 ">
                     {{ (i > 0 ? '&nbsp;/&nbsp;' : '') + station }}
@@ -30,30 +30,25 @@
                 </Popper>
             </div>
         </div>
-        <div class="d-flex">
-            <div class="d-flex block">
-                <div v-for="ingridient in this.recipe.ingredients" class="recipe__group px-1 py-2">
-                    <item-preview class="preview-sm"
-                        :item="this.items.find(item => { return item.id === ingridient.itemId })" :button="true" />
-
-                    <div class="recipe__count">{{ this.matchingFloor && this.confined ?
-                            Math.ceil(ingridient.amount * 0.75) : ingridient.amount
-                    }}</div>
+        <div class="d-flex mt-1">
+            <div class="d-flex block ">
+                <div v-for="ingridient in this.recipe.ingredients" class="recipe__group px-1">
+                    <item-preview :style="'preview-sm'"
+                        :item="this.items.find(item => { return item.id === ingridient.itemId })" :text="this.matchingFloor && this.confined ?
+                        Math.ceil(ingridient.amount * 0.75) : ingridient.amount" :button="true" />
                 </div>
             </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#a8a9ae" class="m-2"
-                viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#a8a9ae" class="" viewBox="0 0 16 16">
                 <path
                     d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
             </svg>
 
             <div class="d-flex flex-fill">
-                <div v-for="result in this.recipe.results" class="recipe__group px-1 py-2">
-                    <item-preview class="preview-sm"
-                        :item="this.items.find(item => { return item.id === result.itemId })" :button="true" />
-
-                    <div class="recipe__count">{{ result.amount }}</div>
+                <div v-for="result in this.recipe.results" class="recipe__group px-1">
+                    <item-preview :style="'preview-sm'"
+                        :item="this.items.find(item => { return item.id === result.itemId })" :text="result.amount"
+                        :button="true" />
                 </div>
             </div>
         </div>
@@ -111,20 +106,6 @@ export default {
 
 * {
     user-select: none;
-}
-
-.recipe__group {
-    position: relative;
-    text-align: center;
-    color: white;
-}
-
-.recipe__count {
-    pointer-events: none;
-    position: absolute;
-    bottom: 8px;
-    right: 16px;
-    font-size: 16px;
 }
 
 .tag__time-confined {
