@@ -128,7 +128,7 @@
         </div>
         <div v-if="this.selectedItem.salvageableOf.length">
           <p class="h-2 mb-auto">Salvageable From</p>
-          <div class="d-flex block">
+          <div class="d-flex flex-wrap block">
             <item-preview class="m-1" :style="'preview-sm'" v-for="input in this.selectedItem.salvageableOf	"
               :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
               :button="true" />
