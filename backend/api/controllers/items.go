@@ -21,12 +21,12 @@ type ItemJson struct {
 type ListResponse struct {
 }
 
-func getItemTypesList() []models.ItemType {
-	var items = make([]models.ItemType, 0)
+func getItemTypesList() []models.ItemTypeObject {
+	var items = make([]models.ItemTypeObject, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
 
-	query := `select * from itemtypes`
+	query := `select * from itemtypes order by itemtypes.id`
 
 	rows, err := connection.Query(query)
 
@@ -37,11 +37,11 @@ func getItemTypesList() []models.ItemType {
 	defer rows.Close()
 
 	for rows.Next() {
-		item := models.ItemType{}
+		item := models.ItemTypeObject{}
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Title)
+			&item.Name)
 
 		if readError != nil {
 			fmt.Println(readError)
@@ -56,7 +56,7 @@ func getItemTypesList() []models.ItemType {
 
 func handleItemTypesList(ctx *gin.Context) {
 
-	var items = make([]models.ItemType, 0)
+	var items = make([]models.ItemTypeObject, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
 
@@ -71,11 +71,11 @@ func handleItemTypesList(ctx *gin.Context) {
 	defer rows.Close()
 
 	for rows.Next() {
-		item := models.ItemType{}
+		item := models.ItemTypeObject{}
 
 		readError := rows.Scan(
 			&item.Id,
-			&item.Title)
+			&item.Name)
 
 		if readError != nil {
 			fmt.Println(readError)
@@ -87,27 +87,258 @@ func handleItemTypesList(ctx *gin.Context) {
 	ctx.JSON(200, items)
 }
 
-func getItemsList(ctx *gin.Context) {
-	type ResponseItem map[string][]models.NewItem
-	type GroupedResponse map[string]*ResponseItem
-	const UnsetTypeId int32 = -1
+func handleListRequest(ctx *gin.Context) {
+	var response = make([]models.Item, 0)
+	connection := database.CreateConnection()
+	defer connection.Close()
 
-	types := getItemTypesList()
+	newQuery := `select
+    items.id,
+    items.name,
+    items.description,
+    items.tier,
+    items.type as typeid,
+    itemtypes.title as typetitle,
+    items.knowledgeid,
+    array(
+        (
+            select
+                stcns.id
+            from
+                recipestations as rcst
+                join stations as stcns on rcst.stationId = stcns.id
+            where
+                rcst.recipeId = rcp.id
+        )
+    ) as stations,
+    array(
+        (
+            select
+                recipes.id
+            from
+                reciperesults
+                join recipes on recipes.id = reciperesults.recipeid
+            where
+                reciperesults.itemid = items.id
+        )
+    ) as recipes,
+    array(
+        (
+            select
+                rc.id
+            from
+                recipeingredients as rci
+                join recipes as rc on rci.recipeId = rc.id
+            where
+                rci.itemId = items.id
+        )
+    ) as reagentFor,
+    array(
+        (
+            select
+                tgs.value
+            from
+                itemtags as itt
+                join tags as tgs on itt.tagId = tgs.id
+            where
+                itt.itemId = items.id
+        )
+    ) as tags,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description,
+    stats.slotid,
+    array(
+        (
+            select
+                secondarystats.bonus
+            from
+                secondaryitemstats
+                join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
+            where
+                secondaryitemstats.statsId = stats.id
+        )
+    ) as bonusStats,
+    array(
+        (
+            select
+                lc.id
+            from
+                itemlocations as itl
+                join locations as lc on itl.locationId = lc.id
+            where
+                itl.itemId = items.id
+        )
+    ) as locations,
+    array(
+        (
+            select
+                structurevariants.variantid
+            from
+                structurevariants
+            where
+                structurevariants.structureid = items.id
+            order by
+                structurevariants.variantid
+        )
+    ) as variants,
+    array (
+        (
+            select
+                salvageables.id
+            from
+                salvageables
+            where
+                salvageables.itemid = items.id
+        )
+    ) as salvageables,
+    array (
+        (
+            select
+                salvageableresults.salvageableid
+            from
+                salvageableresults
+            where
+                salvageableresults.itemid = items.id
+        )
+    ) as salvageableOf
+from
+    items
+    join itemtypes on itemtypes.id = items.type full
+    join recipeingredients on recipeingredients.itemid = items.id full
+    join recipes as rcp on recipeingredients.itemid = rcp.id full
+    join itemstats as stats on stats.id = items.id full
+    join sets on sets.id = items.setid
+where
+    items.id IS NOT NULL
+group by
+    items.id,
+    itemtypes.title,
+    rcp.id,
+    stats.id,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description
+order by
+    items.id,
+    items.type,
+    items.setid`
 
-	var response = GroupedResponse{}
-	for _, item := range types {
-		response[item.Title] = &ResponseItem{}
+	rows, err := connection.Query(newQuery)
+
+	if err != nil {
+		fmt.Print(err)
+		panic(err)
+	}
+	defer rows.Close()
+	for rows.Next() {
+		item := models.Item{
+			Stations:      make([]int32, 0),
+			Recipes:       make([]int32, 0),
+			ReagentFor:    make([]int32, 0),
+			Tags:          make([]string, 0),
+			BonusStats:    make([]string, 0),
+			Locations:     make([]int32, 0),
+			Variants:      make([]int32, 0),
+			Salvageables:  make([]int32, 0),
+			SalvageableOf: make([]int32, 0),
+			Type:          models.ItemTypeObject{}}
+
+		var setName *string
+		var setDesc *string
+
+		readError := rows.Scan(
+			&item.Id,
+			&item.Name,
+			&item.Description,
+			&item.Tier,
+			&item.Type.Id,
+			&item.Type.Name,
+			&item.KnowledgeId,
+			pq.Array(&item.Stations),
+			pq.Array(&item.Recipes),
+			pq.Array(&item.ReagentFor),
+			pq.Array(&item.Tags),
+			&item.Durability,
+			&item.GearLevel,
+			&item.MainStat,
+			&item.SetId,
+			&setName,
+			&setDesc,
+			&item.SlotId,
+			pq.Array(&item.BonusStats),
+			pq.Array(&item.Locations),
+			pq.Array(&item.Variants),
+			pq.Array(&item.Salvageables),
+			pq.Array(&item.SalvageableOf))
+
+		if readError != nil {
+			fmt.Print(readError)
+			continue
+		}
+		if item.SetId != nil {
+			item.Set = &models.ItemSetObject{
+				Id:          *item.SetId,
+				Name:        *setName,
+				Description: setDesc}
+		}
+		response = append(response, item)
 	}
 
-	var setMap = map[int32]string{}
+	ctx.JSON(200, response)
+}
 
-	sets := getSetsList()
-	for _, item := range sets {
-		if _, ok := setMap[item.Id]; !ok {
-			setMap[item.Id] = item.Name
+type ItemGroupedListResponseItem struct {
+	Id    int32         `json:"id"`
+	Name  string        `json:"name"`
+	Items []models.Item `json:"items"`
+}
+type ItemGroupedListResponse struct {
+	Id   int32                         `json:"id"`
+	Name string                        `json:"name"`
+	Sets []ItemGroupedListResponseItem `json:"sets"`
+}
+
+func findSetIndex(sets []ItemGroupedListResponseItem, set int32) int32 {
+	for index, item := range sets {
+		if item.Id == set {
+			return int32(index)
 		}
 	}
-	setMap[UnsetTypeId] = "Unset"
+	return -2
+}
+
+func findWeaponIndex(response []ItemGroupedListResponse, weaponType int32) int32 {
+	for index, item := range response {
+		if item.Id == weaponType {
+			return int32(index)
+		}
+	}
+	return -1
+}
+
+func handleGroupedItemsListRequest(ctx *gin.Context) {
+
+	var response = make([]ItemGroupedListResponse, 0)
+	types := getItemTypesList()
+
+	for _, item := range types {
+		toAdd := ItemGroupedListResponse{
+			Id:   item.Id,
+			Name: item.Name,
+			Sets: make([]ItemGroupedListResponseItem, 0)}
+		response = append(response, toAdd)
+	}
+
+	type ResponseMapItem map[int32][]models.Item
+	type ResponseMap map[int32]*ResponseMapItem
+	const UnsetTypeId int32 = -1
 
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -167,8 +398,9 @@ func getItemsList(ctx *gin.Context) {
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.setid,
-    sets.name as setname,
+    items.setid,
+    sets.name,
+    sets.description,
     stats.slotid,
     array(
         (
@@ -184,21 +416,55 @@ func getItemsList(ctx *gin.Context) {
     array(
         (
             select
-                lc.name
+                lc.id
             from
                 itemlocations as itl
                 join locations as lc on itl.locationId = lc.id
             where
                 itl.itemId = items.id
         )
-    ) as locations
+    ) as locations,
+    array(
+        (
+            select
+                structurevariants.variantid
+            from
+                structurevariants
+            where
+                structurevariants.structureid = items.id
+            order by
+                structurevariants.variantid
+        )
+    ) as variants,
+    array (
+        (
+            select
+                salvageables.id
+            from
+                salvageables
+            where
+                salvageables.itemid = items.id
+        )
+    ) as salvageables,
+    array (
+        (
+            select
+                salvageableresults.salvageableid
+            from
+                salvageableresults
+            where
+                salvageableresults.itemid = items.id
+        )
+    ) as salvageableOf
 from
     items
-    join itemtypes on itemtypes.id = items.type
-    full join recipeingredients on recipeingredients.itemid = items.id
-    full join recipes as rcp on recipeingredients.itemid = rcp.id 
-    full join itemstats as stats on stats.id = items.id
-    full join sets on sets.id = stats.setid
+    join itemtypes on itemtypes.id = items.type full
+    join recipeingredients on recipeingredients.itemid = items.id full
+    join recipes as rcp on recipeingredients.itemid = rcp.id full
+    join itemstats as stats on stats.id = items.id full
+    join sets on sets.id = items.setid
+where
+    items.id IS NOT NULL
 group by
     items.id,
     itemtypes.title,
@@ -207,12 +473,13 @@ group by
     stats.durability,
     stats.gearLevel,
     stats.mainStat,
-    stats.setid,
-    sets.name
+    items.setid,
+    sets.name,
+    sets.description
 order by
     items.id,
     items.type,
-    stats.setid`
+    items.setid`
 
 	rows, err := connection.Query(newQuery)
 
@@ -222,21 +489,28 @@ order by
 	}
 	defer rows.Close()
 	for rows.Next() {
-		item := models.NewItem{
-			Stations:   make([]int32, 0),
-			Recipes:    make([]int32, 0),
-			ReagentFor: make([]int32, 0),
-			Tags:       make([]string, 0),
-			BonusStats: make([]string, 0),
-			Locations:  make([]string, 0)}
+		item := models.Item{
+			Stations:      make([]int32, 0),
+			Recipes:       make([]int32, 0),
+			ReagentFor:    make([]int32, 0),
+			Tags:          make([]string, 0),
+			BonusStats:    make([]string, 0),
+			Locations:     make([]int32, 0),
+			Variants:      make([]int32, 0),
+			Salvageables:  make([]int32, 0),
+			SalvageableOf: make([]int32, 0),
+			Type:          models.ItemTypeObject{}}
+
+		var setName *string
+		var setDesc *string
 
 		readError := rows.Scan(
 			&item.Id,
 			&item.Name,
 			&item.Description,
 			&item.Tier,
-			&item.Type,
-			&item.TypeName,
+			&item.Type.Id,
+			&item.Type.Name,
 			&item.KnowledgeId,
 			pq.Array(&item.Stations),
 			pq.Array(&item.Recipes),
@@ -246,10 +520,14 @@ order by
 			&item.GearLevel,
 			&item.MainStat,
 			&item.SetId,
-			&item.Set,
+			&setName,
+			&setDesc,
 			&item.SlotId,
 			pq.Array(&item.BonusStats),
-			pq.Array(&item.Locations))
+			pq.Array(&item.Locations),
+			pq.Array(&item.Variants),
+			pq.Array(&item.Salvageables),
+			pq.Array(&item.SalvageableOf))
 
 		if readError != nil {
 			fmt.Print(readError)
@@ -259,20 +537,41 @@ order by
 		var key int32 = UnsetTypeId
 		if item.SetId != nil {
 			key = *item.SetId
+			item.Set = &models.ItemSetObject{
+				Id:          key,
+				Name:        *setName,
+				Description: setDesc}
 		}
-		var responseItem *ResponseItem = response[item.TypeName]
-		if _, ok := (*responseItem)[setMap[key]]; ok {
-			updatedArray := append((*responseItem)[setMap[key]], item)
-			(*responseItem)[setMap[key]] = updatedArray
-		} else {
-			arayToAdd := []models.NewItem{item}
-			(*responseItem)[setMap[key]] = arayToAdd
+
+		weaponIndex := findWeaponIndex(response, item.Type.Id)
+		responseWeapon := response[weaponIndex]
+		typeIndex := findSetIndex(responseWeapon.Sets, key)
+		if typeIndex == -2 {
+			var newItem ItemGroupedListResponseItem
+			if key == UnsetTypeId {
+				newItem = ItemGroupedListResponseItem{
+					Id:    UnsetTypeId,
+					Name:  "Unset",
+					Items: make([]models.Item, 0),
+				}
+			} else {
+				newItem = ItemGroupedListResponseItem{
+					Id:    item.Set.Id,
+					Name:  item.Set.Name,
+					Items: make([]models.Item, 0),
+				}
+			}
+			responseWeapon.Sets = append(responseWeapon.Sets, newItem)
+			typeIndex = findSetIndex(responseWeapon.Sets, key)
 		}
+		responseWeapon.Sets[typeIndex].Items = append(responseWeapon.Sets[typeIndex].Items, item)
+		response[weaponIndex] = responseWeapon
 	}
 	ctx.JSON(200, response)
 }
 
 func HandleItemsRequest(ctx *gin.RouterGroup) {
-	ctx.GET("/list", getItemsList)
+	ctx.GET("list", handleListRequest)
+	ctx.GET("/grouplist", handleGroupedItemsListRequest)
 	ctx.GET("/types", handleItemTypesList)
 }

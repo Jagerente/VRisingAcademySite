@@ -113,4 +113,8 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleLocationRequest(locations)
 	}
+	salvageable := r.Group("/api/salvageable")
+	{
+		controllers.HandleSalvageableRequest(salvageable)
+	}
 }

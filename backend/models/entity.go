@@ -10,8 +10,8 @@ type Entity struct {
 
 type GameEntity struct {
 	Entity
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name        string  `json:"name"`
+	Description *string `json:"description"`
 }
 
 func GetId(en *Entity) int32 {

@@ -1,70 +1,47 @@
-import { walkIdentifiers } from "@vue/compiler-core";
 import axios from "axios";
 
 export const itemsModule = {
     state: () => ({
-        weapons: [],
-        armour: [],
-        consumables: [],
-        reagents: [],
         items: [],
+        itemsGrouped: [],
+        types: [],
         sets: [],
         recipes: [],
-        isItemsLoading: false,
+        searchType: 1,
+        isItemsLoading: true,
         searchQuery: "",
         selectedItem: null,
-        loadedItems: 0,
+        matchingFloor: true,
+        confinedRoom: true,
         host: "https://vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
     getters: {
-        sortedItems: (state) => (type) => {
-            let items;
-            switch (type) {
-                case 1:
-                    items = [...state.weapons];
-                    break;
-                case 2:
-                    items = [...state.armour];
-                    break;
-                case 3:
-                    items = [...state.consumables];
-                    break;
-                case 4:
-                    items = [...state.reagents];
-                    break;
-                default:
-                    items = [...state.items];
-                    break;
-            }
-            return items.sort((item1, item2) => {
+        sortedItems: (state) => {
+            return state.items.sort((item1, item2) => {
                 return item1.tier - item2.tier;
             });
         },
-        sortedAndSearchedItems: (state, getters) => (type) => {
-            if (!state.searchQuery) {
-                return getters.sortedItems(type);
-            } else {
-                return getters.sortedItems(0).filter(item =>
-                    item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase().includes(state.searchQuery.toLowerCase())));
+        sortedAndSearchedItems: (state, getters) => {
+            switch (state.searchType) {
+                case 1:
+                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) });
+                case 2:
+                    return getters.sortedItems.filter(item => { return item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
+                default:
+                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
             }
         },
     },
     mutations: {
-        setWeapons(state, weapons) {
-            state.weapons = weapons
-        },
-        setArmour(state, armour) {
-            state.armour = armour
-        },
-        setConsumables(state, consumables) {
-            state.consumables = consumables
-        },
-        setReagents(state, reagents) {
-            state.reagents = reagents
-        },
         setItems(state, items) {
             state.items = items
+        },
+        setItemsGrouped(state, items) {
+            state.itemsGrouped = items
+        },
+        setTypes(state, types) {
+            state.types = types
         },
         setSets(state, sets) {
             state.sets = sets
@@ -72,100 +49,73 @@ export const itemsModule = {
         setRecipes(state, recipes) {
             state.recipes = recipes
         },
-        setLoadedItems(state, count) {
-            state.loadedItems = count
-        },
         setLoading(state, bool) {
             state.isItemsLoading = bool
+        },
+        setSearchType(state, searchType) {
+            state.searchType = searchType
         },
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },
         setSelectedItem(state, selectedItem) {
             state.selectedItem = selectedItem
+        },
+        setMatchingFloor(state, matchingFloor) {
+            state.matchingFloor = matchingFloor
+        },
+        setConfinedRoom(state, confinedRoom) {
+            state.confinedRoom = confinedRoom
         }
     },
     actions: {
-        async getItems({ state, commit }) {
-            try {
-                commit('setLoading', true);
+        async fetchItems({ state, commit }) {
+            commit('setLoading', true);
 
-                let response;
-                response = await axios.get(
-                    state.host + "weapon/list",
-                );
-                commit('setWeapons', response.data);
-                response = await axios.get(
-                    state.host + "armour/list",
-                );
-                commit('setArmour', response.data);
-                response = await axios.get(
-                    state.host + "consumable/list",
-                );
-                commit('setConsumables', response.data);
-                response = await axios.get(
-                    state.host + "reagent/list",
-                );
-                commit('setReagents', response.data);
+            await axios
+                .get(state.host + "item/list")
+                .then(response => commit('setItems', response.data))
+                .catch(error => alert("Error: " + error))
 
-            } catch (e) {
-                alert("Error: " + e);
-            } finally {
-                const items = state.weapons.concat(state.armour, state.consumables, state.reagents);
-                commit('setItems', items);
-                commit('setLoading', false);
-            }
+            await axios
+                .get(state.host + "item/grouplist")
+                .then(response => commit('setItemsGrouped', response.data))
+                .catch(error => alert("Error: " + error))
+
+            await axios
+                .get(state.host + "item/types")
+                .then(response => commit('setTypes', response.data))
+                .catch(error => alert("Error: " + error));
+
+            await axios
+                .get(state.host + "set/list")
+                .then(response => commit('setSets', response.data))
+                .catch(error => alert("Error: " + error));
+
+            await axios
+                .get(state.host + "recipe/list")
+                .then(response => commit('setRecipes', response.data))
+                .catch(error => alert("Error: " + error));
+
+            commit('setLoading', false)
         },
-        async getSets({ state, commit }) {
-            try {
-                const response = await axios.get(
-                    state.host + "set/list",
-                );
 
-                commit('setSets', response.data);
-            } catch (e) {
-                alert("Error: " + e);
-            } finally {
-
-            }
+        selectItem({ commit }, item) {
+            commit('setSelectedItem', item)
         },
-        async getRecipes({ state, commit }) {
-            try {
-                const response = await axios.get(
-                    state.host + "recipe/list",
-                );
 
-                commit('setRecipes', response.data);
-            } catch (e) {
-                alert("Error: " + e);
-            } finally {
-
-            }
-        },
-        selectItem({ state, dispatch, commit }, id) {
-            const selectedItem = state.items.find(item => item.id === id)
-            if (selectedItem.setId) {
-                const set = [...state.sets].find(set => set.id === selectedItem.setId)
-                if (!set.description.toLowerCase().includes("no bonus")) {
-                    selectedItem.set = set;
-                }
-            }
-            if (selectedItem.recipes) {
-                const result = [];
-                selectedItem.recipes.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
-                selectedItem.recipesInfo = result;
-            }
-            if (selectedItem.reagentFor) {
-                const result = [];
-                selectedItem.reagentFor.forEach(x => result.push([...state.recipes].find(r => r.id == x)));
-                selectedItem.reagentForInfo = result;
-            }
-            commit('setSelectedItem', selectedItem)
-
-        },
-        updateSearchQuery({ state, commit }, query) {
+        updateSearchQuery({ commit }, { query = '', type = 0 }) {
+            commit('setSearchType', type)
             commit('setSearchQuery', query)
-        }
+        },
+        updateMatchingFloor({ state, commit }) {
+            commit('setMatchingFloor', !state.matchingFloor);
+            if (state.matchingFloor) commit('setConfinedRoom', true);
+        },
+        updateConfinedRoom({ state, commit }) {
+            commit('setConfinedRoom', !state.confinedRoom);
+        },
+
     },
     namespaced: true
 }
