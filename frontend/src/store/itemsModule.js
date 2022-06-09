@@ -7,6 +7,7 @@ export const itemsModule = {
         types: [],
         sets: [],
         recipes: [],
+        salvageables: [],
         searchType: 1,
         isItemsLoading: true,
         searchQuery: "",
@@ -48,6 +49,9 @@ export const itemsModule = {
         },
         setRecipes(state, recipes) {
             state.recipes = recipes
+        },
+        setSalvageables(state, salvageables) {
+            state.salvageables = salvageables
         },
         setLoading(state, bool) {
             state.isItemsLoading = bool
@@ -97,6 +101,10 @@ export const itemsModule = {
                 .then(response => commit('setRecipes', response.data))
                 .catch(error => alert("Error: " + error));
 
+            await axios
+                .get(state.host + "salvageable/list")
+                .then(response => commit('setSalvageables', response.data))
+                .catch(error => alert("Error: " + error));
             commit('setLoading', false)
         },
 
