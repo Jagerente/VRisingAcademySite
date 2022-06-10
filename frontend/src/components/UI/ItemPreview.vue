@@ -1,8 +1,9 @@
 <template>
   <div class="preview__group" :class="text != null ? '' : ''">
-    <img class="rounded" :class="this.style" :disabled="button" draggable="false" :title="item.name" :src="require('@/' + this.imagePath)"
+    <img class="rounded" :class="this.style" :disabled="button" draggable="false" :title="item.name"
+      :src="require('@/' + this.imagePath)"
       @click="selectItem(this.items.find(item => { return item.id == this.item.id }))">
-    <div v-if="this.text" class="preview__text">{{this.text}}</div>
+    <div v-if="this.text" class="preview__text">{{ this.text }}</div>
   </div>
 </template>
 
@@ -124,8 +125,8 @@ export default {
 }
 
 .preview__group {
-    position: relative;
-    text-align: center;
-    color: white;
+  position: relative;
+  text-align: center;
+  color: white;
 }
 </style>
