@@ -3,9 +3,9 @@
     <div class="d-flex card__header justify-content-center">
       <slot name="left"></slot>
       <slot v-if="custom" name="header"></slot>
-      <span v-else class="mx-2">
+      <p v-else class="mx-2 my-auto">
         {{ title }}
-      </span>
+      </p>
       <slot name="right"></slot>
     </div>
     <div class="card__content h-100">

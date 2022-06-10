@@ -1,19 +1,16 @@
 <template>
-  <div>
-    <my-card title="Filter" :custom="false">
-      <template #left>
-        <icon-filter />
-      </template>
-      <div class="nav d-flex flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <button v-for="(school, i) in this.schools" @click="selectSchool(i)" class="spells__tab"
-          :class="i == 0 ? 'active' : ''" data-bs-toggle="pill"
-          :data-bs-target="`#v-pills-${school.name.toLowerCase()}`" type="button" role="tab"
-          :aria-controls="`v-pills-${school.name.toLowerCase()}`" aria-selected="false">
-          {{ school.name }}
-        </button>
-      </div>
-    </my-card>
-  </div>
+  <my-card title="Filter" :custom="false">
+    <template #left>
+      <icon-filter />
+    </template>
+    <div class="nav d-flex flex-column" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <button v-for="(school, i) in this.schools" @click="selectSchool(i)" class="spells__tab"
+        :class="i == 0 ? 'active' : ''" data-bs-toggle="pill" :data-bs-target="`#v-pills-${school.name.toLowerCase()}`"
+        type="button" role="tab" :aria-controls="`v-pills-${school.name.toLowerCase()}`" aria-selected="false">
+        {{ school.name }}
+      </button>
+    </div>
+  </my-card>
 </template>
 
 <script>
