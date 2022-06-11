@@ -1,5 +1,9 @@
 package models
 
+import (
+	"database/sql"
+)
+
 const (
 	ItemsTable    string = "Items"
 	ItemTierField string = "tier"
@@ -18,24 +22,24 @@ type ItemSetObject struct {
 
 type Item struct {
 	GameEntity
-	Tier          int32          `json:"tier"`
-	Type          ItemTypeObject `json:"type"`
-	KnowledgeId   *int32         `json:"knowledge"`
-	Stations      []int32        `json:"stations"`
-	Recipes       []int32        `json:"recipes"`
-	ReagentFor    []int32        `json:"reagentFor"`
-	Tags          []string       `json:"tags"`
-	Durability    *int32         `json:"durability"`
-	GearLevel     *int32         `json:"gearLevel"`
-	MainStat      *float64       `json:"mainStat"`
-	BonusStats    []string       `json:"bonusStats"`
-	SetId         *int32         `json:"-"`
-	Set           *ItemSetObject `json:"set"`
-	SlotId        *int32         `json:"slot"`
-	Locations     []int32        `json:"locations"`
-	Variants      []int32        `json:"variants"`
-	Salvageables  []int32        `json:"salvageables"`
-	SalvageableOf []int32        `json:"salvageableOf"`
+	Tier          int32            `json:"tier"`
+	Type          ItemTypeObject   `json:"type"`
+	KnowledgeId   *int32           `json:"knowledge"`
+	Stations      []sql.NullInt32  `json:"stations"`
+	Recipes       []sql.NullInt32  `json:"recipes"`
+	ReagentFor    []sql.NullInt32  `json:"reagentFor"`
+	Tags          []string         `json:"tags"`
+	Durability    *int32           `json:"durability"`
+	GearLevel     *int32           `json:"gearLevel"`
+	MainStat      *float64         `json:"mainStat"`
+	BonusStats    []sql.NullString `json:"bonusStats"`
+	SetId         *int32           `json:"-"`
+	Set           *ItemSetObject   `json:"set"`
+	SlotId        *int32           `json:"slot"`
+	Locations     []sql.NullInt32  `json:"locations"`
+	Variants      []sql.NullInt32  `json:"variants"`
+	Salvageables  []sql.NullInt32  `json:"salvageables"`
+	SalvageableOf []sql.NullInt32  `json:"salvageableOf"`
 }
 
 type OldItem struct {
