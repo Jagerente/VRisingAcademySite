@@ -1,12 +1,19 @@
 <template>
-  <my-card title="Information" class="w-100" :custom="false">
+  <my-card
+    title="Information"
+    class="w-100"
+    :custom="false"
+  >
     <div v-if="this.selectedItem === null">
       <div></div>
       <h1 class="text-center">Select an item.</h1>
       <h5 class="text-center">This module is still W.I.P.</h5>
     </div>
 
-    <div class="d-flex flex-column overflow p-2" v-else>
+    <div
+      class="d-flex flex-column overflow p-2"
+      v-else
+    >
       <div class="d-flex justify-content-between">
         <div class="d-flex flex-column">
           <!-- Title -->
@@ -15,13 +22,25 @@
           </p>
           <!-- Tags -->
           <div class="d-flex flex-wrap tags mb-2">
-            <input v-for="(tag, i) in this.selectedItem.tags" type="button" class="tag px-2" :value="tag" :key="i"
-              @click="updateSearchQuery({ query: tag, type: 2 })" />
+            <input
+              v-for="(tag, i) in this.selectedItem.tags"
+              type="button"
+              class="tag px-2"
+              :value="tag"
+              :key="i"
+              @click="updateSearchQuery({ query: tag, type: 2 })"
+            />
           </div>
-          <div v-if="this.selectedItem.mainStat" class="d-flex stats justify-content-between">
+          <div
+            v-if="this.selectedItem.mainStat"
+            class="d-flex stats justify-content-between"
+          >
             <div class="d-flex flex-column w-100">
               <!-- Gear Level -->
-              <p class="h-2" v-if="this.selectedItem.gearLevel">
+              <p
+                class="h-2"
+                v-if="this.selectedItem.gearLevel"
+              >
                 <span class="text-white">{{ this.selectedItem.gearLevel }}</span> Gear Level
               </p>
               <!-- Main Stat -->
@@ -30,16 +49,28 @@
               }}
               </p>
               <!-- Sets -->
-              <div v-if="this.selectedItem.set.description" class="my-2">
+              <div
+                v-if="this.selectedItem.set.description"
+                class="my-2"
+              >
                 <p class="h-3 text-white">
                   {{ this.selectedItem.set.name }}
                 </p>
-                <Markdown class="h-3" breaks html xhtmlOut
-                  :source="this.selectedItem.set.description.replace('\\n', '\n')" />
+                <Markdown
+                  class="h-3"
+                  breaks
+                  html
+                  xhtmlOut
+                  :source="this.selectedItem.set.description.replace('\\n', '\n')"
+                />
               </div>
               <!-- Bonus Stats -->
               <div v-if="this.selectedItem.bonusStats.length">
-                <p class="h-3" v-for="(stat, i) in this.selectedItem.bonusStats" :key="i">
+                <p
+                  class="h-3"
+                  v-for="(stat, i) in this.selectedItem.bonusStats"
+                  :key="i"
+                >
                   <span class="text-white">{{ stat.split(' ')[0] }}</span>
                   <span>
                     {{ ' ' + stat.split(' ').slice(1).join(' ') }}
@@ -47,7 +78,10 @@
                 </p>
               </div>
               <!-- Durability -->
-              <p class="h-3" v-if="this.selectedItem.durability">
+              <p
+                class="h-3"
+                v-if="this.selectedItem.durability"
+              >
                 <span class="text-white">Durability: {{ this.selectedItem.durability }}</span>
               </p>
             </div>
@@ -55,54 +89,104 @@
         </div>
         <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
-          <item-preview :style="'preview-lg'" :item="this.selectedItem" :button="false" />
+          <item-preview
+            :style="'preview-lg'"
+            :item="this.selectedItem"
+            :button="false"
+          />
         </div>
       </div>
       <!-- Description -->
-      <Markdown :source="this.selectedItem.description" class="block mt-2 py-2 h-3" html xhtmlOut
-        v-if="this.selectedItem.description" />
+      <Markdown
+        :source="this.selectedItem.description"
+        class="block mt-2 py-2 h-3"
+        html
+        xhtmlOut
+        v-if="this.selectedItem.description"
+      />
       <!-- Variants -->
-      <div class="d-flex flex-column" v-if="this.selectedItem.variants.length">
+      <div
+        class="d-flex flex-column"
+        v-if="this.selectedItem.variants.length"
+      >
         <p class="h-2">Variants</p>
         <div class="d-flex flex-wrap block py-2">
-          <item-preview v-for="itemId in selectedItem.variants" class="m-1" :style="'preview-sm'"
-            :item="this.items.find(item => { return item.id === itemId })" :button="true" />
+          <item-preview
+            v-for="itemId in selectedItem.variants"
+            class="m-1"
+            :style="'preview-sm'"
+            :item="this.items.find(item => { return item.id === itemId })"
+            :button="true"
+          />
         </div>
       </div>
       <!-- Recipes -->
       <div class="d-flex flex-column">
-        <div v-if="this.selectedItem.recipes.length" class="d-flex flex-column">
+        <div
+          v-if="this.selectedItem.recipes.length"
+          class="d-flex flex-column"
+        >
           <div class="d-flex justify-content-between mt-1">
             <p class="h-2 mb-auto">Recipes</p>
             <div class="d-flex flex-column mt-auto">
               <label id="matchingfloor-label">Matching Floor</label>
               <div class="form-check form-switch">
-                <input @click="this.updateMatchingFloor" class="form-check-input" :checked="this.matchingFloor"
-                  type="checkbox" id="flexSwitchMatchingFloor">
-                <label class="form-check-label" for="flexSwitchMatchingFloor" style="user-select: none;">Matching
+                <input
+                  @click="this.updateMatchingFloor"
+                  class="form-check-input"
+                  :checked="this.matchingFloor"
+                  type="checkbox"
+                  id="flexSwitchMatchingFloor"
+                >
+                <label
+                  class="form-check-label"
+                  for="flexSwitchMatchingFloor"
+                  style="user-select: none;"
+                >Matching
                   Floor</label>
               </div>
               <div class="form-check form-switch">
-                <input @click="this.updateConfinedRoom" class="form-check-input" :checked="this.confinedRoom"
-                  type="checkbox" id="flexSwitchConfinedRoom">
-                <label class="form-check-label" for="flexSwitchConfinedRoom" style="user-select: none;">Confined
+                <input
+                  @click="this.updateConfinedRoom"
+                  class="form-check-input"
+                  :checked="this.confinedRoom"
+                  type="checkbox"
+                  id="flexSwitchConfinedRoom"
+                >
+                <label
+                  class="form-check-label"
+                  for="flexSwitchConfinedRoom"
+                  style="user-select: none;"
+                >Confined
                   Room</label>
               </div>
             </div>
           </div>
 
-          <my-recipe :class="i < this.selectedItem.recipes.length - 1 ? 'mb-2' : ''"
+          <my-recipe
+            :class="i < this.selectedItem.recipes.length - 1 ? 'mb-2' : ''"
             v-for="(recipeId, i) in this.selectedItem.recipes"
-            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })" />
+            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })"
+          />
         </div>
         <!-- Reagent For -->
-        <div v-if="this.selectedItem.reagentFor.length" class="d-flex flex-column">
+        <div
+          v-if="this.selectedItem.reagentFor.length"
+          class="d-flex flex-column"
+        >
           <p class="h-2">Reagent for</p>
           <div class="d-flex block flex-wrap">
-            <div class="d-flex" v-for="recipeId in selectedItem.reagentFor">
-              <item-preview class="m-1" :style="'preview-sm'"
+            <div
+              class="d-flex"
+              v-for="recipeId in selectedItem.reagentFor"
+            >
+              <item-preview
+                class="m-1"
+                :style="'preview-sm'"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
-                :item="this.items.find(item => { return item.id == output.itemId })" :button="true" />
+                :item="this.items.find(item => { return item.id == output.itemId })"
+                :button="true"
+              />
             </div>
           </div>
         </div>
@@ -112,18 +196,26 @@
         <div v-if="this.selectedItem.salvageables.length">
           <p class="h-2 mb-auto">Salvageable For</p>
           <div class="d-flex block ">
-            <item-preview class="m-1" :style="'preview-sm'"
+            <item-preview
+              class="m-1"
+              :style="'preview-sm'"
               v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
-              :item="this.items.find(item => { return item.id === output.itemId })" :text="output.amount"
-              :button="true" />
+              :item="this.items.find(item => { return item.id === output.itemId })"
+              :text="output.amount"
+              :button="true"
+            />
           </div>
         </div>
         <div v-if="this.selectedItem.salvageableOf.length">
           <p class="h-2 mb-auto">Salvageable From</p>
           <div class="d-flex flex-wrap block">
-            <item-preview class="m-1" :style="'preview-sm'" v-for="input in this.selectedItem.salvageableOf	"
+            <item-preview
+              class="m-1"
+              :style="'preview-sm'"
+              v-for="input in this.selectedItem.salvageableOf	"
               :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
-              :button="true" />
+              :button="true"
+            />
           </div>
         </div>
       </div>
@@ -225,5 +317,10 @@ export default {
   background-color: green;
   border-color: green;
 
+}
+
+p {
+  margin: 0;
+  padding: 0;
 }
 </style>

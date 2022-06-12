@@ -1,7 +1,13 @@
 <template>
-    <my-card title="Information" class="w-100">
+    <my-card
+        title="Information"
+        class="w-100"
+    >
         <div class="d-flex flex-column p-2">
-            <div v-if="this.selectedSpell" class="d-flex flex-column">
+            <div
+                v-if="this.selectedSpell"
+                class="d-flex flex-column"
+            >
                 <div class="d-flex">
                     <div class="d-flex flex-column w-50">
                         <!-- Title -->
@@ -9,28 +15,47 @@
                         <!-- Type -->
                         <p class="h-2">{{ this.selectedSpell.type.name.replace(/[0-9]/g, '') }}</p>
                         <!-- Cooldown -->
-                        <p class="h-3" v-if="this.selectedSpell.cooldown">Cooldown: <span class="text-white">{{
+                        <p
+                            class="h-3"
+                            v-if="this.selectedSpell.cooldown"
+                        >Cooldown: <span class="text-white">{{
                                 this.selectedSpell.cooldown
                         }}s</span></p>
                         <!-- Cast Time -->
-                        <p class="h-3" v-if="this.selectedSpell.castTime">Cast Time: <span class="text-white">{{
+                        <p
+                            class="h-3"
+                            v-if="this.selectedSpell.castTime"
+                        >Cast Time: <span class="text-white">{{
                                 this.selectedSpell.castTime
                         }}s</span></p>
                         <!-- Charges -->
-                        <p class="h-3" v-if="this.selectedSpell.charges > 1">Charges: <span class="text-white">{{
+                        <p
+                            class="h-3"
+                            v-if="this.selectedSpell.charges > 1"
+                        >Charges: <span class="text-white">{{
                                 this.selectedSpell.charges
                         }}</span></p>
                     </div>
                     <!-- Preview -->
                     <div class="d-flex justify-content-center flex-fill mx-2 w-50">
-                        <img class="image__preview rounded" draggable="false" :title="selectedSpell.name" :src="
-                            require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
-                        " />
+                        <img
+                            class="image__preview rounded"
+                            draggable="false"
+                            :title="selectedSpell.name"
+                            :src="
+                                require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
+                            "
+                        />
                     </div>
                 </div>
                 <!-- Description -->
-                <Markdown :source="this.selectedSpell.description" class="description py-2 my-3" html xhtmlOut
-                    v-if="this.selectedSpell.description" />
+                <Markdown
+                    :source="this.selectedSpell.description.replaceAll('&quot;&quot;', '&quot;')"
+                    class="description py-2 my-3"
+                    html
+                    xhtmlOut
+                    v-if="this.selectedSpell.description"
+                />
             </div>
             <!-- If none is selected -->
             <div v-else>
