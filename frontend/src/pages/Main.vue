@@ -39,14 +39,16 @@
 
         <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
-        <h5 class="mt-2 mb-0 text-white">12/06/2022 — Blood Update</h5>
+        <h5 class="mt-2 mb-4 text-white">12/06/2022 — Blood Update</h5>
         <div>
           — Added a page for <a
             href="bloodtypes"
             target="_blank"
           >blood types</a>.
         </div>
-        <br>— This page is interactive and you can see how blood quality affects the abilities of a certain blood type.
+        <div>
+          — This page is interactive and you can see how blood quality affects the abilities of a certain blood type.
+        </div>
         <div>
           — Added text formating to <a
             href="spells"
@@ -62,7 +64,10 @@
             target="_blank"
           >this testing.</a>
         </div>
-        <br>—Scourge Pendant's list of abilities was incorrect (it doesn't have any abilities), it has been fixed now.
+        <div>
+          — Scourge Pendant's list of abilities was incorrect (it doesn't have any abilities), it has been fixed
+          now.
+        </div>
         <h5 class="mt-2 mb-0 text-white">09/06/2022 Salvage Update</h5>
         <br>— Salvageable items now display items that they can be salvaged into. Now you can witness the true power of
         The Fish!
