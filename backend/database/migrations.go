@@ -130,5 +130,8 @@ var (
 			ADD COLUMN amount INTEGER NOT NULL DEFAULT 1;`},
 		[]string{
 			`ALTER TABLE spells
-			ALTER COLUMN description TYPE varchar(2048);`}}
+			ALTER COLUMN description TYPE varchar(2048);`},
+		[]string{
+			`ALTER TABLE items
+			ADD COLUMN maxstack INTEGER DEFAULT NULL;`}}
 )
