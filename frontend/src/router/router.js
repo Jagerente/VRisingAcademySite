@@ -1,6 +1,7 @@
 import Main from "@/pages/Main";
 import ItemsPage from "@/pages/ItemsPage"
 import SpellsPage from "@/pages/SpellsPage"
+import BloodTypesPage from "@/pages/BloodTypesPage"
 import ContributePage from "@/pages/ContributePage"
 import NotFoundPage from "@/pages/NotFoundPage"
 
@@ -22,6 +23,10 @@ const routes = [
     {
         path: '/spells',
         component: SpellsPage
+    },
+    {
+        path: '/bloodtypes',
+        component: BloodTypesPage
     },
     {
         path: '/map',

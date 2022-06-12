@@ -20,6 +20,8 @@
             <div class="dropdown-menu">
               <a class="dropdown-item" @click="$router.push('/items')" href="#" data-bs-toggle="tab">Items</a>
               <a class="dropdown-item" @click="$router.push('/spells')" href="#" data-bs-toggle="tab">Spells</a>
+              <a class="dropdown-item" @click="$router.push('/bloodtypes')" href="#" data-bs-toggle="tab">Blood Types</a>
+              <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Hunts</a>
               <a class="dropdown-item disabled" href="#" data-bs-toggle="tab">Bestiary</a>
             </div>
           </li>

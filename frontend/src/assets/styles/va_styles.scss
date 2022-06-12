@@ -48,46 +48,57 @@ body {
 }
 
 
-* {
-    cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
-}
+
 
 // input {
-//     cursor: url("@/assets/images/ui/Cursor_Crosshair.webp"), default;
-// }
-
-.test {
-    background-color: aqua;
-    border-color: red;
-    border: 1px dashed red;
-}
-
-.btn:focus,
-textarea:focus,
-input[type="text"]:focus,
-input[type="password"]:focus,
-input[type="datetime"]:focus,
-input[type="datetime-local"]:focus,
-input[type="date"]:focus,
-input[type="month"]:focus,
-input[type="time"]:focus,
-input[type="week"]:focus,
-input[type="number"]:focus,
-input[type="email"]:focus,
-input[type="url"]:focus,
-input[type="search"]:focus,
-input[type="tel"]:focus,
-input[type="color"]:focus,
-input[type="button"]:focus,
-.uneditable-input:focus {
-    box-shadow: none;
-    outline: 0 none;
-}
-
-.nav-pills .nav-link.active,
-.nav-pills .show>.nav-link {
-    background-color: none;
-    background: none;
-}
-
-@import "bootstrap/scss/bootstrap";
+    //     cursor: url("@/assets/images/ui/Cursor_Crosshair.webp"), default;
+    // }
+    
+    .test {
+        background-color: aqua;
+        border-color: red;
+        border: 1px dashed red;
+    }
+    
+    .btn:focus,
+    textarea:focus,
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="datetime"]:focus,
+    input[type="datetime-local"]:focus,
+    input[type="date"]:focus,
+    input[type="month"]:focus,
+    input[type="time"]:focus,
+    input[type="week"]:focus,
+    input[type="number"]:focus,
+    input[type="email"]:focus,
+    input[type="url"]:focus,
+    input[type="search"]:focus,
+    input[type="tel"]:focus,
+    input[type="color"]:focus,
+    input[type="button"]:focus,
+    .uneditable-input:focus {
+        box-shadow: none;
+        outline: 0 none;
+    }
+    
+    .nav-pills .nav-link.active,
+    .nav-pills .show>.nav-link {
+        background-color: none;
+        background: none;
+    }
+    
+    @import "bootstrap/scss/bootstrap";
+    
+    * {
+        cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
+    }
+    
+    [role="button"],
+    button:not(:disabled),
+    [type="button"]:not(:disabled),
+    [type="reset"]:not(:disabled),
+    [type="submit"]:not(:disabled) {
+        cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
+        
+    }
