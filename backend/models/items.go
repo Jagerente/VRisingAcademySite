@@ -36,6 +36,7 @@ type Item struct {
 	Variants      []int32        `json:"variants"`
 	Salvageables  []int32        `json:"salvageables"`
 	SalvageableOf []int32        `json:"salvageableOf"`
+	MaxStack      *int32         `json:"maxStack"`
 }
 
 type OldItem struct {

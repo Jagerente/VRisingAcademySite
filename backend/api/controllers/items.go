@@ -204,7 +204,8 @@ func handleListRequest(ctx *gin.Context) {
             where
                 salvageableresults.itemid = items.id
         )
-    ) as salvageableOf
+    ) as salvageableOf,
+    items.maxstack
 from
     items
     join itemtypes on itemtypes.id = items.type full
@@ -276,7 +277,8 @@ order by
 			pq.Array(&item.Locations),
 			pq.Array(&item.Variants),
 			pq.Array(&item.Salvageables),
-			pq.Array(&item.SalvageableOf))
+			pq.Array(&item.SalvageableOf),
+			&item.MaxStack)
 
 		if readError != nil {
 			fmt.Print(readError)
@@ -455,7 +457,8 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
             where
                 salvageableresults.itemid = items.id
         )
-    ) as salvageableOf
+    ) as salvageableOf,
+    items.maxstack
 from
     items
     join itemtypes on itemtypes.id = items.type full
@@ -527,7 +530,8 @@ order by
 			pq.Array(&item.Locations),
 			pq.Array(&item.Variants),
 			pq.Array(&item.Salvageables),
-			pq.Array(&item.SalvageableOf))
+			pq.Array(&item.SalvageableOf),
+			&item.MaxStack)
 
 		if readError != nil {
 			fmt.Print(readError)
