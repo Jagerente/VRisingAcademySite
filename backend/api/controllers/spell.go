@@ -155,7 +155,7 @@ func handleGroupedList(request *gin.Context) {
 from spells
 join spellschools on spellschools.id=spells.schoolid
 join spelltypes on spelltypes.id=spells.typeid
-order by spellschools.id`
+order by spells.id, spellschools.id, spelltypes.id`
 
 	rows, err := connection.Query(query)
 
@@ -241,7 +241,8 @@ func handleSpellList(request *gin.Context) {
 	spells.knowledgeId
 from spells
 join spellschools on spellschools.id=spells.schoolid
-join spelltypes on spelltypes.id=spells.typeid`
+join spelltypes on spelltypes.id=spells.typeid
+order by spells.id, spellschools.id, spelltypes.id`
 
 	if filter.School > 0 {
 		query += fmt.Sprintf(" where spellschools.id=%d", filter.School)

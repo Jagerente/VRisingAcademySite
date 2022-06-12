@@ -34,9 +34,8 @@
                 <p class="h-3 text-white">
                   {{ this.selectedItem.set.name }}
                 </p>
-                <p class="h-3" v-for="str in this.selectedItem.set.description.split('\\n')">
-                  {{ str }}
-                </p>
+                <Markdown class="h-3" breaks html xhtmlOut
+                  :source="this.selectedItem.set.description.replace('\\n', '\n')" />
               </div>
               <!-- Bonus Stats -->
               <div v-if="this.selectedItem.bonusStats.length">
@@ -60,9 +59,8 @@
         </div>
       </div>
       <!-- Description -->
-      <div v-if="this.selectedItem.description" class="block mt-2 py-2">
-        <p class="h-3">{{ this.selectedItem.description }}</p>
-      </div>
+      <Markdown :source="this.selectedItem.description" class="block mt-2 py-2 h-3" html xhtmlOut
+        v-if="this.selectedItem.description" />
       <!-- Variants -->
       <div class="d-flex flex-column" v-if="this.selectedItem.variants.length">
         <p class="h-2">Variants</p>
@@ -77,6 +75,7 @@
           <div class="d-flex justify-content-between mt-1">
             <p class="h-2 mb-auto">Recipes</p>
             <div class="d-flex flex-column mt-auto">
+              <label id="matchingfloor-label">Matching Floor</label>
               <div class="form-check form-switch">
                 <input @click="this.updateMatchingFloor" class="form-check-input" :checked="this.matchingFloor"
                   type="checkbox" id="flexSwitchMatchingFloor">
@@ -134,8 +133,13 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import Markdown from 'vue3-markdown-it';
 
 export default {
+  components: {
+    Markdown,
+  },
+
   methods: {
     ...mapActions({
       updateSearchQuery: "items/updateSearchQuery",
@@ -179,7 +183,6 @@ export default {
 
 @import '@/assets/styles/va_styles.scss';
 
-
 .tag {
   margin-top: 5px;
   font-size: 0.8rem;
@@ -209,10 +212,18 @@ export default {
 
 .form-check-input {
   background-color: #14131b;
-  border: 1px solid rgb(77, 77, 77);
+  border: 1px solid;
+  border-color: silver;
 }
 
 .form-check-input:focus {
   box-shadow: none;
+  border-color: white;
+}
+
+.form-check-input:checked {
+  background-color: green;
+  border-color: green;
+
 }
 </style>

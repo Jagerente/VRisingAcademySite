@@ -29,9 +29,8 @@
                     </div>
                 </div>
                 <!-- Description -->
-                <div v-if="selectedSpell.description" class="description py-2 my-3">
-                    <p class="h-2">{{ selectedSpell.description }}</p>
-                </div>
+                <Markdown :source="this.selectedSpell.description" class="description py-2 my-3" html xhtmlOut
+                    v-if="this.selectedSpell.description" />
             </div>
             <!-- If none is selected -->
             <div v-else>
@@ -44,8 +43,12 @@
 
 <script>
 import { mapState } from 'vuex'
+import Markdown from 'vue3-markdown-it';
 
 export default {
+    components: {
+        Markdown,
+    },
     name: 'card-information',
     computed: {
         ...mapState({

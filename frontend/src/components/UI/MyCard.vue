@@ -1,9 +1,17 @@
 <template>
   <div class="d-flex flex-column h-100 card__background">
     <div class="d-flex card__header justify-content-center">
-      <slot name="left"></slot>
-      <slot v-if="custom" name="header"></slot>
-      <p v-else class="mx-2 my-auto">
+      <div class="d-flex my-auto">
+        <slot name="left"></slot>
+      </div>
+      <slot
+        v-if="custom"
+        name="header"
+      ></slot>
+      <p
+        v-else
+        class="mx-2 my-auto"
+      >
         {{ title }}
       </p>
       <slot name="right"></slot>

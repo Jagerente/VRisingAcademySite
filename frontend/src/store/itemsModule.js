@@ -11,6 +11,7 @@ export const itemsModule = {
         searchType: 1,
         isItemsLoading: true,
         searchQuery: "",
+        selectedType: 1,
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
@@ -62,6 +63,9 @@ export const itemsModule = {
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
         },
+        setSelectedType(state, selectedType) {
+            state.selectedType = selectedType
+        },
         setSelectedItem(state, selectedItem) {
             state.selectedItem = selectedItem
         },
@@ -108,6 +112,11 @@ export const itemsModule = {
             commit('setLoading', false)
         },
 
+        selectType({ commit }, id) {
+            commit('setSelectedType', id);
+            commit('setSearchQuery', '')
+        },
+
         selectItem({ commit }, item) {
             commit('setSelectedItem', item)
         },
@@ -116,10 +125,12 @@ export const itemsModule = {
             commit('setSearchType', type)
             commit('setSearchQuery', query)
         },
+
         updateMatchingFloor({ state, commit }) {
             commit('setMatchingFloor', !state.matchingFloor);
             if (state.matchingFloor) commit('setConfinedRoom', true);
         },
+
         updateConfinedRoom({ state, commit }) {
             commit('setConfinedRoom', !state.confinedRoom);
         },

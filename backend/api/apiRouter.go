@@ -117,4 +117,8 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleSalvageableRequest(salvageable)
 	}
+	bloodtype := r.Group("/api/bloodtype")
+	{
+		controllers.HandleBloodTypeRequest(bloodtype)
+	}
 }

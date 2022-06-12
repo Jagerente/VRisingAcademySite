@@ -1,8 +1,5 @@
 <template>
-  <MyLayout :isLoading="this.isItemsLoading">
-    <template #left>
-      <card-filter />
-    </template>
+  <MyLayout :isLoading="this.isItemsLoading" :tabs="this.types" :selector="this.selectType">
     <template #center>
       <card-catalogue />
     </template>
@@ -14,7 +11,6 @@
 
 <script>
 import MyLayout from "@/components/UI/MyLayout";
-import CardFilter from "@/components/ItemsPage/CardFilter";
 import CardCatalogue from "@/components/ItemsPage/CardCatalogue";
 import CardInformation from "@/components/ItemsPage/CardInformation";
 
@@ -23,18 +19,19 @@ import { mapState, mapActions } from "vuex"
 export default {
   components: {
     MyLayout,
-    CardFilter,
     CardCatalogue,
     CardInformation,
   },
   methods: {
     ...mapActions({
       fetchItems: "items/fetchItems",
+      selectType: "items/selectType",
     })
   },
   computed: {
     ...mapState({
       isItemsLoading: (state) => state.items.isItemsLoading,
+      types: (state) => state.items.types,
     })
   },
   mounted() {

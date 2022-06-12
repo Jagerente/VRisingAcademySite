@@ -10,14 +10,14 @@ import MyRecipe from "@/components/UI/MyRecipe";
 import ItemPreview from "@/components/UI/ItemPreview";
 
 export default [
-    MyButton,
-    MyInput,
-    MySelect,
-    MyCard,
-    MyItem,
-    IconBar,
-    IconCatalogue,
-    IconFilter,
-    MyRecipe,
-    ItemPreview
-]
+  MyButton,
+  MyInput,
+  MySelect,
+  MyCard,
+  MyItem,
+  IconBar,
+  IconCatalogue,
+  IconFilter,
+  MyRecipe,
+  ItemPreview,
+];
