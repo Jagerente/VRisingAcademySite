@@ -50,7 +50,7 @@
                 </div>
                 <!-- Description -->
                 <Markdown
-                    :source="this.selectedSpell.description.replaceAll('&quot;&quot;', '&quot;')"
+                    :source="this.selectedSpell.description"
                     class="description py-2 my-3"
                     html
                     xhtmlOut
