@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div>
         <div class="d-flex block rounded py-2 py-lg-3 w-100">
             <div class="col-2 d-flex">
                 <div
@@ -56,14 +56,13 @@ export default {
         },
         getBonus() {
             let bonus = this.bonus;
-            let regex = /([0-9,.]+-[0-9,.]+ |[0-9,.]+%-[0-9,.]+% |[0-9,.]+%)/g;
+            let regex = /([0-9,.]+-[0-9,.]+|[0-9,.]+%-[0-9,.]+%|[0-9,.]+%)/g;
             let values = this.bonus.match(regex);
             if (values) {
                 values.forEach(value => {
                     bonus = `<span>${bonus.replace(value, `<span style="color: teal;">${value}</span>`)}</span>`;
                 });
             }
-
             if (bonus.match(/([0-9,.]+)%?-([0-9,.]+)%/) && this.bloodQuality > 0 && this.bloodQuality > this.getTier.start) {
 
                 let regex = /([0-9,.]+)%?-([0-9,.]+)%/;
