@@ -63,7 +63,7 @@ export default {
                     bonus = `<span>${bonus.replace(value, `<span style="color: teal;">${value}</span>`)}</span>`;
                 });
             }
-            if (bonus.match(/([0-9,.]+)%?-([0-9,.]+)%/) && this.bloodQuality > 0 && this.bloodQuality > this.getTier.start) {
+            if (bonus.match(/([0-9,.]+)%?-([0-9,.]+)%/) && this.bloodQuality > 0 && this.bloodQuality >= this.getTier.start) {
 
                 let regex = /([0-9,.]+)%?-([0-9,.]+)%/;
                 const bonuses = bonus.match(regex);
@@ -72,7 +72,7 @@ export default {
                 const bonusCalculated = Math.round(min + (max - min) * (this.bloodQuality - this.getTier.start) / (100 - this.getTier.start));
                 return bonus.replace(regex, bonusCalculated + '%');
             }
-            else if (bonus.match(/([0-9,.]+)?-([0-9,.]+)/) && this.bloodQuality > 0 && this.bloodQuality > this.getTier.start) {
+            else if (bonus.match(/([0-9,.]+)?-([0-9,.]+)/) && this.bloodQuality > 0 && this.bloodQuality >= this.getTier.start) {
                 const regex = /([0-9,.]+)?-([0-9,.]+)/;
                 const bonuses = bonus.match(regex);
                 const min = parseInt(bonuses[1]);
@@ -81,14 +81,6 @@ export default {
                 return bonus.replace(regex, bonusCalculated);
             }
             else {
-                // let bonus = this.bonus;
-                // let regex = /([0-9,.]+-[0-9,.]+ |[0-9,.]+%-[0-9,.]+% |[0-9,.]+%)/g;
-                // let values = bonus.match(regex);
-                // if (values) {
-                //     values.forEach(value => {
-                //         bonus = bonus.replace(value, `<span style="color: teal; opacity: 0.5">${value}</span>`);
-                //     });
-                // }
                 return bonus;
             }
         },
