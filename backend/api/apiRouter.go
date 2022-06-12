@@ -125,4 +125,8 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleHuntRequest(hunts)
 	}
+	monster := r.Group("api/monster")
+	{
+		controllers.HandleMonsterRequest(monster)
+	}
 }
