@@ -7,7 +7,7 @@
       <my-spell
         v-for="spell in stype.spells"
         :spell="spell"
-        :class="this.selectedSpell.id === spell.id ? 'active' : ''"
+        :class="this.selectedSpell && this.selectedSpell.id === spell.id ? 'active' : ''"
       ></my-spell>
     </div>
   </div>
