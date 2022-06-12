@@ -29,7 +29,7 @@ type Monster struct {
 	BloodType  MonsterBloodTypeObject  `json:"bloodType"`
 	Level      int32                   `json:"level"`
 	KnowledgId sql.NullInt32           `json:"knowledgeId"`
-	MapgenieId sql.NullInt32           `json:"mapgenieid"`
+	MapgenieId sql.NullInt32           `json:"mapgenieId"`
 	Locations  []MonsterLocationObject `json:"locations"`
 	Loot       []MonsterDropObject     `json:"loot"`
 }
