@@ -127,5 +127,8 @@ var (
 			`ALTER TABLE monsterdrops
 			ADD COLUMN droprate REAL NOT NULL`,
 			`ALTER TABLE monsterdrops
-			ADD COLUMN amount INTEGER NOT NULL DEFAULT 1;`}}
+			ADD COLUMN amount INTEGER NOT NULL DEFAULT 1;`},
+		[]string{
+			`ALTER TABLE spells
+			ALTER COLUMN description TYPE varchar(2048);`}}
 )
