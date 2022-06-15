@@ -2,6 +2,9 @@
 - [itemtypes](#itemtypes)
 - [sets](#sets)
 - [items](#items)
+- [tags](#tags)
+- [itemtags](#itemtags)
+- [itemstats](#itemstats)
 
 
 ### knowledges
@@ -38,13 +41,56 @@ insert into sets(name, description) values
 - name — имя предмета
 - description — описание
 - tier — число, служит для сортировки
-- type — id itemtypes (оружие/броня/ювелирка/структура и т.п.)
+- [type](#itemtypes) — id itemtypes (оружие/броня/ювелирка/структура и т.п.)
 - [knowledgid](#knowledges) — если этот предмет что-либо открывает; есть только у предметов типа blueprint
-- setid — id сета, служит для группировки
+- [setid](#sets) — id сета, служит для группировки
 - maxStack — макс. число предмета в одном стаке в инвентаре
 ```
 insert into items(name, description, tier, type, knowledgeid, setid, maxStack) values
 ('Bone Sword', 'An all-round weapon that...', 3, 1, NULL, 1, 1)
 ```
 
+### tags
+Список всевозможных тегов.
+- id
+- value — имя тега
+```
+insert into tags (value) values
+('equippable')
+```
 
+### itemtags
+- [itemid](#items) — id предмета, у которого этот тег
+- [tagid](#tags) — id тега
+
+_Добавление предмету Bone Sword (id = 1) тегов equippable,blood-bound,weapon,sword,character menu_
+```
+insert into itemtags(itemid, tagid) values
+(1, 2), (1, 3), (1, 4), (1, 5), (1, 80)
+```
+
+### itemstats
+Описывает доп. хар-ки у экипируемых предметов (Weapon, Armour, Magic, Hat, Cloak)
+- id
+- mainstat — число;
+  - для предметов типа Weapon — это Physical Power,
+  - для предметов типа Armour и Cloak — это Max Health,
+  - для предметов типа Magic — это Spell Power.
+- setbonus — строка; НЕ ИСПОЛЬЗУЕТСЯ
+- gearlevel — есть только у Weapon, Armour и Magic.
+- durability — есть только у Weapon, Armour и Magic.
+- slotid — на данный момент отдельной таблицы НЕТ, захардкодено.
+  - hat         1
+  - chestguard	2
+  - leggings	  3
+  - gloves	    4
+  - boots	      5
+  - cloak	      6
+  - jewellery	  7
+  - no	        0
+
+_Пример для Bone Sword с физ. уроном 5.2, gear level 3, прочностью 817_
+```
+insert into itemstats(id, mainstat, setbonus, gearlevel, durability, slotid) values
+(1, 5.2, '', 3, 817, 0)
+```
