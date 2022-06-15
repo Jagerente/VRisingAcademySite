@@ -52,7 +52,6 @@ func getSpellTypesList() []models.SpellType {
 	rows, err := connection.Query(query)
 
 	if err != nil {
-		fmt.Print(err)
 		panic(err)
 	}
 	defer rows.Close()
@@ -75,7 +74,6 @@ func getSpellSchoolsList() []models.SpellSchool {
 	defer connection.Close()
 	query := "select * from spellschools"
 
-	fmt.Println(query)
 	rows, err := connection.Query(query)
 
 	if err != nil {
