@@ -87,13 +87,21 @@
             </div>
           </div>
         </div>
-        <!-- Preview -->
         <div class="d-flex justify-content-center flex-fill mx-2">
-          <item-preview
-            :style="'preview-lg'"
-            :item="this.selectedItem"
-            :button="false"
-          />
+          <!-- Preview -->
+          <div class="d-flex flex-column">
+            <item-preview
+              :style="'preview-lg'"
+              :item="this.selectedItem"
+              :button="false"
+            />
+            <!-- Show on map -->
+            <button
+              v-if="this.selectedItem.locations.length"
+              class="btn btn-primary rounded mt-2"
+              @click="this.openUrl(`https://mapgenie.io/v-rising/maps/vardoran?locationIds=${this.mapGenieLocations}`)"
+            >Show on map</button>
+          </div>
         </div>
       </div>
       <!-- Description -->
@@ -224,7 +232,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import Markdown from 'vue3-markdown-it';
 
 export default {
@@ -252,29 +260,29 @@ export default {
           return '';
       }
     },
+    openUrl(url) {
+      window.open(url, '_blank')
+    }
   },
   computed: {
     ...mapState({
       selectedItem: (state) => state.items.selectedItem,
       searchQuery: (state) => state.items.searchQuery,
       items: (state) => state.items.items,
+      locations: (state) => state.items.locations,
       recipes: (state) => state.items.recipes,
       salvageables: (state) => state.items.salvageables,
       matchingFloor: (state) => state.items.matchingFloor,
       confinedRoom: (state) => state.items.confinedRoom,
     }),
+    ...mapGetters({
+      mapGenieLocations: "items/mapGenieLocations",
+    })
   },
-
 };
 </script>
 
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-
-@import '@/assets/styles/va_styles.scss';
-
 .tag {
   margin-top: 5px;
   font-size: 0.8rem;
