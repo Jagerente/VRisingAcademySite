@@ -6,12 +6,13 @@ export const itemsModule = {
         itemsGrouped: [],
         types: [],
         sets: [],
+        locations: [],
         recipes: [],
         salvageables: [],
         searchType: 1,
         isItemsLoading: true,
         searchQuery: "",
-        selectedType: 1,
+        selectedType: 0,
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
@@ -34,6 +35,13 @@ export const itemsModule = {
                     return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
             }
         },
+
+        mapGenieLocations: (state) => {
+            const locations = state.locations
+                .filter(location => state.selectedItem.locations.includes(location.id))
+                .map(location => (location.mapgenieId));
+            return locations.join();
+        }
     },
     mutations: {
         setItems(state, items) {
@@ -47,6 +55,9 @@ export const itemsModule = {
         },
         setSets(state, sets) {
             state.sets = sets
+        },
+        setLocations(state, locations) {
+            state.locations = locations
         },
         setRecipes(state, recipes) {
             state.recipes = recipes
@@ -101,6 +112,11 @@ export const itemsModule = {
                 .catch(error => alert("Error: " + error));
 
             await axios
+                .get(state.host + "location/list")
+                .then(response => commit('setLocations', response.data))
+                .catch(error => alert("Error: " + error));
+
+            await axios
                 .get(state.host + "recipe/list")
                 .then(response => commit('setRecipes', response.data))
                 .catch(error => alert("Error: " + error));
@@ -109,6 +125,7 @@ export const itemsModule = {
                 .get(state.host + "salvageable/list")
                 .then(response => commit('setSalvageables', response.data))
                 .catch(error => alert("Error: " + error));
+
             commit('setLoading', false)
         },
 
@@ -134,7 +151,6 @@ export const itemsModule = {
         updateConfinedRoom({ state, commit }) {
             commit('setConfinedRoom', !state.confinedRoom);
         },
-
     },
     namespaced: true
 }
