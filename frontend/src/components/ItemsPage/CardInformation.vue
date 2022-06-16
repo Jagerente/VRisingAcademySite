@@ -90,7 +90,7 @@
         <div class="d-flex justify-content-center flex-fill mx-2">
           <!-- Preview -->
           <div class="d-flex flex-column">
-            <item-preview
+            <ItemPreview
               :style="'preview-lg'"
               :item="this.selectedItem"
               :button="false"
@@ -119,7 +119,7 @@
       >
         <p class="h-2">Variants</p>
         <div class="d-flex flex-wrap block py-2">
-          <item-preview
+          <ItemPreview
             v-for="itemId in selectedItem.variants"
             class="m-1"
             :style="'preview-sm'"
@@ -171,7 +171,7 @@
             </div>
           </div>
 
-          <my-recipe
+          <MyRecipe
             :class="i < this.selectedItem.recipes.length - 1 ? 'mb-2' : ''"
             v-for="(recipeId, i) in this.selectedItem.recipes"
             :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })"
@@ -188,7 +188,7 @@
               class="d-flex"
               v-for="recipeId in selectedItem.reagentFor"
             >
-              <item-preview
+              <ItemPreview
                 class="m-1"
                 :style="'preview-sm'"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
@@ -204,7 +204,7 @@
         <div v-if="this.selectedItem.salvageables.length">
           <p class="h-2 mb-auto">Salvageable For</p>
           <div class="d-flex block ">
-            <item-preview
+            <ItemPreview
               class="m-1"
               :style="'preview-sm'"
               v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
@@ -217,7 +217,7 @@
         <div v-if="this.selectedItem.salvageableOf.length">
           <p class="h-2 mb-auto">Salvageable From</p>
           <div class="d-flex flex-wrap block">
-            <item-preview
+            <ItemPreview
               class="m-1"
               :style="'preview-sm'"
               v-for="input in this.selectedItem.salvageableOf	"
@@ -233,11 +233,15 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
-import Markdown from 'vue3-markdown-it';
+import Markdown from "vue3-markdown-it";
+import ItemPreview from "@/components/ItemsPage/ItemPreview";
+import MyRecipe from "@/components/ItemsPage/MyRecipe";
 
 export default {
   components: {
     Markdown,
+    ItemPreview,
+    MyRecipe
   },
 
   methods: {

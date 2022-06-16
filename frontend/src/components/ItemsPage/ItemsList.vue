@@ -10,7 +10,7 @@
       >
         <h1>{{ set.name }}</h1>
         <div class="d-flex flex-wrap">
-          <my-item
+          <MyItem
             v-for="item in set.items"
             :key="item.id"
             :item="item"
@@ -22,7 +22,7 @@
         v-else
       >
         <!-- <transition-group name="items-list"> -->
-        <my-item
+        <MyItem
           v-for="item in this.sortedAndSearchedItems"
           :key="item.id"
           :item="item"
@@ -36,8 +36,12 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
+import MyItem from "@/components/ItemsPage/MyItem.vue"
 
 export default {
+  components: {
+    MyItem,
+  },
   name: "items-list",
   props: {
     sets: Object

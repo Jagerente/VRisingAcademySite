@@ -92,12 +92,12 @@ export const itemsModule = {
             commit('setLoading', true);
 
             await axios
-                .get(state.host + "item/list")
+                .get(state.host + "item/list?v2=1")
                 .then(response => commit('setItems', response.data))
                 .catch(error => alert("Error: " + error))
 
             await axios
-                .get(state.host + "item/grouplist")
+                .get(state.host + "item/grouplist?v2=1")
                 .then(response => commit('setItemsGrouped', response.data))
                 .catch(error => alert("Error: " + error))
 
