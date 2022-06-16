@@ -19,7 +19,10 @@
         <!-- Books -->
         <div class="col">
           <div class="d-flex flex-column">
-            <button class="btn btn-primary mx-auto" @click="$router.push('/contribute/books')">Books Drop
+            <button
+              class="btn btn-primary mx-auto"
+              @click="$router.push('/contribute/books')"
+            >Books Drop
               Statistics
             </button>
             <p class="description">
@@ -37,7 +40,10 @@
         <!-- Hats/Cloaks -->
         <div class="col">
           <div class="d-flex flex-column">
-            <button class="btn btn-primary mx-auto" @click="$router.push('/contribute/cosmetics')">Hats/Cloaks Drop
+            <button
+              class="btn btn-primary mx-auto"
+              @click="$router.push('/contribute/cosmetics')"
+            >Hats/Cloaks Drop
               Statistics
             </button>
             <p class="description">
@@ -49,7 +55,10 @@
         <!-- Servant Blood Quality -->
         <div class="col">
           <div class="d-flex flex-column">
-            <button class="btn btn-primary mx-auto" @click="$router.push('/contribute/servants/bloodquality')">
+            <button
+              class="btn btn-primary mx-auto"
+              @click="$router.push('/contribute/servants/bloodquality')"
+            >
               Servant Blood Quality
             </button>
             <p class="description">
@@ -61,8 +70,10 @@
       <div class="d-flex flex-column">
         <div class="description mx-auto my-5">
           We are also looking for players that can help us gather info on mosters, their behaviour, loot drops and their
-          locations. If you are interested, please reach out to <a href="#"
-            @click="$router.push('/credits/bobrokrot/discord')">Bobrokrot#0111</a> on Discord.
+          locations. If you are interested, please reach out to <a
+            href="#"
+            @click="$router.push('/credits/bobrokrot/discord')"
+          >Bobrokrot#0111</a> on Discord.
         </div>
       </div>
     </div>

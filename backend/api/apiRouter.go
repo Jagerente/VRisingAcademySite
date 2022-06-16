@@ -121,4 +121,12 @@ func RegisterApiHandlers(r *gin.Engine) {
 	{
 		controllers.HandleBloodTypeRequest(bloodtype)
 	}
+	hunts := r.Group("/api/hunt")
+	{
+		controllers.HandleHuntRequest(hunts)
+	}
+	monster := r.Group("api/monster")
+	{
+		controllers.HandleMonsterRequest(monster)
+	}
 }

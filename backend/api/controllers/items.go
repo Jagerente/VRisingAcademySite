@@ -10,16 +10,203 @@ import (
 	"github.com/lib/pq"
 )
 
-type ItemJson struct {
-	Id          int32  `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Tier        int32  `json:"tier"`
-	Type        int32  `json:"type"`
-}
-
-type ListResponse struct {
-}
+const (
+	GetItemsRequest = `select
+    items.id,
+    items.name,
+    items.description,
+    items.tier,
+    items.type as typeid,
+    itemtypes.title as typetitle,
+    items.knowledgeid,
+    array(
+        (
+            select
+                stcns.id
+            from
+                recipestations as rcst
+                join stations as stcns on rcst.stationId = stcns.id
+            where
+                rcst.recipeId = rcp.id
+        )
+    ) as stations,
+    array(
+        (
+            select
+                recipes.id
+            from
+                reciperesults
+                join recipes on recipes.id = reciperesults.recipeid
+            where
+                reciperesults.itemid = items.id
+        )
+    ) as recipes,
+    array(
+        (
+            select
+                rc.id
+            from
+                recipeingredients as rci
+                join recipes as rc on rci.recipeId = rc.id
+            where
+                rci.itemId = items.id
+        )
+    ) as reagentFor,
+    array(
+        (
+            select
+                tgs.value
+            from
+                itemtags as itt
+                join tags as tgs on itt.tagId = tgs.id
+            where
+                itt.itemId = items.id
+        )
+    ) as tags,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description,
+    stats.slotid,
+    array(
+        (
+            select
+                secondarystats.bonus
+            from
+                secondaryitemstats
+                join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
+            where
+                secondaryitemstats.statsId = stats.id
+        )
+    ) as bonusStats,
+    array(
+        (
+            select
+                lc.id
+            from
+                itemlocations as itl
+                join locations as lc on itl.locationId = lc.id
+            where
+                itl.itemId = items.id
+        )
+    ) as locations,
+    array(
+        (
+            select
+                structurevariants.variantid
+            from
+                structurevariants
+            where
+                structurevariants.structureid = items.id
+            order by
+                structurevariants.variantid
+        )
+    ) as variants,
+    array (
+        (
+            select
+                salvageables.id
+            from
+                salvageables
+            where
+                salvageables.itemid = items.id
+        )
+    ) as salvageables,
+    array (
+        (
+            select
+                salvageableresults.salvageableid
+            from
+                salvageableresults
+            where
+                salvageableresults.itemid = items.id
+        )
+    ) as salvageableOf,
+    items.maxstack
+from
+    items
+    join itemtypes on itemtypes.id = items.type full
+    join recipeingredients on recipeingredients.itemid = items.id full
+    join recipes as rcp on recipeingredients.itemid = rcp.id full
+    join itemstats as stats on stats.id = items.id full
+    join sets on sets.id = items.setid
+where
+    items.id IS NOT NULL
+group by
+    items.id,
+    itemtypes.title,
+    rcp.id,
+    stats.id,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description
+order by
+    items.id,
+    items.type,
+    items.setid`
+	GetItemsrequestV2 = `select
+    items.id,
+    items.name,
+    items.description,
+    items.tier,
+    items.type as typeid,
+    itemtypes.title as typetitle,
+    items.knowledgeid,
+    array_remove(array_agg(distinct recipestations.stationid), NULL) as stations,
+    array_remove(array_agg(distinct reciperesults.recipeid), NULL) as recipes,
+    array_remove(array_agg(distinct recipeingredients.recipeid), NULL) as reagentFor,
+    array_remove(array_agg(distinct tags.value), NULL) as tags,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description,
+    stats.slotid,
+    array_remove(array_agg(distinct secondarystats.bonus), NULL) as bonusStats,
+    array_remove(array_agg(distinct itemlocations.locationid), NULL) as locations,
+    array_remove(array_agg(distinct structurevariants.variantid), NULL) as variants,
+    array_remove(array_agg(distinct salvageables.id), NULL) as salvageables,
+    array_remove(array_agg(distinct salvageableresults.salvageableid), NULL) as salvageableOf,
+    items.maxstack
+from
+    items
+    join itemtypes on itemtypes.id = items.type
+    left join recipeingredients on recipeingredients.itemid = items.id
+    left join recipes as rcp on recipeingredients.itemid = rcp.id
+    left join recipestations on recipestations.recipeid = rcp.id
+    left join reciperesults on reciperesults.itemid = items.id
+    left join itemstats as stats on stats.id = items.id
+    left join sets on sets.id = items.setid
+    left join itemtags on itemtags.itemid=items.id
+    left join tags on tags.id = itemtags.tagid
+    left join salvageables on salvageables.itemid = items.id
+    left join salvageableresults on salvageableresults.itemid = items.id
+    left join itemlocations on itemlocations.itemid = items.id
+    left join structurevariants on structurevariants.structureid = items.id
+    left join secondaryitemstats on secondaryitemstats.statsid = stats.id
+    left join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
+group by
+    items.id,
+    itemtypes.title,
+    rcp.id,
+    stats.id,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description
+order by
+    items.id,
+    items.type,
+    items.setid`
+)
 
 func getItemTypesList() []models.ItemTypeObject {
 	var items = make([]models.ItemTypeObject, 0)
@@ -88,149 +275,16 @@ func handleItemTypesList(ctx *gin.Context) {
 }
 
 func handleListRequest(ctx *gin.Context) {
+	var queryString = GetItemsRequest
+	if ctx.Query("v2") != "" {
+		queryString = GetItemsrequestV2
+	}
+
 	var response = make([]models.Item, 0)
 	connection := database.CreateConnection()
 	defer connection.Close()
 
-	newQuery := `select
-    items.id,
-    items.name,
-    items.description,
-    items.tier,
-    items.type as typeid,
-    itemtypes.title as typetitle,
-    items.knowledgeid,
-    array(
-        (
-            select
-                stcns.id
-            from
-                recipestations as rcst
-                join stations as stcns on rcst.stationId = stcns.id
-            where
-                rcst.recipeId = rcp.id
-        )
-    ) as stations,
-    array(
-        (
-            select
-                recipes.id
-            from
-                reciperesults
-                join recipes on recipes.id = reciperesults.recipeid
-            where
-                reciperesults.itemid = items.id
-        )
-    ) as recipes,
-    array(
-        (
-            select
-                rc.id
-            from
-                recipeingredients as rci
-                join recipes as rc on rci.recipeId = rc.id
-            where
-                rci.itemId = items.id
-        )
-    ) as reagentFor,
-    array(
-        (
-            select
-                tgs.value
-            from
-                itemtags as itt
-                join tags as tgs on itt.tagId = tgs.id
-            where
-                itt.itemId = items.id
-        )
-    ) as tags,
-    stats.durability,
-    stats.gearLevel,
-    stats.mainStat,
-    items.setid,
-    sets.name,
-    sets.description,
-    stats.slotid,
-    array(
-        (
-            select
-                secondarystats.bonus
-            from
-                secondaryitemstats
-                join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
-            where
-                secondaryitemstats.statsId = stats.id
-        )
-    ) as bonusStats,
-    array(
-        (
-            select
-                lc.id
-            from
-                itemlocations as itl
-                join locations as lc on itl.locationId = lc.id
-            where
-                itl.itemId = items.id
-        )
-    ) as locations,
-    array(
-        (
-            select
-                structurevariants.variantid
-            from
-                structurevariants
-            where
-                structurevariants.structureid = items.id
-            order by
-                structurevariants.variantid
-        )
-    ) as variants,
-    array (
-        (
-            select
-                salvageables.id
-            from
-                salvageables
-            where
-                salvageables.itemid = items.id
-        )
-    ) as salvageables,
-    array (
-        (
-            select
-                salvageableresults.salvageableid
-            from
-                salvageableresults
-            where
-                salvageableresults.itemid = items.id
-        )
-    ) as salvageableOf
-from
-    items
-    join itemtypes on itemtypes.id = items.type full
-    join recipeingredients on recipeingredients.itemid = items.id full
-    join recipes as rcp on recipeingredients.itemid = rcp.id full
-    join itemstats as stats on stats.id = items.id full
-    join sets on sets.id = items.setid
-where
-    items.id IS NOT NULL
-group by
-    items.id,
-    itemtypes.title,
-    rcp.id,
-    stats.id,
-    stats.durability,
-    stats.gearLevel,
-    stats.mainStat,
-    items.setid,
-    sets.name,
-    sets.description
-order by
-    items.id,
-    items.type,
-    items.setid`
-
-	rows, err := connection.Query(newQuery)
+	rows, err := connection.Query(queryString)
 
 	if err != nil {
 		fmt.Print(err)
@@ -276,7 +330,8 @@ order by
 			pq.Array(&item.Locations),
 			pq.Array(&item.Variants),
 			pq.Array(&item.Salvageables),
-			pq.Array(&item.SalvageableOf))
+			pq.Array(&item.SalvageableOf),
+			&item.MaxStack)
 
 		if readError != nil {
 			fmt.Print(readError)
@@ -340,148 +395,15 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 	type ResponseMap map[int32]*ResponseMapItem
 	const UnsetTypeId int32 = -1
 
+	var queryString = GetItemsRequest
+	if ctx.Query("v2") != "" {
+		queryString = GetItemsrequestV2
+	}
+
 	connection := database.CreateConnection()
 	defer connection.Close()
 
-	newQuery := `select
-    items.id,
-    items.name,
-    items.description,
-    items.tier,
-    items.type as typeid,
-    itemtypes.title as typetitle,
-    items.knowledgeid,
-    array(
-        (
-            select
-                stcns.id
-            from
-                recipestations as rcst
-                join stations as stcns on rcst.stationId = stcns.id
-            where
-                rcst.recipeId = rcp.id
-        )
-    ) as stations,
-    array(
-        (
-            select
-                recipes.id
-            from
-                reciperesults
-                join recipes on recipes.id = reciperesults.recipeid
-            where
-                reciperesults.itemid = items.id
-        )
-    ) as recipes,
-    array(
-        (
-            select
-                rc.id
-            from
-                recipeingredients as rci
-                join recipes as rc on rci.recipeId = rc.id
-            where
-                rci.itemId = items.id
-        )
-    ) as reagentFor,
-    array(
-        (
-            select
-                tgs.value
-            from
-                itemtags as itt
-                join tags as tgs on itt.tagId = tgs.id
-            where
-                itt.itemId = items.id
-        )
-    ) as tags,
-    stats.durability,
-    stats.gearLevel,
-    stats.mainStat,
-    items.setid,
-    sets.name,
-    sets.description,
-    stats.slotid,
-    array(
-        (
-            select
-                secondarystats.bonus
-            from
-                secondaryitemstats
-                join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
-            where
-                secondaryitemstats.statsId = stats.id
-        )
-    ) as bonusStats,
-    array(
-        (
-            select
-                lc.id
-            from
-                itemlocations as itl
-                join locations as lc on itl.locationId = lc.id
-            where
-                itl.itemId = items.id
-        )
-    ) as locations,
-    array(
-        (
-            select
-                structurevariants.variantid
-            from
-                structurevariants
-            where
-                structurevariants.structureid = items.id
-            order by
-                structurevariants.variantid
-        )
-    ) as variants,
-    array (
-        (
-            select
-                salvageables.id
-            from
-                salvageables
-            where
-                salvageables.itemid = items.id
-        )
-    ) as salvageables,
-    array (
-        (
-            select
-                salvageableresults.salvageableid
-            from
-                salvageableresults
-            where
-                salvageableresults.itemid = items.id
-        )
-    ) as salvageableOf
-from
-    items
-    join itemtypes on itemtypes.id = items.type full
-    join recipeingredients on recipeingredients.itemid = items.id full
-    join recipes as rcp on recipeingredients.itemid = rcp.id full
-    join itemstats as stats on stats.id = items.id full
-    join sets on sets.id = items.setid
-where
-    items.id IS NOT NULL
-group by
-    items.id,
-    itemtypes.title,
-    rcp.id,
-    stats.id,
-    stats.durability,
-    stats.gearLevel,
-    stats.mainStat,
-    items.setid,
-    sets.name,
-    sets.description
-order by
-    items.id,
-    items.type,
-    items.setid`
-
-	rows, err := connection.Query(newQuery)
+	rows, err := connection.Query(queryString)
 
 	if err != nil {
 		fmt.Print(err)
@@ -527,7 +449,8 @@ order by
 			pq.Array(&item.Locations),
 			pq.Array(&item.Variants),
 			pq.Array(&item.Salvageables),
-			pq.Array(&item.SalvageableOf))
+			pq.Array(&item.SalvageableOf),
+			&item.MaxStack)
 
 		if readError != nil {
 			fmt.Print(readError)

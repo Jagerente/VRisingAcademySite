@@ -2,14 +2,28 @@
     <div class="d-flex flex-column block ">
         <div class="d-flex justify-content-between">
             <div class="d-flex">
-                <span v-for="(station, i) in recipe.stations" class="h-3 ">
+                <span
+                    v-for="(station, i) in recipe.stations"
+                    class="h-3 "
+                >
                     {{ (i > 0 ? '&nbsp;/&nbsp;' : '') + station }}
                 </span>
             </div>
-            <div v-if="this.recipe.time" class="d-flex">
-                <Popper v-if="this.confinedRoom && this.confined" hover placement="left"
-                    content="Time in a confined castle room.">
-                    <span v-if="this.confined" class="h-3 tag tag__time-confined" @click="this.updateConfinedRoom">
+            <div
+                v-if="this.recipe.time"
+                class="d-flex"
+            >
+                <Popper
+                    v-if="this.confinedRoom && this.confined"
+                    hover
+                    placement="left"
+                    content="Time in a confined castle room."
+                >
+                    <span
+                        v-if="this.confined"
+                        class="h-3 tag tag__time-confined"
+                        @click="this.updateConfinedRoom"
+                    >
                         <span v-if="this.confinedTime.minutes">
                             {{ `${this.confinedTime.minutes}m${this.confinedTime.seconds ? '&nbsp;' : ''}` }}
                         </span>
@@ -18,8 +32,17 @@
                         </span>
                     </span>
                 </Popper>
-                <Popper v-else interactive hover placement="left" content="Time without bonuses.">
-                    <span class="h-3 tag tag__time-normal" @click="this.updateConfinedRoom">
+                <Popper
+                    v-else
+                    interactive
+                    hover
+                    placement="left"
+                    content="Time without bonuses."
+                >
+                    <span
+                        class="h-3 tag tag__time-normal"
+                        @click="this.updateConfinedRoom"
+                    >
                         <span v-if="this.time.minutes">
                             {{ `${this.time.minutes}m${this.time.seconds ? '&nbsp;' : ''}` }}
                         </span>
@@ -32,23 +55,44 @@
         </div>
         <div class="d-flex mt-1">
             <div class="d-flex block ">
-                <div v-for="ingridient in this.recipe.ingredients" class="recipe__group px-1">
-                    <item-preview :style="'preview-sm'"
-                        :item="this.items.find(item => { return item.id === ingridient.itemId })" :text="this.matchingFloor && this.confined ?
-                        Math.ceil(ingridient.amount * 0.75) : ingridient.amount" :button="true" />
+                <div
+                    v-for="ingridient in this.recipe.ingredients"
+                    class="recipe__group px-1"
+                >
+                    <item-preview
+                        :style="'preview-sm'"
+                        :item="this.items.find(item => { return item.id === ingridient.itemId })"
+                        :text="this.matchingFloor && this.confined ?
+                        Math.ceil(ingridient.amount * 0.75) : ingridient.amount"
+                        :button="true"
+                    />
                 </div>
             </div>
 
-            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="#a8a9ae" class="" viewBox="0 0 16 16">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="40"
+                height="40"
+                fill="#a8a9ae"
+                class=""
+                viewBox="0 0 16 16"
+            >
                 <path
-                    d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                    d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                />
             </svg>
 
             <div class="d-flex flex-fill">
-                <div v-for="result in this.recipe.results" class="recipe__group px-1">
-                    <item-preview :style="'preview-sm'"
-                        :item="this.items.find(item => { return item.id === result.itemId })" :text="result.amount"
-                        :button="true" />
+                <div
+                    v-for="result in this.recipe.results"
+                    class="recipe__group px-1"
+                >
+                    <item-preview
+                        :style="'preview-sm'"
+                        :item="this.items.find(item => { return item.id === result.itemId })"
+                        :text="result.amount"
+                        :button="true"
+                    />
                 </div>
             </div>
         </div>
@@ -57,8 +101,12 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ItemPreview from "@/components/ItemsPage/ItemPreview";
 
 export default {
+    components: {
+        ItemPreview,
+    },
     name: "my-recipe",
     props: {
         recipe: Object,
