@@ -39,6 +39,14 @@
 
         <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-0 text-white">16/06/2022 "Show on Map" Update</h5>
+        <br />— Some items now have a "Show on Map" button, that opens Mapgenie with highlighted areas where the chosen
+        item can be farmed. It shows all areas where ingame map tooltips suggest that an item can be gathered.
+        <br />— Max Stack: all items now show how many instances of an item can be stored in a single stack (on official
+        servers).
+        <br />— Added info on Razer items which can be obtained in Razer giveaways.
+        <br />— Added Castle Heart upgrades as separte items as well as their characteristics (on official servers).
+        <br />— Updated Spells description due to today's Balance Patch.
         <h5 class="mt-2 mb-4 text-white">12/06/2022 — Blood Update</h5>
         <div>
           — Added a page for <a
