@@ -84,8 +84,15 @@
               >
                 <span class="text-white">Durability: {{ this.selectedItem.durability }}</span>
               </p>
+              <!-- Max Stack -->
             </div>
           </div>
+          <p
+            class="h-3"
+            v-if="this.selectedItem.maxStack"
+          >
+            <span class="text-white">Max Stack: {{ this.selectedItem.maxStack }}</span>
+          </p>
         </div>
         <div class="d-flex justify-content-center flex-fill mx-2">
           <!-- Preview -->
