@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from '@/router/router';
 
 export const itemsModule = {
     state: () => ({
@@ -126,6 +127,23 @@ export const itemsModule = {
                 .then(response => commit('setSalvageables', response.data))
                 .catch(error => alert("Error: " + error));
 
+            if (!router.currentRoute._value.query.id) {
+                router.replace({
+                    query: {
+                        ...router.currentRoute.params,
+                        id: 1
+                    }
+                });
+                commit('setSelectedItem', state.items[0]);
+            }
+            else if (router.currentRoute._value.query.id > 0 && router.currentRoute._value.query.id <= state.items.length) {
+                commit('setSelectedItem', state.items[router.currentRoute._value.query.id - 1]);
+            }
+            else {
+                commit('setSelectedItem', null)
+            }
+
+
             commit('setLoading', false)
         },
 
@@ -135,6 +153,12 @@ export const itemsModule = {
         },
 
         selectItem({ commit }, item) {
+            router.replace({
+                query: {
+                    ...router.currentRoute.params,
+                    id: item.id
+                }
+            });
             commit('setSelectedItem', item)
         },
 
