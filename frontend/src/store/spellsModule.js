@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from '@/router/router';
 
 export const spellsModule = {
     state: () => ({
@@ -62,6 +63,22 @@ export const spellsModule = {
                 .then(response => commit('setSpellsGrouped', response.data))
                 .catch(error => alert("Error: " + error))
 
+            if (!router.currentRoute._value.query.id) {
+                router.replace({
+                    query: {
+                        ...router.currentRoute.params,
+                        id: 1
+                    }
+                });
+                commit('setSelectedSpell', state.spells[0]);
+            }
+            else if (router.currentRoute._value.query.id > 0 && router.currentRoute._value.query.id <= state.spells.length) {
+                commit('setSelectedSpell', state.spells[router.currentRoute._value.query.id - 1]);
+            }
+            else {
+                commit('setSelectedSpell', null)
+            }
+
             commit('setSpellsLoading', false)
         },
 
@@ -69,6 +86,12 @@ export const spellsModule = {
             commit('setSelectedSchool', id);
         },
         selectSpell({ commit }, spell) {
+            router.replace({
+                query: {
+                    ...router.currentRoute.params,
+                    id: spell.id
+                }
+            });
             commit('setSelectedSpell', spell);
         },
     },
