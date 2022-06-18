@@ -12,6 +12,8 @@
 - [recipestations](#recipestations)
 - [recipeingredients](#recipeingredients)
 - [reciperesults](#reciperesults)
+- [salvageables](#salvageables)
+- [salvageableresults](#salvageableresults)
 
 
 ### knowledges
@@ -179,4 +181,26 @@ _В результате крафта Vermin Salve (recipe id = 10) получа
 ```
 insert into reciperesults(recipeId, itemId, amount) values
 (10, 163, 1)
+```
+
+### salvageables
+![image](https://user-images.githubusercontent.com/30572380/174455190-d4d084a8-f1af-486b-9504-84a20a6e02f9.png)
+- id — id "рецепта" разбора
+- [itemid](#items) — что разбирается; всегда в кол-ве одной штуки
+
+_The Fish (id = 281) можно разобрать._
+```
+insert into salvageables(id, itemid) values
+(40, 281)
+```
+### salvageableresults
+![image](https://user-images.githubusercontent.com/30572380/174455272-fc1eb166-0e8d-4d7f-9c72-d45a8fdf6d74.png)
+- [itemid](#items) — во что разбирается;
+- [salvageableid](#salvageables) — id "рецепта" разбора;
+- amount — кол-во предмета, которое получаешь после разбора
+
+_The Fish разбирается в 8 Golden Jewellery (id = 223), 50 Fish Oil (id = 226) и в 250 Scales (id = 225).
+```
+insert into salvageableresults(itemid, salvageableid, amount) values
+(223, 40, 8), (226, 40, 50), (225, 40, 250)
 ```
