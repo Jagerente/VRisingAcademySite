@@ -1,13 +1,19 @@
 <template>
-  <item-preview class="preview-md rounded"
-    :class="this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''" :item="item"
-    @click="selectItem(item)" />
+  <ItemPreview
+    :style="`preview-md rounded ${this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''}`"
+    :item="item"
+    @click="selectItem(item)"
+  />
 </template>
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ItemPreview from '@/components/ItemsPage/ItemPreview.vue';
 
 export default {
+  components: {
+    ItemPreview,
+  },
   name: "my-item",
   props: {
     item: Object,

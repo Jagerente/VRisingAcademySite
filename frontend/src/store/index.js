@@ -1,6 +1,7 @@
 import { createStore } from "vuex";
 import { itemsModule } from "@/store/itemsModule";
 import { spellsModule } from "@/store/spellsModule";
+import { bloodTypesModule } from "@/store/bloodTypesModule";
 
 export default createStore({
     state: {
@@ -13,6 +14,7 @@ export default createStore({
     },
     modules: {
         items: itemsModule,
-        spells: spellsModule
+        spells: spellsModule,
+        bloodTypes: bloodTypesModule
     }
 })

@@ -1,36 +1,16 @@
 <template>
-  <div v-if="this.isItemsLoading">
-    <div class="position-absolute top-50 start-50 translate-middle" role="status">
-      <span class="h1">Loading...</span>
-    </div>
-  </div>
-  <div v-else class="catalogue d-flex flex-column flex-lg-row mx-2">
-    <!-- LEFT -->
-    <div class="w-100 d-flex mb-2 mb-lg-0 filter__card">
-      <!-- FILTER -->
-      <div>
-        <card-filter />
-      </div>
-      <!-- CATALOGUE -->
-      <div class="flex-fill mx-0 ms-1 mx-lg-2">
-        <card-catalogue />
-      </div>
-    </div>
-    <!-- RIGHT -->
-    <!-- INFORMATION -->
-    <div class="p-0 m-0 d-lg-flex d-none" style="height: auto;">
-      <card-information style="width: 500px;" />
-    </div>
-    <!-- BOTTOM -->
-    <!-- INFORMATION -->
-    <div class="p-0 m-0 d-flex d-lg-none flex-fill">
-      <card-information style="width: 100%;" />
-    </div>
-  </div>
+  <MyLayout :isLoading="this.isItemsLoading" :tabs="this.types" :selector="this.selectType">
+    <template #center>
+      <card-catalogue />
+    </template>
+    <template #right>
+      <card-information />
+    </template>
+  </MyLayout>
 </template>
 
 <script>
-import CardFilter from "@/components/ItemsPage/CardFilter";
+import MyLayout from "@/components/UI/MyLayout";
 import CardCatalogue from "@/components/ItemsPage/CardCatalogue";
 import CardInformation from "@/components/ItemsPage/CardInformation";
 
@@ -38,18 +18,20 @@ import { mapState, mapActions } from "vuex"
 
 export default {
   components: {
-    CardFilter,
+    MyLayout,
     CardCatalogue,
     CardInformation,
   },
   methods: {
     ...mapActions({
       fetchItems: "items/fetchItems",
+      selectType: "items/selectType",
     })
   },
   computed: {
     ...mapState({
       isItemsLoading: (state) => state.items.isItemsLoading,
+      types: (state) => state.items.types,
     })
   },
   mounted() {
@@ -59,29 +41,4 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-@import '@/assets/styles/va_variables.scss';
-
-@include media-breakpoint-down(sm) {
-  .filter__card {
-    min-height: 220px;
-  }
-}
-
-@include media-breakpoint-up(sm) {
-  .filter__card {
-    min-height: 300px;
-  }
-}
-
-.catalogue {
-  padding-top: 15px;
-}
-
-.catalogue {
-  height: calc(100vh - ($header-height + $footer-height) + 5px);
-  min-height: calc(100vh - ($header-height + 25px));
-}
 </style>

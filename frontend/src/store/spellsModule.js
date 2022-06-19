@@ -57,27 +57,11 @@ export const spellsModule = {
                 .then(response => commit('setSpells', response.data))
                 .catch(error => alert("Error: " + error))
 
-            // await axios
-            //     .get(state.host + "spell/grouplist")
-            //     .then(response => commit('setSpellsGrouped', response.data))
-            //     .catch(error => alert("Error: " + error))
+            await axios
+                .get(state.host + "spell/grouplist")
+                .then(response => commit('setSpellsGrouped', response.data))
+                .catch(error => alert("Error: " + error))
 
-            // --Remove after fix--
-            let spells = [];
-            state.schools.forEach((school, i) => {
-                spells.push({ name: school.name, types: [] });
-                state.types.forEach((type, j) => {
-                    spells[i].types.push({ title: type.title, spells: [] })
-                    state.spells.forEach(spell => {
-                        if (spell.school.name === school.name && spell.type.name === type.title) {
-                            spells[i].types[j].spells.push(spell);
-                        }
-                    });
-                });
-            })
-            commit('setSpellsGrouped', spells)
-            // --Remove after fix--
-            
             commit('setSpellsLoading', false)
         },
 

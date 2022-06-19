@@ -2,9 +2,14 @@
   <div class="content">
     <div class="d-flex flex-column my-auto h-100">
       <!-- Logo -->
-      <img class="mx-auto" style="" draggable="false" :src="
-        require('@/assets/images/ui/main_page/VAlogo.webp')
-      ">
+      <img
+        class="mx-auto"
+        style=""
+        draggable="false"
+        :src="
+          require('@/assets/images/ui/main_page/VAlogo.webp')
+        "
+      >
       <!-- Text -->
       <div class="d-flex flex-column info mx-auto">
         <p class="text-center">Welcome to the academy, V Academy!
@@ -15,19 +20,65 @@
         </p>
 
         <div class="d-flex flex-column justify-content-center">
-          <button @click="gotoBoosty()" class="btn btn-primary my-2 mx-auto">Support
+          <button
+            @click="gotoBoosty()"
+            class="btn btn-primary my-2 mx-auto"
+          >Support
             Us!</button>
           <p class="text-center">Support us monetarily to pay for server hosting and keep this site
             ad-free.</p>
         </div>
         <div class="d-flex flex-column w-100 justify-content-center">
-          <button @click="$router.push('/contribute')" class="btn btn-primary my-2 mx-auto">Contribute</button>
+          <button
+            @click="$router.push('/contribute')"
+            class="btn btn-primary my-2 mx-auto"
+          >Contribute</button>
           <p class="text-center">If you want to help fill up the database, there is a number of topics we
             seek data about.</p>
         </div>
 
         <p class="mt-5">
         <h3 class="text-white">Changelog</h3>
+        <h5 class="mt-2 mb-4 text-white">12/06/2022 — Blood Update</h5>
+        <div>
+          — Added a page for <a
+            href="bloodtypes"
+            target="_blank"
+          >blood types</a>.
+        </div>
+        <div>
+          — This page is interactive and you can see how blood quality affects the abilities of a certain blood type.
+        </div>
+        <div>
+          — Added text formating to <a
+            href="spells"
+            target="_blank"
+          >spells</a>. Descriptions should be now easier to read.
+        </div>
+        <div>
+          — Added Chaos Burn description to all related <a
+            href="spells"
+            target="_blank"
+          >spells</a> based on <a
+            href="https://docs.google.com/spreadsheets/d/1kdUng_E6RC0l7MxWQ7VaqZpTDz7DwDI6yTZHD4ONt5A/edit?usp=sharing"
+            target="_blank"
+          >this testing.</a>
+        </div>
+        <div>
+          — Scourge Pendant's list of abilities was incorrect (it doesn't have any abilities), it has been fixed
+          now.
+        </div>
+        <h5 class="mt-2 mb-0 text-white">09/06/2022 Salvage Update</h5>
+        <br>— Salvageable items now display items that they can be salvaged into. Now you can witness the true power of
+        The Fish!
+        <br> Items now also display whether you can obtain them from salvaging other items.
+        <br>— Note that weapons, armour and jewellery are not included since their salvage results depend on their
+        durability.
+        <br>— Other fixes:
+        <br>— Sanguine Crossbow's crafting time is fixed.
+        <br>— Royal Braziers' recipes had all incorrectly required Regular Amethyst. This has been fixed.
+        <br>— Tainted Heart, Unsullied Heart and Exquisite Heart's descriptions have been updated to include the phrase
+        "Refined into X by using a Blood Press" that were added into the game in Patch 0.5.41237.
         <h5 class="mt-2 mb-0 text-white">07/06/2022 Items Update</h5>
         <br>— Added Structures and Blueprints (Books)
         <br>— Structures display their Variants which essentially represent the same structure with the same recipe and
