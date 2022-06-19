@@ -128,10 +128,15 @@ var (
 			ADD COLUMN droprate REAL NOT NULL`,
 			`ALTER TABLE monsterdrops
 			ADD COLUMN amount INTEGER NOT NULL DEFAULT 1;`},
-		[]string{
+		[]string{ //v14
 			`ALTER TABLE spells
 			ALTER COLUMN description TYPE varchar(2048);`},
-		[]string{
+		[]string{ //v15
 			`ALTER TABLE items
-			ADD COLUMN maxstack INTEGER DEFAULT NULL;`}}
+			ADD COLUMN maxstack INTEGER DEFAULT NULL;`},
+		[]string{ //v16
+			`ALTER TABLE spells
+			ALTER COLUMN description TYPE text;`,
+			`ALTER TABLE items
+			ALTER COLUMN description TYPE text;`}}
 )
