@@ -4,6 +4,7 @@ import (
 	"VRisingAcademySite/api"
 	"VRisingAcademySite/database"
 	"fmt"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -38,7 +39,7 @@ func handleRequest() {
 	// config := cors.DefaultConfig()
 	// config.AllowOrigins = []string{"https://vrising-academy.info"}
 
-        r.Use(cors.Default())
+	r.Use(cors.Default())
 
 	api.RegisterApiHandlers(r)
 
@@ -51,5 +52,11 @@ func handleRequest() {
 }
 
 func main() {
+	if len(os.Args) > 1 {
+		if os.Args[1] == "--test-mode" {
+			fmt.Println("Launching Academy server in debug mode...")
+			database.SetTestMode()
+		}
+	}
 	handleRequest()
 }
