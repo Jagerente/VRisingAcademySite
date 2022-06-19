@@ -5,6 +5,7 @@ import (
 	"VRisingAcademySite/database"
 	"fmt"
 	"os"
+	"strconv"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -48,13 +49,21 @@ func handleRequest() {
 	// r.RunTLS(":10443", crtPath+"combined.crt", crtPath+"private.key")
 
 	//HTTP
-	r.Run("localhost:8087")
+	var port int = 8087
+	if database.IsTestMode() {
+		port = 4047
+	}
+	r.Run("localhost:" + strconv.Itoa(port))
 }
 
 func main() {
 	if len(os.Args) > 1 {
 		if os.Args[1] == "--test-mode" {
-			fmt.Println("Launching Academy server in debug mode...")
+			fmt.Println("Launching Academy server in TEST mode...")
+			for i := 0; i < 30; i++ {
+				fmt.Println("\x1B[31m!!!!! YOU RUN ACADEMY SERVER IN TEST MODE, PLEASE ENSURE THIS IS WHAT YOU WANTED !!!!!")
+			}
+			fmt.Println("\x1B[0m")
 			database.SetTestMode()
 		}
 	}

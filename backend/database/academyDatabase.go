@@ -24,6 +24,10 @@ var (
 	isTestMode bool = false
 )
 
+func IsTestMode() bool {
+	return isTestMode
+}
+
 func SetTestMode() {
 	isTestMode = true
 }
