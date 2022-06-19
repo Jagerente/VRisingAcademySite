@@ -110,71 +110,71 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-@import '@/assets/styles/va_variables.scss';
+<!--<style lang="scss">-->
+<!--@import 'bootstrap/scss/_functions.scss';-->
+<!--@import 'bootstrap/scss/_variables.scss';-->
+<!--@import 'bootstrap/scss/_mixins.scss';-->
+<!--@import '@/assets/styles/va_variables.scss';-->
 
-@include media-breakpoint-down(sm) {
-  $header-size: 13px;
+<!--@include media-breakpoint-down(sm) {-->
+<!--  $header-size: 13px;-->
 
-  .filter__card {
-    min-height: 220px;
-  }
+<!--  .filter__card {-->
+<!--    min-height: 220px;-->
+<!--  }-->
 
-  .tab {
-    font-size: $header-size;
-    width: 100px;
-    height: 35px;
-  }
+<!--  .tab {-->
+<!--    font-size: $header-size;-->
+<!--    width: 100px;-->
+<!--    height: 35px;-->
+<!--  }-->
 
-  .logo {
-    $size: 12px;
-    width: $size;
-    height: $size;
-  }
-}
+<!--  .logo {-->
+<!--    $size: 12px;-->
+<!--    width: $size;-->
+<!--    height: $size;-->
+<!--  }-->
+<!--}-->
 
-@include media-breakpoint-up(sm) {
-  .filter__card {
-    min-height: 300px;
-  }
+<!--@include media-breakpoint-up(sm) {-->
+<!--  .filter__card {-->
+<!--    min-height: 300px;-->
+<!--  }-->
 
-  .tab {
-    height: 55px;
-  }
+<!--  .tab {-->
+<!--    height: 55px;-->
+<!--  }-->
 
-  .logo {
-    $size: 12px;
-    width: size;
-    height: size;
-  }
-}
+<!--  .logo {-->
+<!--    $size: 12px;-->
+<!--    width: size;-->
+<!--    height: size;-->
+<!--  }-->
+<!--}-->
 
-.catalogue {
-  padding-top: 15px;
-}
+<!--.catalogue {-->
+<!--  padding-top: 15px;-->
+<!--}-->
 
-.catalogue {
-  height: calc(100vh - ($header-height + $footer-height) + 5px);
-  min-height: calc(100vh - ($header-height + 25px));
-}
+<!--.catalogue {-->
+<!--  height: calc(100vh - ($header-height + $footer-height) + 5px);-->
+<!--  min-height: calc(100vh - ($header-height + 25px));-->
+<!--}-->
 
-.tab {
-  margin-bottom: 5px;
-  background-color: #14141e;
-  border: 1px solid #14141e;
-  color: $text-color;
-  text-transform: capitalize;
-}
+<!--.tab {-->
+<!--  margin-bottom: 5px;-->
+<!--  background-color: #14141e;-->
+<!--  border: 1px solid #14141e;-->
+<!--  color: $text-color;-->
+<!--  text-transform: capitalize;-->
+<!--}-->
 
-.tab.active {
-  background: url("@/assets/images/ui/circle.webp"), rgba(0, 0, 0, 0.5);
-  background-size: 110%;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  border: 1px solid white;
-  color: white;
-}
-</style>
+<!--.tab.active {-->
+<!--  background: url("@/assets/images/ui/circle.webp"), rgba(0, 0, 0, 0.5);-->
+<!--  background-size: 110%;-->
+<!--  background-position: 50%;-->
+<!--  background-repeat: no-repeat;-->
+<!--  border: 1px solid white;-->
+<!--  color: white;-->
+<!--}-->
+<!--</style>-->

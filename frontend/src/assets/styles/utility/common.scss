@@ -1,0 +1,12 @@
+* {
+    cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
+}
+
+[role="button"],
+button:not(:disabled),
+[type="button"]:not(:disabled),
+[type="reset"]:not(:disabled),
+[type="submit"]:not(:disabled) {
+    cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
+
+}

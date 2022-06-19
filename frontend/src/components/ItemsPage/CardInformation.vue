@@ -293,53 +293,53 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.tag {
-  margin-top: 5px;
-  font-size: 0.8rem;
-  background: #ae1d1d;
-  border-radius: 100px;
-  text-transform: capitalize;
-  margin-right: 5px;
-  border: none;
-  color: silver;
-}
+<!--<style scoped lang="scss">-->
+<!--.tag {-->
+<!--  margin-top: 5px;-->
+<!--  font-size: 0.8rem;-->
+<!--  background: #ae1d1d;-->
+<!--  border-radius: 100px;-->
+<!--  text-transform: capitalize;-->
+<!--  margin-right: 5px;-->
+<!--  border: none;-->
+<!--  color: silver;-->
+<!--}-->
 
-.tag:hover {
-  box-shadow: 0 0 5px black;
-  transition: box-shadow 0.05s ease-in-out;
-}
+<!--.tag:hover {-->
+<!--  box-shadow: 0 0 5px black;-->
+<!--  transition: box-shadow 0.05s ease-in-out;-->
+<!--}-->
 
-.block {
-  background: #14131b;
-  border-radius: 10px;
-  margin-left: -10px;
-  margin-right: -10px;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
+<!--.block {-->
+<!--  background: #14131b;-->
+<!--  border-radius: 10px;-->
+<!--  margin-left: -10px;-->
+<!--  margin-right: -10px;-->
+<!--  padding-left: 15px;-->
+<!--  padding-right: 15px;-->
+<!--  padding-top: 5px;-->
+<!--  padding-bottom: 5px;-->
+<!--}-->
 
-.form-check-input {
-  background-color: #14131b;
-  border: 1px solid;
-  border-color: silver;
-}
+<!--.form-check-input {-->
+<!--  background-color: #14131b;-->
+<!--  border: 1px solid;-->
+<!--  border-color: silver;-->
+<!--}-->
 
-.form-check-input:focus {
-  box-shadow: none;
-  border-color: white;
-}
+<!--.form-check-input:focus {-->
+<!--  box-shadow: none;-->
+<!--  border-color: white;-->
+<!--}-->
 
-.form-check-input:checked {
-  background-color: green;
-  border-color: green;
+<!--.form-check-input:checked {-->
+<!--  background-color: green;-->
+<!--  border-color: green;-->
 
-}
+<!--}-->
 
-p {
-  margin: 0;
-  padding: 0;
-}
-</style>
+<!--p {-->
+<!--  margin: 0;-->
+<!--  padding: 0;-->
+<!--}-->
+<!--</style>-->

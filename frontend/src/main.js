@@ -5,10 +5,10 @@ import customComponents from '@/components/custom';
 import router from '@/router/router';
 import store from '@/store';
 
-import "bootstrap/dist/js/bootstrap.js";
-import "@/assets/styles/va_variables.scss";
-import "@/assets/styles/va_styles.scss";
-import "@/assets/styles/va_slider.scss";
+// import "bootstrap/dist/js/bootstrap.js";
+// import "@/assets/styles/va_variables.scss";
+// import "@/assets/styles/va_styles.scss";
+// import "@/assets/styles/utility/va_slider.scss";
 
 const app = createApp(App);
 
@@ -20,7 +20,6 @@ customComponents.forEach(component => {
     app.use(component)
 });
 
-app
 app
     .use(router)
     .use(store)

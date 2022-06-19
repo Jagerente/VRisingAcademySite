@@ -20,6 +20,3 @@ export default {
     name: "my-footer",
 };
 </script>
-
-<style>
-</style>

@@ -18,6 +18,3 @@ export default {
   name: "icon-filter",
 };
 </script>
-
-<style scoped>
-</style>

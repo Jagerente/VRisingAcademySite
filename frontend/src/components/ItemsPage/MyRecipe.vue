@@ -149,33 +149,33 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-@import '@/assets/styles/va_styles.scss';
+<!--<style scoped lang="scss">-->
+<!--@import '@/assets/styles/va_styles.scss';-->
 
-* {
-    user-select: none;
-}
+<!--* {-->
+<!--    user-select: none;-->
+<!--}-->
 
-.tag__time-confined {
-    background: #176744;
-}
+<!--.tag__time-confined {-->
+<!--    background: #176744;-->
+<!--}-->
 
-.tag__time-normal {
-    background: #ae1d1d;
-}
+<!--.tag__time-normal {-->
+<!--    background: #ae1d1d;-->
+<!--}-->
 
-.tag {
-    border-radius: 100px;
-    text-transform: capitalize;
-    margin-right: 5px;
-    border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: silver;
-}
+<!--.tag {-->
+<!--    border-radius: 100px;-->
+<!--    text-transform: capitalize;-->
+<!--    margin-right: 5px;-->
+<!--    border: none;-->
+<!--    padding-left: 10px;-->
+<!--    padding-right: 10px;-->
+<!--    color: silver;-->
+<!--}-->
 
-.tag:hover {
-    box-shadow: 0 0 5px black;
-    transition: box-shadow 0.05s ease-in-out;
-}
-</style>
+<!--.tag:hover {-->
+<!--    box-shadow: 0 0 5px black;-->
+<!--    transition: box-shadow 0.05s ease-in-out;-->
+<!--}-->
+<!--</style>-->

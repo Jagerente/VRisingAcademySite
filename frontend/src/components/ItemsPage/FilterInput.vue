@@ -55,27 +55,27 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.clear {
-  background: #14141e;
-  border: none;
-}
+<!--<style scoped lang="scss">-->
+<!--.clear {-->
+<!--  background: #14141e;-->
+<!--  border: none;-->
+<!--}-->
 
-.input-group {
-  height: 39px;
-}
+<!--.input-group {-->
+<!--  height: 39px;-->
+<!--}-->
 
-.tag {
-  background: #ae1d1d;
-  font-size: 16px;
-  height: 20px;
-  border-radius: 100px;
-  text-transform: capitalize;
-  border: none;
-  color: silver;
-}
+<!--.tag {-->
+<!--  background: #ae1d1d;-->
+<!--  font-size: 16px;-->
+<!--  height: 20px;-->
+<!--  border-radius: 100px;-->
+<!--  text-transform: capitalize;-->
+<!--  border: none;-->
+<!--  color: silver;-->
+<!--}-->
 
-.tag:hover {
-  box-shadow: 0 0 8px black;
-}
-</style>
+<!--.tag:hover {-->
+<!--  box-shadow: 0 0 8px black;-->
+<!--}-->
+<!--</style>-->

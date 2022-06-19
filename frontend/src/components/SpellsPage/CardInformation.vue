@@ -83,51 +83,51 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+<!--<style lang="scss" scoped>-->
+<!--@import 'bootstrap/scss/_functions.scss';-->
+<!--@import 'bootstrap/scss/_variables.scss';-->
+<!--@import 'bootstrap/scss/_mixins.scss';-->
 
-@import '@/assets/styles/va_styles.scss';
+<!--@import '@/assets/styles/va_styles.scss';-->
 
 
-@include media-breakpoint-down(sm) {
-    .tag {
-        margin-top: 5px;
-        font-size: 0.7rem;
-    }
+<!--@include media-breakpoint-down(sm) {-->
+<!--    .tag {-->
+<!--        margin-top: 5px;-->
+<!--        font-size: 0.7rem;-->
+<!--    }-->
 
-    .image__preview {
-        --img-size: 100px;
-        width: var(--img-size);
-        height: var(--img-size);
-    }
+<!--    .image__preview {-->
+<!--        &#45;&#45;img-size: 100px;-->
+<!--        width: var(&#45;&#45;img-size);-->
+<!--        height: var(&#45;&#45;img-size);-->
+<!--    }-->
 
-}
+<!--}-->
 
-@include media-breakpoint-up(sm) {
-    .image__preview {
-        --img-size: 200px;
-        width: var(--img-size);
-        height: var(--img-size);
-    }
-}
+<!--@include media-breakpoint-up(sm) {-->
+<!--    .image__preview {-->
+<!--        &#45;&#45;img-size: 200px;-->
+<!--        width: var(&#45;&#45;img-size);-->
+<!--        height: var(&#45;&#45;img-size);-->
+<!--    }-->
+<!--}-->
 
-.image__preview {
-    user-select: none;
-}
+<!--.image__preview {-->
+<!--    user-select: none;-->
+<!--}-->
 
-.description {
-    background: #14131b;
-    border-radius: 10px;
-    margin-left: -10px;
-    margin-right: -10px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
+<!--.description {-->
+<!--    background: #14131b;-->
+<!--    border-radius: 10px;-->
+<!--    margin-left: -10px;-->
+<!--    margin-right: -10px;-->
+<!--    padding-left: 15px;-->
+<!--    padding-right: 15px;-->
+<!--}-->
 
-p {
-    margin: 0;
-    padding: 0;
-}
-</style>
+<!--p {-->
+<!--    margin: 0;-->
+<!--    padding: 0;-->
+<!--}-->
+<!--</style>-->

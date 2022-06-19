@@ -9,8 +9,3 @@ export default {
   name: "my-button",
 };
 </script>
-
-<style>
-.btn {
-}
-</style>

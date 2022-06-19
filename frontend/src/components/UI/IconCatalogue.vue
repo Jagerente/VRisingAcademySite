@@ -19,6 +19,3 @@ export default {
   name: "icon-catalogue",
 };
 </script>
-
-<style scoped>
-</style>

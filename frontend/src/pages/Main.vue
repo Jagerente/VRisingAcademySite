@@ -153,47 +153,45 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-* {
-  user-select: none;
-}
+//* {
+//  user-select: none;
+//}
+//
 
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+//@include media-breakpoint-down(lg) {
+//  .info {
+//    width: 90%;
+//  }
+//
+//  img {
+//    width: 300px;
+//    margin-bottom: -75px;
+//    margin-top: -50px;
+//  }
+//}
+//
+//@include media-breakpoint-up(lg) {
+//  .info {
+//    width: 45%;
+//  }
+//
+//  img {
+//    width: 100%;
+//    max-width: 500px;
+//    margin-bottom: -150px;
+//    margin-top: -100px;
+//  }
+//
+//  h3 {
+//    font-size: 1.5em;
+//  }
+//}
+//
+//.content {
+//  padding-left: auto;
+//  padding-right: auto;
+//  margin-left: auto;
+//  margin-right: auto;
+//}
 
-@include media-breakpoint-down(lg) {
-  .info {
-    width: 90%;
-  }
-
-  img {
-    width: 300px;
-    margin-bottom: -75px;
-    margin-top: -50px;
-  }
-}
-
-@include media-breakpoint-up(lg) {
-  .info {
-    width: 45%;
-  }
-
-  img {
-    width: 100%;
-    max-width: 500px;
-    margin-bottom: -150px;
-    margin-top: -100px;
-  }
-
-  h3 {
-    font-size: 1.5em;
-  }
-}
-
-.content {
-  padding-left: auto;
-  padding-right: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
 </style>

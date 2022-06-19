@@ -19,41 +19,41 @@
 <script>
 </script>
 
-<style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+<!--<style scoped lang="scss">-->
+<!--@import 'bootstrap/scss/_functions.scss';-->
+<!--@import 'bootstrap/scss/_variables.scss';-->
+<!--@import 'bootstrap/scss/_mixins.scss';-->
 
-main {
-    padding-top: 85px;
-}
+<!--main {-->
+<!--    padding-top: 85px;-->
+<!--}-->
 
-@include media-breakpoint-down(sm) {
-    main {
-        margin-left: 50px;
-        margin-right: 50px;
-    }
+<!--@include media-breakpoint-down(sm) {-->
+<!--    main {-->
+<!--        margin-left: 50px;-->
+<!--        margin-right: 50px;-->
+<!--    }-->
 
-    h1 {
-        font-size: 5rem;
-    }
+<!--    h1 {-->
+<!--        font-size: 5rem;-->
+<!--    }-->
 
-    .image {
-        $size: 500px;
-        height: $size;
-        margin-right: -75px;
-    }
-}
+<!--    .image {-->
+<!--        $size: 500px;-->
+<!--        height: $size;-->
+<!--        margin-right: -75px;-->
+<!--    }-->
+<!--}-->
 
-@include media-breakpoint-up(sm) {
-    h1 {
-        font-size: 10rem;
-    }
+<!--@include media-breakpoint-up(sm) {-->
+<!--    h1 {-->
+<!--        font-size: 10rem;-->
+<!--    }-->
 
-    .image {
-        $size: 500px;
-        height: $size;
-        margin-right: -75px;
-    }
-}
-</style>
+<!--    .image {-->
+<!--        $size: 500px;-->
+<!--        height: $size;-->
+<!--        margin-right: -75px;-->
+<!--    }-->
+<!--}-->
+<!--</style>-->

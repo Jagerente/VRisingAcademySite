@@ -97,24 +97,24 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-* {
-  user-select: none;
-}
+<!--<style lang="scss" scoped>-->
+<!--* {-->
+<!--  user-select: none;-->
+<!--}-->
 
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+<!--@import 'bootstrap/scss/_functions.scss';-->
+<!--@import 'bootstrap/scss/_variables.scss';-->
+<!--@import 'bootstrap/scss/_mixins.scss';-->
 
-.content {
-  padding-left: auto;
-  padding-right: auto;
-  margin-left: auto;
-  margin-right: auto;
-}
+<!--.content {-->
+<!--  padding-left: auto;-->
+<!--  padding-right: auto;-->
+<!--  margin-left: auto;-->
+<!--  margin-right: auto;-->
+<!--}-->
 
-.description {
-  text-align: center;
-  margin-top: 10px;
-}
-</style>
+<!--.description {-->
+<!--  text-align: center;-->
+<!--  margin-top: 10px;-->
+<!--}-->
+<!--</style>-->
