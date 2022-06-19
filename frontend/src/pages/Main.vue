@@ -133,8 +133,6 @@
       </div>
     </div>
   </div>
-  <my-footer class="mt-2" />
-
 </template>
 
 <script>

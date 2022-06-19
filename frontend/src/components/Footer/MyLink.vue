@@ -19,10 +19,10 @@ export default {
 };
 </script>
 
-<!--<style scoped>-->
-<!--.image {-->
-<!--    width: 30px;-->
-<!--    margin-right: 5px;-->
-<!--    margin-left: 5px;-->
-<!--}-->
-<!--</style>-->
+<style scoped>
+.image {
+    width: 30px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
+</style>
