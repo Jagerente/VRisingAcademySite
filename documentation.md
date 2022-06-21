@@ -7,6 +7,7 @@
 - [itemstats](#itemstats)
 - [secondarystats](#secondarystats)
 - [secondaryitemstats](#secondaryitemstats)
+- [structurevariants](#structurevariants)
 - [recipes](#recipes)
 - [stations](#stations)
 - [recipestations](#recipestations)
@@ -14,6 +15,10 @@
 - [reciperesults](#reciperesults)
 - [salvageables](#salvageables)
 - [salvageableresults](#salvageableresults)
+- [spelltypes](#spelltypes)
+- [spellschools](#spellschools)
+- [spells](#spells)
+- [quests](#quests)
 
 
 ### knowledges
@@ -123,6 +128,16 @@ insert into secondaryitemstats(statsid, secondarystatid) values
 (1, 1)
 ```
 
+### structurevariants
+- [variantid](#items) — item id варианта.
+- [structureid](#items) — item id тоже варианта.
+
+_Пример добавления вариантов для Castle Floor - Diamond Pattern (id = 355), варианты Castle Floor - Square Pattern (id = 480) и Castle Floor - Royal Pattern (id = 481)_
+```
+insert into structurevariants(variantid, structureid) values
+(480, 355), (481, 355), (355, 480), (481, 480), (355, 481), (480, 481)
+```
+
 ### recipes
 ![image](https://user-images.githubusercontent.com/30572380/173920337-8c742320-d5b5-4a0c-a785-f8707b2e1c7f.png)
 
@@ -204,3 +219,47 @@ _The Fish разбирается в 8 Golden Jewellery (id = 223), 50 Fish Oil (
 insert into salvageableresults(itemid, salvageableid, amount) values
 (223, 40, 8), (226, 40, 50), (225, 40, 250)
 ```
+
+### spelltypes
+- id
+- title — название
+```
+insert into spelltypes(title) values
+('Basic Spell 1')
+```
+
+### spellschools
+- id
+- name
+- description — (не используется)
+```
+insert into spellschools(name, description) values
+('Blood', '')
+```
+
+### spells
+- id
+- name
+- description — описание действия навыка; есть форматирование
+- [schoolid](#spellschools)
+- [typeid](#spelltypes)
+- cooldown — перезарядка умения
+- casttime — время каста; 0 для тех, у кого его нет или неизвестно;
+- charges — кол-во использований умения
+- [knowledgeid](#knowledges) — кем открывается (V Blood), null для стандартных
+
+```
+insert into spells(name, description, schoolid, typeid, cooldown, casttime, charges, knowledgeid) values
+('Blood Rage', 'Shield self and nearby allies for <span style="color: turquoise;">110%</span> of your spell power and increase attack speed by <span style="color: white;">25%</span> for <span style="color: white;">4,5s</span>.', 1, 1, 12, 0, 1, 22)
+```
+
+### quests
+- name
+- description
+- goals — массив {}
+- [knowledgeid](#knowledges)
+```
+insert into quests(name, description, goals, knowledgeid) values
+('Wielding the Sword', 'The sword. A swift and deadly weapon that slashes through flesh, bone, and thickets with ease. It was the first step towards restoring my former glory.', '{ "Craft a Sword.", "Slay Enemies using Bone Sword [3]."}', 2)
+```
+
