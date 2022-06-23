@@ -138,5 +138,8 @@ var (
 			`ALTER TABLE spells
 			ALTER COLUMN description TYPE text;`,
 			`ALTER TABLE items
-			ALTER COLUMN description TYPE text;`}}
+			ALTER COLUMN description TYPE text;`},
+		[]string{ //v17
+			`ALTER TABLE stations
+			ADD COLUMN itemid INTEGER REFERENCES items(id) DEFAULT NULL;`}}
 )
