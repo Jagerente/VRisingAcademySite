@@ -27,88 +27,88 @@ export default {
 };
 </script>
 
-<!--<style scoped lang="scss">-->
-<!--@import 'bootstrap/scss/_functions.scss';-->
-<!--@import 'bootstrap/scss/_variables.scss';-->
-<!--@import 'bootstrap/scss/_mixins.scss';-->
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
 
 
-<!--@include media-breakpoint-down(sm) {-->
-<!--  $item-size: 3em;-->
-<!--  $item-margin: 2px;-->
+@include media-breakpoint-down(sm) {
+ $item-size: 3em;
+ $item-margin: 2px;
 
-<!--  .spell {-->
-<!--    width: $item-size;-->
-<!--    height: $item-size;-->
-<!--  }-->
-<!--}-->
+ .spell {
+   width: $item-size;
+   height: $item-size;
+ }
+}
 
-<!--@include media-breakpoint-up(sm) {-->
-<!--  $item-size: 5em;-->
-<!--  $item-margin: 5px;-->
+@include media-breakpoint-up(sm) {
+ $item-size: 5em;
+ $item-margin: 5px;
 
-<!--  .spell {-->
-<!--    width: $item-size;-->
-<!--    height: $item-size;-->
-<!--  }-->
-<!--}-->
+ .spell {
+   width: $item-size;
+   height: $item-size;
+ }
+}
 
-<!--.spell {-->
-<!--  background: none;-->
-<!--  -webkit-user-drag: none;-->
-<!--  user-select: none;-->
-<!--  transition: opacity 0.15s ease-in-out;-->
-<!--}-->
+.spell {
+ background: none;
+ -webkit-user-drag: none;
+ user-select: none;
+ transition: opacity 0.15s ease-in-out;
+}
 
-<!--.spell:hover {-->
-<!--  opacity: 0.85;-->
-<!--}-->
+.spell:hover {
+ opacity: 0.85;
+}
 
-<!--.spell-basic {-->
-<!--  border: 3px solid #534837-->
-<!--}-->
+.spell-basic {
+ border: 3px solid #534837
+}
 
-<!--.spell-basic:hover {-->
-<!--  box-shadow: 0 0 8px black;-->
-<!--}-->
+.spell-basic:hover {
+ box-shadow: 0 0 8px black;
+}
 
-<!--.spell-basic:focus,-->
-<!--.spell-basic.active {-->
-<!--  border: 3px solid #917141;-->
-<!--  box-shadow: 0;-->
-<!--}-->
+.spell-basic:focus,
+.spell-basic.active {
+ border: 3px solid #917141;
+ box-shadow: 0;
+}
 
-<!--.spell-ultimate {-->
-<!--  border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;-->
-<!--}-->
+.spell-ultimate {
+ border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+}
 
-<!--.spell-ultimate:hover {-->
-<!--  border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;-->
-<!--  box-shadow: 0 0 28px black;-->
-<!--}-->
+.spell-ultimate:hover {
+ border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+ box-shadow: 0 0 28px black;
+}
 
-<!--.spell-ultimate:focus,-->
-<!--.spell-ultimate.active {-->
-<!--  border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;-->
-<!--}-->
+.spell-ultimate:focus,
+.spell-ultimate.active {
+ border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+}
 
-<!--.spell-travel {-->
-<!--  border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;-->
-<!--}-->
+.spell-travel {
+ border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+}
 
-<!--.spell-travel:hover {-->
-<!--  border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;-->
-<!--  box-shadow: 0 0 28px black;-->
-<!--}-->
+.spell-travel:hover {
+ border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+ box-shadow: 0 0 28px black;
+}
 
-<!--.spell-travel:focus,-->
-<!--.spell-travel.active {-->
-<!--  border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;-->
-<!--  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;-->
-<!--}-->
-<!--</style>-->
+.spell-travel:focus,
+.spell-travel.active {
+ border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+ -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+}
+</style>

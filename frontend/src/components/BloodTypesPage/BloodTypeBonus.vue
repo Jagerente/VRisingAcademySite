@@ -89,41 +89,41 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-//@import 'bootstrap/scss/_functions.scss';
-//@import 'bootstrap/scss/_variables.scss';
-//@import 'bootstrap/scss/_mixins.scss';
-//@import '@/assets/styles/va_variables.scss';
-//
-//p {
-//    margin: 0;
-//}
-//
-//@include media-breakpoint-down(sm) {
-//    .bonus {
-//        font-size: 13px;
-//    }
-//
-//    .tier {
-//        font-size: 18px;
-//    }
-//}
-//
-//@include media-breakpoint-up(sm) {
-//    .tier {
-//        font-size: 22px;
-//    }
-//}
-//
-//.tier-active {
-//    color: yellow;
-//}
-//
-//.description-active {
-//    color: white;
-//    opacity: 1;
-//}
-//
-//.block {
-//    background-color: #14141e;
-//}
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
+@import '@/assets/styles/utility/vars.scss';
+
+p {
+    margin: 0;
+}
+
+@include media-breakpoint-down(sm) {
+    .bonus {
+        font-size: 13px;
+    }
+
+    .tier {
+        font-size: 18px;
+    }
+}
+
+@include media-breakpoint-up(sm) {
+    .tier {
+        font-size: 22px;
+    }
+}
+
+.tier-active {
+    color: yellow;
+}
+
+.description-active {
+    color: white;
+    opacity: 1;
+}
+
+.block {
+    background-color: #14141e;
+}
 </style>

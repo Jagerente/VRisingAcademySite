@@ -32,44 +32,44 @@ export default {
 };
 </script>
 
-<!--<style scoped lang="scss">-->
-<!--@import 'bootstrap/scss/_functions.scss';-->
-<!--@import 'bootstrap/scss/_variables.scss';-->
-<!--@import 'bootstrap/scss/_mixins.scss';-->
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
 
-<!--.card__background {-->
-<!--  border-radius: 10px;-->
-<!--  background-color: #282737;-->
-<!--}-->
+.card__background {
+  border-radius: 10px;
+  background-color: #282737;
+}
 
-<!--@include media-breakpoint-down(sm) {-->
-<!--  $header-size: 18px;-->
+@include media-breakpoint-down(sm) {
+  $header-size: 18px;
 
-<!--  .card__header {-->
-<!--    font-size: $header-size;-->
-<!--    height: 39px;-->
-<!--  }-->
-<!--}-->
+  .card__header {
+    font-size: $header-size;
+    height: 39px;
+  }
+}
 
-<!--@include media-breakpoint-up(sm) {-->
-<!--  $header-size: 26px;-->
+@include media-breakpoint-up(sm) {
+  $header-size: 26px;
 
-<!--  .card__header {-->
-<!--    font-size: $header-size;-->
-<!--  }-->
-<!--}-->
+  .card__header {
+    font-size: $header-size;
+  }
+}
 
-<!--.card__header {-->
-<!--  background-color: #14141e;-->
-<!--  border-radius: 10px;-->
-<!--  padding-left: 15px;-->
-<!--  padding-right: 15px;-->
-<!--  text-align: center;-->
-<!--  user-select: none;-->
-<!--}-->
+.card__header {
+  background-color: #14141e;
+  border-radius: 10px;
+  padding-left: 15px;
+  padding-right: 15px;
+  text-align: center;
+  user-select: none;
+}
 
-<!--.card__content {-->
-<!--  padding: 10px;-->
-<!--  overflow-y: auto;-->
-<!--}-->
-<!--</style>-->
+.card__content {
+  padding: 10px;
+  overflow-y: auto;
+}
+</style>

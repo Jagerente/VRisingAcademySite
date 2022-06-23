@@ -51,94 +51,94 @@ export default {
 </script>
 
 
-<!--<style scoped lang="scss">-->
-<!--@import 'bootstrap/scss/_functions.scss';-->
-<!--@import 'bootstrap/scss/_variables.scss';-->
-<!--@import 'bootstrap/scss/_mixins.scss';-->
+<style scoped lang="scss">
+@import 'bootstrap/scss/_functions.scss';
+@import 'bootstrap/scss/_variables.scss';
+@import 'bootstrap/scss/_mixins.scss';
 
-<!--@include media-breakpoint-down(sm) {-->
-<!--  .preview-md {-->
-<!--    $size: 3em;-->
-<!--    $margin: 2px;-->
-<!--    width: $size;-->
-<!--    height: $size;-->
-<!--    margin: $margin;-->
-<!--  }-->
+@include media-breakpoint-down(sm) {
+  .preview-md {
+    $size: 3em;
+    $margin: 2px;
+    width: $size;
+    height: $size;
+    margin: $margin;
+  }
 
-<!--  .preview-lg {-->
-<!--    $size: 100px;-->
-<!--    width: $size;-->
-<!--    height: $size;-->
-<!--  }-->
-<!--}-->
+  .preview-lg {
+    $size: 100px;
+    width: $size;
+    height: $size;
+  }
+}
 
-<!--@include media-breakpoint-up(sm) {-->
+@include media-breakpoint-up(sm) {
 
-<!--  .preview-md {-->
-<!--    $size: 5em;-->
-<!--    $margin: 5px;-->
-<!--    width: $size;-->
-<!--    height: $size;-->
-<!--    margin: $margin;-->
-<!--  }-->
+  .preview-md {
+    $size: 5em;
+    $margin: 5px;
+    width: $size;
+    height: $size;
+    margin: $margin;
+  }
 
-<!--  .preview-lg {-->
-<!--    $size: 200px;-->
-<!--    width: $size;-->
-<!--    height: $size;-->
-<!--  }-->
-<!--}-->
+  .preview-lg {
+    $size: 200px;
+    width: $size;
+    height: $size;
+  }
+}
 
-<!--.preview-sm {-->
-<!--  $size: 48px;-->
-<!--  background: rgba(0, 0, 0, 0.5);-->
-<!--  font-family: sans-serif;-->
-<!--  width: $size;-->
-<!--  height: $size;-->
-<!--  -webkit-user-drag: none;-->
-<!--  border: 0;-->
-<!--  user-select: none;-->
-<!--  transition: box-shadow 0.15s ease-in-out;-->
-<!--  color: white;-->
-<!--  text-align: right;-->
-<!--}-->
+.preview-sm {
+  $size: 48px;
+  background: rgba(0, 0, 0, 0.5);
+  font-family: sans-serif;
+  width: $size;
+  height: $size;
+  -webkit-user-drag: none;
+  border: 0;
+  user-select: none;
+  transition: box-shadow 0.15s ease-in-out;
+  color: white;
+  text-align: right;
+}
 
-<!--.preview-sm:hover {-->
-<!--  box-shadow: 0 0 8px black;-->
-<!--}-->
+.preview-sm:hover {
+  box-shadow: 0 0 8px black;
+}
 
-<!--.preview-md {-->
-<!--  background: rgba(0, 0, 0, 0.5);-->
-<!--  font-family: sans-serif;-->
-<!--  -webkit-user-drag: none;-->
-<!--  border: 0;-->
-<!--  user-select: none;-->
-<!--  transition: box-shadow 0.15s ease-in-out;-->
-<!--}-->
+.preview-md {
+  background: rgba(0, 0, 0, 0.5);
+  font-family: sans-serif;
+  -webkit-user-drag: none;
+  border: 0;
+  user-select: none;
+  transition: box-shadow 0.15s ease-in-out;
+}
 
-<!--.preview-md:hover {-->
-<!--  box-shadow: 0 0 8px black;-->
-<!--}-->
+.preview-md:hover {
+  box-shadow: 0 0 8px black;
+}
 
-<!--.active {-->
-<!--  border: 1px solid white;-->
-<!--}-->
+.active {
+  border: 1px solid white;
+}
 
-<!--.active:hover {-->
-<!--  box-shadow: none-->
-<!--}-->
+.active:hover {
+  box-shadow: none
+}
 
-<!--.preview__text {-->
-<!--  pointer-events: none;-->
-<!--  position: absolute;-->
-<!--  bottom: 0px;-->
-<!--  right: 0px;-->
-<!--  font-size: 16px;-->
-<!--}-->
+.preview__text {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 16px;
+}
 
-<!--.preview__group {-->
-<!--  position: relative;-->
-<!--  text-align: center;-->
-<!--  color: white;-->
-<!--}-->
-<!--</style>-->
+.preview__group {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+</style>
