@@ -5,6 +5,7 @@ type Location struct {
 	Region     string  `json:"region"`
 	Loot       []int32 `json:"loot"`
 	MapgenieId int32   `json:"mapgenieId"`
+	Hazards    []int32 `json:"hazards"`
 }
 
 type LocationWithRegion struct {
@@ -18,7 +19,8 @@ type Region struct {
 }
 
 type Hazard struct {
-	Id          int32  `json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Id          int32   `json:"id"`
+	Name        string  `json:"name"`
+	Description string  `json:"description"`
+	Locations   []int32 `json:"locations"`
 }
