@@ -17,7 +17,7 @@ const (
 	postgresPassword         string = "83"
 	postgresHost             string = "localhost"
 	postgresPort             int32  = 5432
-	DatabaseVersion          int32  = 17
+	DatabaseVersion          int32  = 18
 )
 
 var (
