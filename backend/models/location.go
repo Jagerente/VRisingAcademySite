@@ -16,3 +16,9 @@ type Region struct {
 	Entity
 	Name string `json:"name"`
 }
+
+type Hazard struct {
+	Id          int32  `json:"id"`
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
