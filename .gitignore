@@ -1,6 +1,8 @@
 .DS_Store
 node_modules
 /dist
+obj/
+output/
 
 main
 
@@ -23,5 +25,4 @@ go.work
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
