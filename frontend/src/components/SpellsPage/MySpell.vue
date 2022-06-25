@@ -1,9 +1,14 @@
 <template>
-  <input @click="selectSpell(spell)" type="image" class="spell rounded"
-    :class="spell.type === 'Ultimate' ? 'spell-ultimate' : spell.type === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
-    :title="spell.name" :src="
+  <input
+    @click="selectSpell(spell)"
+    type="image"
+    class="spell rounded"
+    :class="spell.type.name === 'Ultimate' ? 'spell-ultimate' : spell.type.name === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
+    :title="spell.name"
+    :src="
       require(`@/assets/images/spells/${spell.school.name.toLowerCase()}/${spell.name}.webp`)
-    " />
+    "
+  />
 </template>
 
 <script>
@@ -67,7 +72,8 @@ export default {
   box-shadow: 0 0 8px black;
 }
 
-.spell-basic:focus {
+.spell-basic:focus,
+.spell-basic.active {
   border: 3px solid #917141;
   box-shadow: 0;
 }
@@ -83,7 +89,8 @@ export default {
   box-shadow: 0 0 28px black;
 }
 
-.spell-ultimate:focus {
+.spell-ultimate:focus,
+.spell-ultimate.active {
   border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
   -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
 }
@@ -99,7 +106,8 @@ export default {
   box-shadow: 0 0 28px black;
 }
 
-.spell-travel:focus {
+.spell-travel:focus,
+.spell-travel.active {
   border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
   -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
 }

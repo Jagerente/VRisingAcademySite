@@ -6,10 +6,13 @@ export const itemsModule = {
         itemsGrouped: [],
         types: [],
         sets: [],
+        locations: [],
         recipes: [],
+        salvageables: [],
         searchType: 1,
         isItemsLoading: true,
         searchQuery: "",
+        selectedType: 0,
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
@@ -32,6 +35,13 @@ export const itemsModule = {
                     return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
             }
         },
+
+        mapGenieLocations: (state) => {
+            const locations = state.locations
+                .filter(location => state.selectedItem.locations.includes(location.id))
+                .map(location => (location.mapgenieId));
+            return locations.join();
+        }
     },
     mutations: {
         setItems(state, items) {
@@ -46,8 +56,14 @@ export const itemsModule = {
         setSets(state, sets) {
             state.sets = sets
         },
+        setLocations(state, locations) {
+            state.locations = locations
+        },
         setRecipes(state, recipes) {
             state.recipes = recipes
+        },
+        setSalvageables(state, salvageables) {
+            state.salvageables = salvageables
         },
         setLoading(state, bool) {
             state.isItemsLoading = bool
@@ -57,6 +73,9 @@ export const itemsModule = {
         },
         setSearchQuery(state, searchQuery) {
             state.searchQuery = searchQuery
+        },
+        setSelectedType(state, selectedType) {
+            state.selectedType = selectedType
         },
         setSelectedItem(state, selectedItem) {
             state.selectedItem = selectedItem
@@ -73,12 +92,12 @@ export const itemsModule = {
             commit('setLoading', true);
 
             await axios
-                .get(state.host + "item/list")
+                .get(state.host + "item/list?v2=1")
                 .then(response => commit('setItems', response.data))
                 .catch(error => alert("Error: " + error))
 
             await axios
-                .get(state.host + "item/grouplist")
+                .get(state.host + "item/grouplist?v2=1")
                 .then(response => commit('setItemsGrouped', response.data))
                 .catch(error => alert("Error: " + error))
 
@@ -93,11 +112,26 @@ export const itemsModule = {
                 .catch(error => alert("Error: " + error));
 
             await axios
+                .get(state.host + "location/list")
+                .then(response => commit('setLocations', response.data))
+                .catch(error => alert("Error: " + error));
+
+            await axios
                 .get(state.host + "recipe/list")
                 .then(response => commit('setRecipes', response.data))
                 .catch(error => alert("Error: " + error));
 
+            await axios
+                .get(state.host + "salvageable/list")
+                .then(response => commit('setSalvageables', response.data))
+                .catch(error => alert("Error: " + error));
+
             commit('setLoading', false)
+        },
+
+        selectType({ commit }, id) {
+            commit('setSelectedType', id);
+            commit('setSearchQuery', '')
         },
 
         selectItem({ commit }, item) {
@@ -108,14 +142,15 @@ export const itemsModule = {
             commit('setSearchType', type)
             commit('setSearchQuery', query)
         },
+
         updateMatchingFloor({ state, commit }) {
             commit('setMatchingFloor', !state.matchingFloor);
             if (state.matchingFloor) commit('setConfinedRoom', true);
         },
+
         updateConfinedRoom({ state, commit }) {
             commit('setConfinedRoom', !state.confinedRoom);
         },
-
     },
     namespaced: true
 }

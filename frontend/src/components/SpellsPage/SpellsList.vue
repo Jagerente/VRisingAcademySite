@@ -1,13 +1,21 @@
 <template>
   <div class="d-flex flex-column">
-    <div class="d-flex justify-content-evenly my-3 flex-wrap" v-for="stype in this.clearTypes">
-      <my-spell v-for="spell in stype.spells" :spell="spell"></my-spell>
+    <div
+      class="d-flex justify-content-evenly my-3 flex-wrap"
+      v-for="stype in this.types"
+    >
+      <my-spell
+        v-for="spell in stype.spells"
+        :spell="spell"
+        :class="this.selectedSpell && this.selectedSpell.id === spell.id ? 'active' : ''"
+      ></my-spell>
     </div>
   </div>
 </template>
 
 <script>
-import MySpell from "@/components/SpellsPage/MySpell"
+import { mapState } from "vuex";
+import MySpell from "@/components/SpellsPage/MySpell";
 
 export default {
   name: "spells-list",
@@ -17,13 +25,11 @@ export default {
   props: {
     types: Array
   },
-  // --Remove after fix--
   computed: {
-    clearTypes() {
-      return this.types.filter(type => type.spells.length > 0)
-    }
+    ...mapState({
+      selectedSpell: (state) => state.spells.selectedSpell
+    })
   },
-  // --Remove after fix--
 };
 </script>
 

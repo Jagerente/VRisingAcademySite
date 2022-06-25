@@ -1,6 +1,22 @@
 <template>
-  <img class="rounded" :disabled="button" draggable="false" :title="item.name" :src="require('@/' + this.imagePath)"
-    @click="selectItem(this.items.find(item => { return item.id == this.item.id }))" />
+  <div
+    class="preview__group"
+    :class="text != null ? '' : ''"
+  >
+    <img
+      class="rounded"
+      :class="this.style"
+      :disabled="button"
+      draggable="false"
+      :title="item.name"
+      :src="require('@/' + this.imagePath)"
+      @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
+    >
+    <div
+      v-if="this.text"
+      class="preview__text"
+    >{{ this.text }}</div>
+  </div>
 </template>
 
 <script>
@@ -11,6 +27,11 @@ export default {
   props: {
     item: Object,
     button: Boolean,
+    style: String,
+    text: {
+      Type: String,
+      Default: null
+    }
   },
   methods: {
     ...mapActions({
@@ -19,10 +40,11 @@ export default {
   },
   computed: {
     imagePath() {
-      return 'assets/images/items/' + this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[1])) + '.webp';
+      return 'assets/images/items/' + this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[0])) + '.webp';
     },
     ...mapState({
       items: (state) => state.items.items,
+      selectedItem: (state) => state.items.selectedItem,
     }),
   },
 };
@@ -104,5 +126,19 @@ export default {
 
 .active:hover {
   box-shadow: none
+}
+
+.preview__text {
+  pointer-events: none;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  font-size: 16px;
+}
+
+.preview__group {
+  position: relative;
+  text-align: center;
+  color: white;
 }
 </style>
