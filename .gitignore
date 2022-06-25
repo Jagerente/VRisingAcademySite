@@ -26,5 +26,4 @@ go.work
 *.suo
 *.ntvs*
 *.njsproj
-*.sln
 *.sw?
