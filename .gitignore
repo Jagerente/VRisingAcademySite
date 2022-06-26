@@ -7,7 +7,8 @@ node_modules
 .vs/
 
 main
-
+Cargo.lock*
+target/
 # local env files
 .env.local
 .env.*.local
