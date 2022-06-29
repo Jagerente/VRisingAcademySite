@@ -5,9 +5,7 @@
 [role="button"],
 a:not(:disabled),
 button:not(:disabled),
-[type="button"]:not(:disabled),
-[type="reset"]:not(:disabled),
-[type="submit"]:not(:disabled) {
+[type="button"]:not(:disabled) {
     cursor: url("@/assets/images/ui/Cursor_Arrow_Active.webp"), default;
 
 }
