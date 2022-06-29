@@ -96,6 +96,8 @@ export default {
     $item-size: 2.5rem;
     width: $item-size;
     height: $item-size;
+    background: black;
+    border: 1px solid black;
   }
 
   .item-md {
