@@ -1,4 +1,4 @@
-$header-height: 79px;
+$header-height: 70px;
 $footer-height: 100px;
 
 $mainFontFamily: 'DniproCity';
@@ -9,6 +9,13 @@ $text-color: #a8a9ae;
 
 $dark: #14141e;
 $primary: #aa1d1d;
+
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;
+
+$m1: 0.5rem;
 
 :root {
     --popper-theme-background-color: #171722d5;
