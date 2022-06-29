@@ -98,7 +98,7 @@
           <!-- Preview -->
           <div class="d-flex flex-column">
             <ItemPreview
-              :style="'preview-lg'"
+              :style="'item-lg'"
               :item="this.selectedItem"
               :button="false"
             />
@@ -129,7 +129,7 @@
           <ItemPreview
             v-for="itemId in selectedItem.variants"
             class="m-1"
-            :style="'preview-sm'"
+            :style="'item-sm'"
             :item="this.items.find(item => { return item.id === itemId })"
             :button="true"
           />
@@ -197,7 +197,7 @@
             >
               <ItemPreview
                 class="m-1"
-                :style="'preview-sm'"
+                :style="'item-sm'"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
                 :item="this.items.find(item => { return item.id == output.itemId })"
                 :button="true"
@@ -213,7 +213,7 @@
           <div class="d-flex block ">
             <ItemPreview
               class="m-1"
-              :style="'preview-sm'"
+              :style="'item-sm'"
               v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
               :item="this.items.find(item => { return item.id === output.itemId })"
               :text="output.amount"
@@ -226,7 +226,7 @@
           <div class="d-flex flex-wrap block">
             <ItemPreview
               class="m-1"
-              :style="'preview-sm'"
+              :style="'item-sm'"
               v-for="input in this.selectedItem.salvageableOf	"
               :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
               :button="true"

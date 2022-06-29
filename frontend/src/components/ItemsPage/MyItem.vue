@@ -1,6 +1,6 @@
 <template>
   <ItemPreview
-    :style="`preview-md rounded ${this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''}`"
+    :style="`item-md ${this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''}`"
     :item="item"
     @click="selectItem(item)"
   />

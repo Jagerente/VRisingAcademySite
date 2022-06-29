@@ -60,7 +60,7 @@
                     class="recipe__group px-1"
                 >
                     <item-preview
-                        :style="'preview-sm'"
+                        :style="'item-sm'"
                         :item="this.items.find(item => { return item.id === ingridient.itemId })"
                         :text="this.matchingFloor && this.confined ?
                         Math.ceil(ingridient.amount * 0.75) : ingridient.amount"
@@ -88,7 +88,7 @@
                     class="recipe__group px-1"
                 >
                     <item-preview
-                        :style="'preview-sm'"
+                        :style="'item-sm'"
                         :item="this.items.find(item => { return item.id === result.itemId })"
                         :text="result.amount"
                         :button="true"
