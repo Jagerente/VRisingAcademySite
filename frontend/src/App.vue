@@ -2,7 +2,7 @@
   <div class="d-flex flex-column h-100">
     <my-navbar />
     <router-view />
-    <my-footer />
+    <my-footer v-show="false" />
   </div>
 </template>
 
