@@ -156,6 +156,7 @@ export default {
             }
 
             &__label {
+              pointer-events: none;
               display: flex;
               margin-top: auto;
               margin-bottom: auto;
