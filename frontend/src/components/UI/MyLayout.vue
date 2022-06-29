@@ -10,66 +10,49 @@
   </div>
   <div
     v-else
-    class="catalogue d-flex flex-column flex-lg-row mx-2"
+    class="catalogue"
   >
     <!-- LEFT TOP -->
     <div
-      class="catalogue__left w-100 d-flex mb-2 mb-lg-0 filter__card"
+      class="catalogue__top-left"
       :class="{ 'h-100': !right }"
     >
       <!-- LEFT -->
-      <div>
-        <my-card
-          title="Filter"
-          :custom="false"
-        >
-          <template #left>
-            <icon-filter />
-          </template>
-          <div
-            class="nav d-flex flex-column"
-            id="v-pills-tab"
-            role="tablist"
-            aria-orientation="vertical"
+      <my-card
+        class="top-left__left"
+        title="Filter"
+        :custom="false"
+      >
+        <template #left>
+          <icon-filter />
+        </template>
+        <div class="tabs">
+          <button
+            v-for="(tab, i) in this.tabs"
+            @click="this.selector(i);"
+            class="tabs__button button"
+            :class="i == 0 ? 'active' : ''"
           >
-            <button
-              v-for="(tab, i) in this.tabs"
-              @click="this.selector(i);"
-              class="tab d-flex"
-              :class="i == 0 ? 'active' : ''"
-              data-bs-toggle="pill"
-              :data-bs-target="`#v-pills-${tab.name.toLowerCase()}`"
-              type="button"
-              role="tab"
-              :aria-controls="`v-pills-${tab.name.toLowerCase()}`"
-              aria-selected="false"
-            >
-              <div
-                class="d-flex my-auto"
-                v-if="this.tabLogo"
-              >
-                <img
-                  style="width:24px;"
-                  :src="require('@/assets/images/blood_types/' + tab.name.toLowerCase() + '.webp')"
-                />
-              </div>
-              <div class="d-flex my-auto mx-auto">
-                {{ tab.name }}
-              </div>
-            </button>
-          </div>
-        </my-card>
-        <!-- <slot name="left"></slot> -->
-      </div>
+            <img
+              v-if="this.tabLogo"
+              class="button__image"
+              :src="require('@/assets/images/blood_types/' + tab.name.toLowerCase() + '.webp')"
+            />
+            <div class="button__label">
+              {{ tab.name }}
+            </div>
+          </button>
+        </div>
+      </my-card>
       <!-- RIGHT -->
-      <div class="flex-fill mx-0 ms-1 mx-lg-2">
+      <div class="top-left__right">
         <slot name="center"></slot>
       </div>
     </div>
     <!-- RIGHT TOP -->
     <div
       v-if="right"
-      class="catalogue__right-top p-0 m-0 d-lg-flex d-none"
+      class="catalogue__top-right"
       style="height: auto; width: 800px"
     >
       <slot name="right"></slot>
@@ -77,7 +60,7 @@
     <!-- RIGHT TO BOTTOM -->
     <div
       v-if="right"
-      class="catalogue__right-bottom p-0 m-0 d-flex d-lg-none flex-fill"
+      class="catalogue__bottom"
     >
       <slot name="right"></slot>
     </div>
@@ -111,70 +94,98 @@ export default {
 </script>
 
 <style lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
 @import '@/assets/styles/utility/vars.scss';
-
-@include media-breakpoint-down(sm) {
-  $header-size: 13px;
-
-  .filter__card {
-    min-height: 220px;
-  }
-
-  .tab {
-    font-size: $header-size;
-    width: 100px;
-    height: 35px;
-  }
-
-  .logo {
-    $size: 12px;
-    width: $size;
-    height: $size;
-  }
-}
-
-@include media-breakpoint-up(sm) {
-  .filter__card {
-    min-height: 300px;
-  }
-
-  .tab {
-    height: 55px;
-  }
-
-  .logo {
-    $size: 12px;
-    width: size;
-    height: size;
-  }
-}
 
 .catalogue {
   padding-top: 15px;
-}
-
-.catalogue {
+  padding-left: 10px;
+  padding-right: 10px;
   height: calc(100vh - ($header-height + $footer-height) + 5px);
   min-height: calc(100vh - ($header-height + 25px));
-}
+  display: flex;
+  flex-direction: column;
 
-.tab {
-  margin-bottom: 5px;
-  background-color: #14141e;
-  border: 1px solid #14141e;
-  color: $text-color;
-  text-transform: capitalize;
-}
 
-.tab.active {
-  background: url("@/assets/images/ui/circle.webp"), rgba(0, 0, 0, 0.5);
-  background-size: 110%;
-  background-position: 50%;
-  background-repeat: no-repeat;
-  border: 1px solid white;
-  color: white;
+  @media (min-width: $lg) {
+    flex-direction: row;
+  }
+
+  &__top-left {
+    display: flex;
+    width: 100%;
+    min-height: 220px;
+    margin-bottom: $m1;
+
+    .top-left__left {
+      .tabs {
+        display: flex;
+        flex-direction: column;
+
+        .tabs__button {
+          display: flex;
+          background-color: $dark;
+          border: 1px solid $dark;
+          color: $text-color;
+          text-transform: capitalize;
+          width: 100%;
+          height: 40px;
+
+          &:not(:last-child) {
+            margin-bottom: 5px;
+          }
+
+          &.active {
+            background: url("@/assets/images/ui/circle.webp"), $dark;
+            background-size: 110%;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            border: 1px solid white;
+            color: white;
+          }
+
+          .button {
+            &__image {
+              width: 24px;
+              margin-top: auto;
+              margin-bottom: auto;
+            }
+
+            &__label {
+              display: flex;
+              margin-top: auto;
+              margin-bottom: auto;
+              margin-left: auto;
+              margin-right: auto;
+            }
+          }
+        }
+      }
+    }
+
+    .top-left__right {
+      flex: 1 1 auto;
+      margin-left: $m1;
+
+      @media (min-width: $lg) {
+        margin-right: $m1;
+      }
+    }
+  }
+
+  &__top-right {
+    display: none;
+
+    @media (min-width: $lg) {
+      display: flex;
+    }
+  }
+
+  &__bottom {
+    flex: 1 1 auto;
+
+    @media (min-width: $lg) {
+      display: none;
+    }
+  }
 }
 </style>
