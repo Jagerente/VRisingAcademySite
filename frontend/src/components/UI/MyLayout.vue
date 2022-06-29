@@ -29,9 +29,9 @@
         <div class="tabs">
           <button
             v-for="(tab, i) in this.tabs"
-            @click="this.selector(i);"
+            @click="this.selector(i); this.selectedTab = i;"
             class="tabs__button button"
-            :class="i == 0 ? 'active' : ''"
+            :class="{ 'active': i === this.selectedTab }"
           >
             <img
               v-if="this.tabLogo"
@@ -89,7 +89,12 @@ export default {
       type: Boolean,
       default: true,
     },
-  }
+  },
+  data() {
+    return {
+      selectedTab: 0
+    }
+  },
 }
 </script>
 
