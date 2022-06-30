@@ -1,5 +1,5 @@
 <template>
-    <div class="d-flex flex-column block ">
+    <div class="d-flex flex-column">
         <div class="d-flex justify-content-between">
             <div class="d-flex">
                 <span
