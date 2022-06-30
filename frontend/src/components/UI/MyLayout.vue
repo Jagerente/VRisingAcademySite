@@ -14,12 +14,12 @@
   >
     <!-- LEFT TOP -->
     <div
-      class="catalogue__top-left"
+      class="catalogue__wrapper"
       :class="{ 'h-100': !right }"
     >
       <!-- LEFT -->
       <my-card
-        class="top-left__left"
+        class="catalogue__filters"
         title="Filter"
         :custom="false"
       >
@@ -45,25 +45,24 @@
         </div>
       </my-card>
       <!-- RIGHT -->
-      <div class="top-left__right">
+      <div class="catalogue__content">
         <slot name="center"></slot>
       </div>
     </div>
     <!-- RIGHT TOP -->
     <div
       v-if="right"
-      class="catalogue__top-right"
-      style="height: auto; width: 800px"
+      class="catalogue__aside"
     >
       <slot name="right"></slot>
     </div>
     <!-- RIGHT TO BOTTOM -->
-    <div
-      v-if="right"
-      class="catalogue__bottom"
-    >
-      <slot name="right"></slot>
-    </div>
+<!--    <div-->
+<!--      v-if="right"-->
+<!--      class="catalogue__bottom"-->
+<!--    >-->
+<!--      <slot name="right"></slot>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -115,13 +114,13 @@ export default {
     flex-direction: row;
   }
 
-  &__top-left {
+  &__wrapper {
     display: flex;
     width: 100%;
     min-height: 220px;
     margin-bottom: $m1;
 
-    .top-left__left {
+    .catalogue__filters{
       .tabs {
         display: flex;
         flex-direction: column;
@@ -168,7 +167,7 @@ export default {
       }
     }
 
-    .top-left__right {
+    .catalogue__content {
       flex: 1 1 auto;
       margin-left: $m1;
 
@@ -178,12 +177,15 @@ export default {
     }
   }
 
-  &__top-right {
-    display: none;
-
+  &__aside {
+		flex: 1 1 auto;
+		width: 100%;
+		
     @media (min-width: $lg) {
       margin-bottom: $m1;
       display: flex;
+			height: auto;
+			width: 800px;
     }
   }
 
