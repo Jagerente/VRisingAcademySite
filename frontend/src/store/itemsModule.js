@@ -17,6 +17,7 @@ export const itemsModule = {
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
+        showModal: false,
         host: "https://vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
@@ -86,6 +87,9 @@ export const itemsModule = {
         },
         setConfinedRoom(state, confinedRoom) {
             state.confinedRoom = confinedRoom
+        },
+        setShowModal(state, showModal) {
+            state.showModal = showModal
         }
     },
     actions: {
@@ -160,6 +164,11 @@ export const itemsModule = {
                 }
             });
             commit('setSelectedItem', item)
+            commit('setShowModal', true)
+        },
+
+        updateShowModal({ commit }, show) {
+            commit('setShowModal', show)
         },
 
         updateSearchQuery({ commit }, { query = '', type = 0 }) {

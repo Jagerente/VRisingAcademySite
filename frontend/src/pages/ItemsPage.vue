@@ -1,5 +1,11 @@
 <template>
-  <MyLayout :isLoading="this.isItemsLoading" :tabs="this.types" :selector="this.selectType">
+  <MyLayout
+    :isLoading="this.isItemsLoading"
+    :tabs="this.types"
+    :selector="this.selectType"
+    :showModal="this.showModal"
+    :updateShowModal="this.updateShowModal"
+  >
     <template #center>
       <card-catalogue />
     </template>
@@ -26,12 +32,22 @@ export default {
     ...mapActions({
       fetchItems: "items/fetchItems",
       selectType: "items/selectType",
+      updateShowModal: "items/updateShowModal",
     })
   },
   computed: {
+    // modal: {
+    //   get() {
+    //     return this.showModal;
+    //   },
+    //   set(show) {
+    //     return this.updateShowModal(show);
+    //   },
+    // },
     ...mapState({
       isItemsLoading: (state) => state.items.isItemsLoading,
       types: (state) => state.items.types,
+      showModal: (state) => state.items.showModal,
     })
   },
   mounted() {

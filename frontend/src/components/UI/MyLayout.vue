@@ -13,10 +13,7 @@
     class="catalogue"
   >
     <!-- LEFT TOP -->
-    <div
-      class="catalogue__wrapper"
-      :class="{ 'h-100': !right }"
-    >
+    <div class="catalogue__wrapper">
       <!-- LEFT -->
       <my-card
         class="catalogue__filters"
@@ -56,13 +53,20 @@
     >
       <slot name="right"></slot>
     </div>
-    <!-- RIGHT TO BOTTOM -->
-<!--    <div-->
-<!--      v-if="right"-->
-<!--      class="catalogue__bottom"-->
-<!--    >-->
-<!--      <slot name="right"></slot>-->
-<!--    </div>-->
+    <div
+      class="modal"
+      :class="{ 'active': this.showModal }"
+      v-if="this.showModal"
+    >
+      <div
+        class="modal__overlay"
+        @click.self="this.updateShowModal(false)"
+      >
+        <div class="modal__content">
+          <slot name="right"></slot>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -88,10 +92,15 @@ export default {
       type: Boolean,
       default: true,
     },
+    showModal: {
+      type: Boolean,
+      default: false,
+    },
+    updateShowModal: Function
   },
   data() {
     return {
-      selectedTab: 0
+      selectedTab: 0,
     }
   },
 }
@@ -120,7 +129,7 @@ export default {
     min-height: 220px;
     margin-bottom: $m1;
 
-    .catalogue__filters{
+    .catalogue__filters {
       .tabs {
         display: flex;
         flex-direction: column;
@@ -178,14 +187,15 @@ export default {
   }
 
   &__aside {
-		flex: 1 1 auto;
-		width: 100%;
-		
+    flex: 1 1 auto;
+    width: 100%;
+    display: none;
+
     @media (min-width: $lg) {
       margin-bottom: $m1;
       display: flex;
-			height: auto;
-			width: 800px;
+      height: auto;
+      width: 800px;
     }
   }
 
@@ -195,6 +205,52 @@ export default {
     @media (min-width: $lg) {
       display: none;
     }
+  }
+}
+
+.modal {
+  //display: none;
+  opacity: 0;
+  transition: opacity .2s ease;
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__content {
+    border-radius: 20px;
+    background-color: $background;
+    // padding: 15px 5px 0 5px;
+    translate: 0 100%;
+    transition: translate .2s ease, display .2s ease;
+  }
+
+  @media (max-width: $lg) {
+
+      display: flex;
+      max-height: 50%;
+      opacity: 1;
+
+      &__overlay {
+        display: flex;
+        align-items: flex-end;
+      }
+
+      &__content {
+        height: 75%;
+        translate: 0 0%;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        width: 100%;
+      }
   }
 }
 </style>
