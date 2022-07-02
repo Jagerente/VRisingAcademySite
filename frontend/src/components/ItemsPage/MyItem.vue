@@ -3,7 +3,7 @@
     class="item"
     :class="{ 'active': this.selectedItem !== null && this.item.id === this.selectedItem.id }"
     :item="item"
-    @click="selectItem(item)"
+    button
   />
 </template>
 
