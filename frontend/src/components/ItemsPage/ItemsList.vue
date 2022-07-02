@@ -6,7 +6,7 @@
     :key="set.id"
   >
     <p class="items__set">{{ set.name }}</p>
-    <div class="items__list ">
+    <div class="items__list">
       <MyItem
         v-for="item in set.items"
         :key="item.id"
