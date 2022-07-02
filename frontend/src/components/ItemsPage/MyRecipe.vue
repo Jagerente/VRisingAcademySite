@@ -156,26 +156,25 @@ export default {
     user-select: none;
 }
 
-.tag__time-confined {
-    background: #176744;
-}
-
-.tag__time-normal {
-    background: #ae1d1d;
-}
-
 .tag {
     border-radius: 100px;
     text-transform: capitalize;
     margin-right: 5px;
-    border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: silver;
-}
+    padding: 2px 10px;
 
-.tag:hover {
-    box-shadow: 0 0 5px black;
-    transition: box-shadow 0.05s ease-in-out;
+    &:hover {
+        box-shadow: 0 0 5px black;
+        transition: box-shadow 0.05s ease-in-out;
+    }
+
+    &__time-confined {
+        background: $primary;
+        color: white;
+    }
+
+    &__time-normal {
+        background: #282737;
+        color: $text-color;
+    }
 }
 </style>
