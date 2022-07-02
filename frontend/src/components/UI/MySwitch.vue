@@ -13,8 +13,9 @@
 
 <script>
 export default {
+    name: 'MySwitch',
     props: {
-        label: Number,
+        label: String,
         update: Function,
         checked: Boolean
     },
@@ -44,7 +45,6 @@ $dot_translate: 2px;
         width: 0;
         height: 0;
 
-        // user-select: none;
         &:checked+.switch__slider {
             background-color: $primary;
         }
