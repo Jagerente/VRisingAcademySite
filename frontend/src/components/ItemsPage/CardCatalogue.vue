@@ -1,7 +1,10 @@
 <template>
   <my-card :custom="true">
+    <template #left>
+      
+    </template>
     <template #header>
-      <filter-input></filter-input>
+      <filter-input class="header__input"></filter-input>
     </template>
     <items-list :sets="this.itemsGrouped[this.selectedType].sets"></items-list>
   </my-card>
