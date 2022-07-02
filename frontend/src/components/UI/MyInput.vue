@@ -1,6 +1,9 @@
 <template>
-  <input :value="modelValue" @input="debounce(() => updateInput($event))" type="text"
-    class="form-control bg-dark border-primary" />
+  <input
+    :value="modelValue"
+    @input="debounce(() => updateInput($event))"
+    type="text"
+  />
 </template>
 
 <script>
