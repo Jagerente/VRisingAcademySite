@@ -78,7 +78,13 @@ tt,
 u,
 ul,
 var,
-video { margin: 0; padding: 0; border: 0; font: inherit; vertical-align: baseline; }
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font: inherit;
+    vertical-align: baseline;
+}
 
 article,
 aside,
@@ -90,19 +96,66 @@ header,
 hgroup,
 menu,
 nav,
-section { display: block; }
+section {
+    display: block;
+}
 
-body { line-height: 1; }
+body {
+    line-height: 1;
+}
 
 ol,
-ul { list-style: none; }
+ul {
+    list-style: none;
+}
 
 blockquote,
-q { quotes: none; }
+q {
+    quotes: none;
+}
 
 blockquote::after,
 blockquote::before,
 q::after,
-q::before { content: ''; content: none; }
+q::before {
+    content: '';
+    content: none;
+}
 
-table { border-collapse: collapse; border-spacing: 0; }
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.button,
+button {
+    border: none;
+    cursor: pointer;
+    background: none;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    backface-visibility: hidden;
+    text-align: center;
+}
+
+input,
+textarea {
+    // appearance: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    margin: 0;
+
+    &::placeholder {
+        font-size: inherit;
+        font-family: inherit;
+        color: inherit;
+    }
+
+    &:-webkit-autofill {
+        background-clip: text;
+    }
+}
