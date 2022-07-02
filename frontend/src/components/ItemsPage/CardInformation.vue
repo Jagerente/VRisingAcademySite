@@ -22,14 +22,15 @@
         <div class="block__left">
           <!-- Tags -->
           <div class="information__tags">
-            <input
+            <button
               v-for="(tag, i) in this.selectedItem.tags"
-              type="button"
               class="tag"
-              :value="tag"
               :key="i"
               @click="updateSearchQuery({ query: tag, type: 2 })"
-            />
+            >
+              {{ tag }}
+            </button>
+
           </div>
           <!-- Stats -->
           <div v-if="this.selectedItem.mainStat">
@@ -92,7 +93,7 @@
         <!-- Preview -->
         <div class="block__right">
           <ItemPreview
-            :style="'item-lg'"
+            class="item__image-preview"
             :item="this.selectedItem"
             :button="false"
           />
@@ -118,10 +119,10 @@
         v-if="this.selectedItem.variants.length"
       >
         <div class="variants__title">Variants</div>
-        <div class="variants__list block__card">
+        <div class="item variants__list block__card">
           <ItemPreview
             v-for="itemId in selectedItem.variants"
-            :style="'item-sm'"
+            class="item-link"
             :item="this.items.find(item => { return item.id === itemId })"
             :button="true"
           />
@@ -136,29 +137,21 @@
           <div class="ingridients">
             <div class="ingridients__title">Recipes</div>
             <div class="ingridients__options">
-              <div class="option">
-                <input
-                  @click="this.updateMatchingFloor"
-                  class="option__input"
-                  :checked="this.matchingFloor"
-                  type="checkbox"
-                >
-                <label class="option__label">Matching Floor</label>
-              </div>
-              <div class="form-check form-switch">
-                <input
-                  @click="this.updateConfinedRoom"
-                  class="option__input"
-                  :checked="this.confinedRoom"
-                  type="checkbox"
-                >
-                <label class="option__label">Confined Room</label>
-              </div>
+              <MySwitch
+                label="Matching Floor"
+                :update="this.updateMatchingFloor"
+                :checked="this.matchingFloor"
+              />
+              <MySwitch
+                label="Confined Room"
+                :update="this.updateConfinedRoom"
+                :checked="this.confinedRoom"
+              />
             </div>
           </div>
 
           <MyRecipe
-            class="block__card"
+            class="recipes__recipe block__card"
             v-for="(recipeId, i) in this.selectedItem.recipes"
             :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })"
           />
@@ -170,10 +163,12 @@
         >
           <div class="reagents__title">Reagent for</div>
           <div class="reagents__list block__card">
-            <div v-for="recipeId in selectedItem.reagentFor">
+            <div
+              class="item"
+              v-for="recipeId in selectedItem.reagentFor"
+            >
               <ItemPreview
-                class="item"
-                :style="'item-sm'"
+                class="item__image-link"
                 v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
                 :item="this.items.find(item => { return item.id == output.itemId })"
                 :button="true"
@@ -186,22 +181,26 @@
           <div v-if="this.selectedItem.salvageables.length">
             <div class="salvageables__title">Salvageable For</div>
             <div class="salvageables__list block__card ">
-              <ItemPreview
-                :style="'item-sm'"
+              <div
                 class="item"
                 v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
-                :item="this.items.find(item => { return item.id === output.itemId })"
-                :text="output.amount"
-                :button="true"
-              />
+              >
+                <ItemPreview
+                  class="item__image-link"
+                  :item="this.items.find(item => { return item.id === output.itemId })"
+                  :button="true"
+                />
+                <div class="item__text">
+                  {{ output.amount }}
+                </div>
+              </div>
             </div>
           </div>
           <div v-if="this.selectedItem.salvageableOf.length">
             <p class="salvageables__title">Salvageable From</p>
-            <div class="salvageables__list block__card">
+            <div class="salvageables__list block__card item">
               <ItemPreview
-                class="item"
-                :style="'item-sm'"
+                class="item__image-link"
                 v-for="input in this.selectedItem.salvageableOf	"
                 :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
                 :button="true"
@@ -224,7 +223,7 @@ export default {
   components: {
     Markdown,
     ItemPreview,
-    MyRecipe
+    MyRecipe,
   },
 
   methods: {
@@ -275,6 +274,7 @@ export default {
 .information {
   width: 100%;
 
+
   &__block {
     display: flex;
 
@@ -312,7 +312,7 @@ export default {
       margin-top: 5px;
       font-size: 0.8rem;
       background: $primary;
-      border-radius: 100px;
+      border-radius: 15px;
       text-transform: capitalize;
 
       border: none;
@@ -368,6 +368,7 @@ export default {
     color: white;
     font-size: 1.5rem;
     margin-bottom: $m1;
+    user-select: none;
   }
 
   &__list {
@@ -390,20 +391,13 @@ export default {
         color: white;
         font-size: 1.5rem;
         margin-bottom: $m1;
+        user-select: none;
       }
 
       &__options {
         margin-bottom: $m1;
-
-        .option {
-          &__label {
-            color: white;
-          }
-
-          &__input {
-            user-select: none;
-          }
-        }
+        display: flex;
+        flex-direction: column;
       }
     }
 
@@ -417,15 +411,57 @@ export default {
       color: white;
       font-size: 1.5rem;
       margin-bottom: $m1;
+      user-select: none;
     }
 
     &__list {
       display: flex;
       flex-wrap: wrap;
+    }
+  }
 
-      .item {
-        margin: 5px;
+  .item {
+    position: relative;
+
+    &__image {
+      &-preview {
+        background: none;
+        $item-size: 10rem;
+        width: $item-size;
+        height: $item-size;
+        border: none;
+        pointer-events: none;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+        @media (min-width: $sm) {
+          $item-size: 13rem;
+          width: $item-size;
+          height: $item-size;
+        }
       }
+
+      &-link {
+        position: relative;
+        $item-size: 2.5rem;
+        width: $item-size;
+        height: $item-size;
+        background: black;
+        border: 1px solid black;
+      }
+    }
+
+    &__text {
+      position: absolute;
+      color: white;
+      font-family: sans-serif;
+      pointer-events: none;
+      bottom: 0px;
+      right: 0px;
+      font-size: 16px;
+      user-select: none;
     }
   }
 
@@ -437,14 +473,12 @@ export default {
       color: white;
       font-size: 1.5rem;
       margin-bottom: $m1;
+      user-select: none;
     }
 
     &__list {
       display: flex;
       flex-wrap: wrap;
-      .item {
-        margin: 5px;
-      }
     }
   }
 }
