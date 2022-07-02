@@ -2,9 +2,9 @@
     cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
 }
 
-[role="button"],
 a:not(:disabled),
 button:not(:disabled),
+[role="button"]:not(:disabled),
 [type="button"]:not(:disabled) {
     cursor: url("@/assets/images/ui/Cursor_Arrow_Active.webp"), default;
 
