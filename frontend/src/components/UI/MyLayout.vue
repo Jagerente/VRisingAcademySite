@@ -235,22 +235,22 @@ export default {
 
   @media (max-width: $lg) {
 
+    display: flex;
+    max-height: 50%;
+    opacity: 1;
+
+    &__overlay {
       display: flex;
-      max-height: 50%;
-      opacity: 1;
+      align-items: flex-end;
+    }
 
-      &__overlay {
-        display: flex;
-        align-items: flex-end;
-      }
-
-      &__content {
-        height: 75%;
-        translate: 0 0%;
-        border-bottom-left-radius: 0;
-        border-bottom-right-radius: 0;
-        width: 100%;
-      }
+    &__content {
+      height: 75%;
+      translate: 0 0%;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      width: 100%;
+    }
   }
 }
 </style>
