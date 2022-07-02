@@ -1,7 +1,7 @@
 <template>
   <img
     class="item"
-    :disabled="button"
+    :disabled="!this.button"
     draggable="false"
     :title="item.name"
     :src="require('@/' + this.imagePath)"
