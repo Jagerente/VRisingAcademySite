@@ -1,8 +1,5 @@
 <template>
   <my-card :custom="true">
-    <template #left>
-      
-    </template>
     <template #header>
       <filter-input class="header__input"></filter-input>
     </template>
