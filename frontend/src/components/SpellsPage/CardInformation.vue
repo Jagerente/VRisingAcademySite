@@ -1,67 +1,74 @@
 <template>
     <my-card
         title="Information"
-        class="w-100"
+        class="information"
     >
-        <div class="d-flex flex-column p-2">
-            <div
-                v-if="this.selectedSpell"
-                class="d-flex flex-column"
-            >
-                <div class="d-flex">
-                    <div class="d-flex flex-column w-50">
-                        <!-- Title -->
-                        <p class="h-1">{{ this.selectedSpell.name }}</p>
-                        <!-- Type -->
-                        <p class="h-2">{{ this.selectedSpell.type.name.replace(/[0-9]/g, '') }}</p>
-                        <!-- Cooldown -->
-                        <p
-                            class="h-3"
-                            v-if="this.selectedSpell.cooldown"
-                        >Cooldown: <span class="text-white">{{
-                                this.selectedSpell.cooldown
-                        }}s</span></p>
-                        <!-- Cast Time -->
-                        <p
-                            class="h-3"
-                            v-if="this.selectedSpell.castTime"
-                        >Cast Time: <span class="text-white">{{
-                                this.selectedSpell.castTime
-                        }}s</span></p>
-                        <!-- Charges -->
-                        <p
-                            class="h-3"
-                            v-if="this.selectedSpell.charges > 1"
-                        >Charges: <span class="text-white">{{
-                                this.selectedSpell.charges
-                        }}</span></p>
-                    </div>
-                    <!-- Preview -->
-                    <div class="d-flex justify-content-center flex-fill mx-2 w-50">
-                        <img
-                            class="image__preview rounded"
-                            draggable="false"
-                            :title="selectedSpell.name"
-                            :src="
-                                require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
-                            "
-                        />
-                    </div>
+        <!-- If none is selected -->
+        <div
+            v-if="this.selectedSpell === null"
+            class="information__block--column"
+        >
+            <div class="block--unknown">
+                <p class="stat--unknown">Select spell.</p>
+                <p class="stat--unknown">This module is still W.I.P.</p>
+            </div>
+        </div>
+        <div
+            v-else
+            class="information__block--column"
+        >
+            <!-- Title -->
+            <div class="header information__header">
+                <p class="header__title">
+                    {{ this.selectedSpell.name }}
+                </p>
+            </div>
+            <div class="block information__block">
+                <div class="block__left">
+                    <!-- Type -->
+                    <p class="stat--md">{{ this.selectedSpell.type.name.replace(/[0-9]/g, '') }}</p>
+                    <!-- Cooldown -->
+                    <p
+                        class="stat"
+                        v-if="this.selectedSpell.cooldown"
+                    >Cooldown: <span class="stat__value">{{
+                            this.selectedSpell.cooldown
+                    }}s</span></p>
+                    <!-- Cast Time -->
+                    <p
+                        class="stat"
+                        v-if="this.selectedSpell.castTime"
+                    >Cast Time: <span class="stat__value">{{
+                            this.selectedSpell.castTime
+                    }}s</span></p>
+                    <!-- Charges -->
+                    <p
+                        class="stat"
+                        v-if="this.selectedSpell.charges > 1"
+                    >Charges: <span class="stat__value">{{
+                            this.selectedSpell.charges
+                    }}</span></p>
                 </div>
-                <!-- Description -->
-                <Markdown
-                    :source="this.selectedSpell.description"
-                    class="description py-2 my-3"
-                    html
-                    xhtmlOut
-                    v-if="this.selectedSpell.description"
-                />
+                <!-- Preview -->
+                <div class="block__right">
+                    <img
+                        class="image__preview"
+                        draggable="false"
+                        :title="selectedSpell.name"
+                        :src="
+                            require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
+                        "
+                    />
+                </div>
             </div>
-            <!-- If none is selected -->
-            <div v-else>
-                <h1 class="text-center">Select spell.</h1>
-                <h5 class="text-center">This module is still W.I.P.</h5>
-            </div>
+            <!-- Description -->
+            <Markdown
+                :source="this.selectedSpell.description"
+                class="block__card"
+                html
+                xhtmlOut
+                v-if="this.selectedSpell.description"
+            />
         </div>
     </my-card>
 </template>
@@ -84,50 +91,88 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-
 @import '@/assets/styles/utility/vars.scss';
 
+.image__preview {
+    user-select: none;
+    --img-size: 200px;
+    width: var(--img-size);
+    height: var(--img-size);
 
-@include media-breakpoint-down(sm) {
-    .tag {
-        margin-top: 5px;
-        font-size: 0.7rem;
-    }
-
-    .image__preview {
+    @media (max-width: $sm) {
         --img-size: 100px;
         width: var(--img-size);
         height: var(--img-size);
     }
+}
+
+.information {
+    width: 100%;
+
+    &__block {
+        display: flex;
+        justify-content: space-between;
+
+        &:not(:last-child) {
+            margin-bottom: $m1;
+        }
+
+        &--column {
+            flex-direction: column;
+
+            &:not(:last-child) {
+                margin-bottom: $m1;
+            }
+        }
+    }
+
+    &__header {
+        margin-bottom: $m1;
+    }
 
 }
 
-@include media-breakpoint-up(sm) {
-    .image__preview {
-        --img-size: 200px;
-        width: var(--img-size);
-        height: var(--img-size);
+.header {
+    &__title {
+        font-size: 2rem;
+        color: white;
     }
 }
 
-.image__preview {
-    user-select: none;
+.stat {
+    font-size: 1rem;
+    margin-bottom: 5px;
+
+    &--md {
+        font-size: 1.25rem;
+        margin-bottom: 5px;
+
+    }
+
+    &--unknown {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    &__value {
+        color: white;
+    }
 }
 
-.description {
-    background: #14131b;
-    border-radius: 10px;
-    margin-left: -10px;
-    margin-right: -10px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
+.block {
+    &__card {
+        background: $dark;
+        border-radius: 10px;
+        margin-bottom: $m1;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
 
-p {
-    margin: 0;
-    padding: 0;
+    &--unknown {
+        padding-top: 15px;
+    }
 }
 </style>
