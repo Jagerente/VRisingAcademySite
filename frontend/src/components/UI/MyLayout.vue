@@ -53,24 +53,26 @@
     >
       <slot name="right"></slot>
     </div>
-    <div
-      class="modal"
-      :class="{ 'active': this.showModal }"
-      v-if="this.showModal"
-    >
+    <Transition name="translate-up">
       <div
-        class="modal__overlay"
+        v-if="this.showModal && this.windowWidth < 992"
+        class="modal"
         @click.self="this.updateShowModal(false)"
       >
-        <div class="modal__content">
+        <div
+          v-if="this.showModal"
+          class="modal__content"
+        >
           <slot name="right"></slot>
         </div>
       </div>
-    </div>
+    </Transition>
   </div>
 </template>
 
 <script>
+import { useWindowSize } from 'vue-window-size';
+
 export default {
   props: {
     isLoading: Boolean,
@@ -103,6 +105,14 @@ export default {
       selectedTab: 0,
     }
   },
+  setup() {
+    const { width, height } = useWindowSize();
+
+    return {
+      windowWidth: width,
+      windowHeight: height,
+    };
+  }
 }
 </script>
 
@@ -209,47 +219,89 @@ export default {
 }
 
 .modal {
-  //display: none;
-  opacity: 0;
-  transition: opacity .2s ease;
-
-  &__overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &__content {
-    border-radius: 20px;
-    background-color: $background;
-    // padding: 15px 5px 0 5px;
-    translate: 0 100%;
-    transition: translate .2s ease, display .2s ease;
-  }
+  display: flex;
+  // display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  // background: rgba(0, 0, 0, 0.4);
+  opacity: 1;
+  align-items: flex-end;
+  justify-content: center;
 
   @media (max-width: $lg) {
-
-    display: flex;
-    max-height: 50%;
-    opacity: 1;
-
-    &__overlay {
-      display: flex;
-      align-items: flex-end;
-    }
-
     &__content {
+      z-index: 10;
+      background-color: $background;
+      border-radius: 20px;
       height: 75%;
-      translate: 0 0%;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       width: 100%;
+    }
+  }
+}
+
+.fade {
+  &-enter {
+    &-from {
+      opacity: 0;
+    }
+
+    &-active {
+      transition: opacity 0.3s ease;
+    }
+
+    &-to {
+      opacity: 1;
+    }
+  }
+
+  &-leave {
+    &-from {
+      opacity: 1;
+    }
+
+    &-active {
+      transition: opacity 0.3s ease;
+    }
+
+    &-to {
+      opacity: 0;
+    }
+  }
+}
+
+.translate-up {
+  &-enter {
+    &-from {
+      transform: translateY(100%);
+    }
+
+    &-active {
+      transition: transform 0.25s ease;
+    }
+
+    &-to {
+      transform: translateY(0);
+    }
+  }
+
+  &-leave {
+    &-from {
+      transform: translateY(0);
+
+    }
+
+    &-active {
+      transition: transform 0.25s ease;
+    }
+
+    &-to {
+      transform: translateY(100%);
+
     }
   }
 }
