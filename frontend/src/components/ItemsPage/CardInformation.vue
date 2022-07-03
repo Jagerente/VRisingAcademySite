@@ -5,7 +5,6 @@
     class="information"
   >
     <div v-if="this.selectedItem === null">
-      <div></div>
       <h1 class="text-center">Select an item.</h1>
       <h5 class="text-center">This module is still W.I.P.</h5>
     </div>
@@ -18,7 +17,7 @@
       <div class="information__header">
         {{ this.selectedItem.name }}
       </div>
-      <div class="information__block">
+      <div class="block information__block">
         <div class="block__left">
           <!-- Tags -->
           <div class="information__tags">
@@ -277,6 +276,7 @@ export default {
 
   &__block {
     display: flex;
+    justify-content: space-between;
 
     &:not(:last-child) {
       margin-bottom: $m1;
@@ -294,7 +294,6 @@ export default {
       &__right {
         display: flex;
         flex-direction: column;
-        flex: 1 1 auto;
       }
     }
   }
@@ -314,7 +313,6 @@ export default {
       background: $primary;
       border-radius: 15px;
       text-transform: capitalize;
-
       border: none;
       color: white;
       transition: box-shadow 0.1s ease-in-out;
@@ -336,11 +334,7 @@ export default {
   .block__card {
     background: $dark;
     border-radius: 10px;
-
-    // margin-left: -10px;
-    // margin-right: -10px;
     margin-bottom: $m1;
-
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 15px;
@@ -420,50 +414,7 @@ export default {
     }
   }
 
-  .item {
-    position: relative;
 
-    &__image {
-      &-preview {
-        background: none;
-        $item-size: 10rem;
-        width: $item-size;
-        height: $item-size;
-        border: none;
-        pointer-events: none;
-
-        &:hover {
-          box-shadow: none;
-        }
-
-        @media (min-width: $sm) {
-          $item-size: 13rem;
-          width: $item-size;
-          height: $item-size;
-        }
-      }
-
-      &-link {
-        position: relative;
-        $item-size: 2.5rem;
-        width: $item-size;
-        height: $item-size;
-        background: black;
-        border: 1px solid black;
-      }
-    }
-
-    &__text {
-      position: absolute;
-      color: white;
-      font-family: sans-serif;
-      pointer-events: none;
-      bottom: 0px;
-      right: 0px;
-      font-size: 16px;
-      user-select: none;
-    }
-  }
 
   .salvageables {
     display: flex;
@@ -480,6 +431,51 @@ export default {
       display: flex;
       flex-wrap: wrap;
     }
+  }
+}
+
+.item {
+  position: relative;
+
+  &__image {
+    &-preview {
+      background: none;
+      $item-size: 10rem;
+      width: $item-size;
+      height: $item-size;
+      border: none;
+      pointer-events: none;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      @media (min-width: $lg) {
+        $item-size: 13rem;
+        width: $item-size;
+        height: $item-size;
+      }
+    }
+
+    &-link {
+      position: relative;
+      $item-size: 2.5rem;
+      width: $item-size;
+      height: $item-size;
+      background: black;
+      border: 1px solid black;
+    }
+  }
+
+  &__text {
+    position: absolute;
+    color: white;
+    font-family: sans-serif;
+    pointer-events: none;
+    bottom: 0px;
+    right: 0px;
+    font-size: 16px;
+    user-select: none;
   }
 }
 
