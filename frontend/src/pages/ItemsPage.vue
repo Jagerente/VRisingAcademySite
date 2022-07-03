@@ -36,14 +36,6 @@ export default {
     })
   },
   computed: {
-    // modal: {
-    //   get() {
-    //     return this.showModal;
-    //   },
-    //   set(show) {
-    //     return this.updateShowModal(show);
-    //   },
-    // },
     ...mapState({
       isItemsLoading: (state) => state.items.isItemsLoading,
       types: (state) => state.items.types,
