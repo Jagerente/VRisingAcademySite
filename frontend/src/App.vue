@@ -1,8 +1,8 @@
 <template>
-  <div class="d-flex flex-column h-100">
+  <div class="app__container">
     <my-navbar />
     <router-view />
-    <my-footer v-if="false" />
+    <my-footer v-show="false" />
   </div>
 </template>
 
@@ -18,5 +18,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+@import "@/assets/styles/utility/vars.scss";
+@import '@/assets/styles/main.scss';
+
+body {
+  font-family: $mainFontFamily;
+  background-color: $background;
+  color: $text-color;
+}
+
+.app__container {
+  display: flex;
+  flex-direction: column;
+}
 </style>

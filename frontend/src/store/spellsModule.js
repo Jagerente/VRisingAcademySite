@@ -9,7 +9,8 @@ export const spellsModule = {
         spellsGrouped: [],
         isSpellsLoading: true,
         selectedSpell: null,
-        selectedSchool: 1,
+        selectedSchool: 0,
+        showModal: false,
         host: "https://vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
@@ -38,6 +39,9 @@ export const spellsModule = {
         setSelectedSpell(state, selectedSpell) {
             state.selectedSpell = selectedSpell
         },
+        setShowModal(state, showModal) {
+            state.showModal = showModal
+        }
     },
     actions: {
         async fetchSpells({ state, commit }) {
@@ -93,6 +97,10 @@ export const spellsModule = {
                 }
             });
             commit('setSelectedSpell', spell);
+            commit('setShowModal', true);
+        },
+        updateShowModal({ commit }, show) {
+            commit('setShowModal', show)
         },
     },
     namespaced: true

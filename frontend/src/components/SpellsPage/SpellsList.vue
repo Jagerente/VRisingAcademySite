@@ -1,13 +1,13 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="spells d-flex flex-column">
     <div
-      class="d-flex justify-content-evenly my-3 flex-wrap"
+      class="spells__row"
       v-for="stype in this.types"
     >
       <my-spell
         v-for="spell in stype.spells"
         :spell="spell"
-        :class="this.selectedSpell && this.selectedSpell.id === spell.id ? 'active' : ''"
+        :class="{ 'active': this.selectedSpell && this.selectedSpell.id === spell.id }"
       ></my-spell>
     </div>
   </div>
@@ -33,5 +33,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import "@/assets/styles/utility/vars.scss";
+
+.spells {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin: $m2 0px;
+  }
+}
 </style>

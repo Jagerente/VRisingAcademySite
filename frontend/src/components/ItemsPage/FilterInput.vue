@@ -1,36 +1,41 @@
 <template>
-  <div class="input-group">
-    <span class="input-group-text bg-dark border-0">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
-        viewBox="0 0 16 16">
+  <div class="input">
+    <div class="input__icon">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+      >
         <path
-          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z">
+          d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+        >
         </path>
       </svg>
-    </span>
-    <my-input v-if="this.searchType !== 2" @click="updateSearchQuery('');" :model-value="searchQuery"
-      @update:model-value="setSearchQuery" type="text" class="form-control bg-dark border-0" placeholder="Search..."
-      focus />
-    <div v-else class="d-flex flex-column justify-content-center ms-1" @click="updateSearchQuery('');">
-      <div class="d-flex flex-column tag px-2 justify-content-center">
-        <div class="d-flex">
-          <span>{{ this.searchQuery }}</span>
-          <svg class="my-auto" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#a8a9ae"
-            viewBox="0 0 16 16">
-            <path
-              d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-          </svg>
-        </div>
-      </div>
     </div>
-    <button v-if="this.searchQuery && this.searchType !== 2" class="clear p-0 m-0 mx-2" @click="updateSearchQuery('');">
-      <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: -5px;" width="20" height="20" fill="#a8a9ae"
-        viewBox="0 0 16 16">
-        <path
-          d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-      </svg>
+    <my-input
+      v-if="this.searchType !== 2"
+      @click="updateSearchQuery('');"
+      :model-value="searchQuery"
+      @update:model-value="setSearchQuery"
+      type="text"
+      class="input__field"
+      placeholder="Search..."
+    />
+    <button
+      v-else
+      class="input__tag"
+      @click="updateSearchQuery('');"
+    >
+      {{ this.searchQuery }}
     </button>
-
+    <button
+      v-if="this.searchQuery && this.searchType !== 2"
+      class="input__clear"
+      @click="updateSearchQuery('');"
+    >
+    </button>
   </div>
 </template>
 
@@ -56,26 +61,108 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.clear {
-  background: #14141e;
-  border: none;
+@import "@/assets/styles/utility/vars.scss";
+$cross_size: 16px;
+$cross_weight: 1.5px;
+$cross_size-tag: $cross_size * .63;
+$cross_weight-tag: 1.25px;
+
+.header__input {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
-.input-group {
-  height: 39px;
-}
+.input {
+  padding: 0 15px;
 
-.tag {
-  background: #ae1d1d;
-  font-size: 16px;
-  height: 20px;
-  border-radius: 100px;
-  text-transform: capitalize;
-  border: none;
-  color: silver;
-}
+  &__icon {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 15px;
+  }
 
-.tag:hover {
-  box-shadow: 0 0 8px black;
+  &__field {
+    background-color: $dark;
+    border: none;
+    color: white;
+    width: 100%;
+
+    &:focus {
+      outline: 0;
+      outline-offset: 0;
+    }
+  }
+
+  &__clear {
+    box-sizing: border-box;
+    position: relative;
+    background: transparent;
+    border: none;
+    height: 100%;
+    width: $cross_size;
+    padding: 0;
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: $cross_size;
+      width: $cross_weight;
+      top: 50%;
+      background-color: white;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: $cross_size;
+      width: $cross_weight;
+      top: 50%;
+      background-color: white;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  &__tag {
+
+    position: relative;
+    font-size: 0.8rem;
+    background: $primary;
+    border-radius: 15px;
+    text-transform: capitalize;
+    border: none;
+    color: white;
+    transition: box-shadow 0.1s ease-in-out;
+    padding: 4px 8px;
+    padding-right: $cross_size-tag*2;
+
+    &:hover {
+      box-shadow: 0 0 8px black;
+    }
+
+
+    &::after {
+      content: "";
+      position: absolute;
+      height: $cross_size-tag;
+      width: $cross_weight-tag;
+      top: 50%;
+      right: $cross_size-tag;
+      background-color: white;
+      transform: translateY(-50%) rotate(-45deg);
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      height: $cross_size-tag;
+      width: $cross_weight-tag;
+      top: 50%;
+      right: $cross_size-tag;
+      background-color: white;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
 }
 </style>

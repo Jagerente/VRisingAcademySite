@@ -1,9 +1,9 @@
 <template>
   <input
     @click="selectSpell(spell)"
-    type="image"
-    class="spell rounded"
     :class="spell.type.name === 'Ultimate' ? 'spell-ultimate' : spell.type.name === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
+    class="spell"
+    type="image"
     :title="spell.name"
     :src="
       require(`@/assets/images/spells/${spell.school.name.toLowerCase()}/${spell.name}.webp`)
@@ -28,87 +28,72 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+@import "@/assets/styles/utility/vars.scss";
 
-
-@include media-breakpoint-down(sm) {
-  $item-size: 3em;
-  $item-margin: 2px;
-
-  .spell {
-    width: $item-size;
-    height: $item-size;
-  }
-}
-
-@include media-breakpoint-up(sm) {
-  $item-size: 5em;
-  $item-margin: 5px;
-
-  .spell {
-    width: $item-size;
-    height: $item-size;
-  }
-}
+$item-size: 5em;
 
 .spell {
   background: none;
   -webkit-user-drag: none;
   user-select: none;
-  transition: opacity 0.15s ease-in-out;
-}
+  transition: opacity 0.15s ease, box-shadow 0.15s ease, border 0.15s ease;
+  border-radius: 3px;
+  width: $item-size;
+  height: $item-size;
 
-.spell:hover {
-  opacity: 0.85;
-}
+  @media (max-width: $sm) {
+    $item-size: 3em;
+    width: $item-size;
+    height: $item-size;
+  }
 
-.spell-basic {
-  border: 3px solid #534837
-}
+  &:hover {
+    opacity: 0.85;
+  }
 
-.spell-basic:hover {
-  box-shadow: 0 0 8px black;
-}
+  &.spell-basic {
+    border: 3px solid #534837;
 
-.spell-basic:focus,
-.spell-basic.active {
-  border: 3px solid #917141;
-  box-shadow: 0;
-}
+    &:hover {
+      box-shadow: 0 0 8px black;
+    }
 
-.spell-ultimate {
-  border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-}
+    &.active {
+      border: 3px solid #917141;
+      box-shadow: 0;
+    }
+  }
 
-.spell-ultimate:hover {
-  border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-  box-shadow: 0 0 28px black;
-}
+  &-ultimate {
+    border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
 
-.spell-ultimate:focus,
-.spell-ultimate.active {
-  border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
-}
+    &:hover {
+      border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      box-shadow: 0 0 28px black;
+    }
 
-.spell-travel {
-  border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-}
+    &.active {
+      border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+    }
+  }
 
-.spell-travel:hover {
-  border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-  box-shadow: 0 0 28px black;
-}
+  &-travel {
+    border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
 
-.spell-travel:focus,
-.spell-travel.active {
-  border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
-  -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+    &:hover {
+      border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      box-shadow: 0 0 28px black;
+    }
+
+    &.active {
+      border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+    }
+  }
 }
 </style>

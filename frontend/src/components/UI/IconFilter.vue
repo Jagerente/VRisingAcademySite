@@ -4,7 +4,6 @@
     width="28"
     height="100%"
     fill="currentColor"
-    class="bi bi-filter"
     viewBox="0 0 16 16"
   >
     <path
@@ -18,6 +17,3 @@ export default {
   name: "icon-filter",
 };
 </script>
-
-<style scoped>
-</style>

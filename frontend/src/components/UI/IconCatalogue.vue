@@ -4,7 +4,6 @@
     width="28"
     height="100%"
     fill="currentColor"
-    class="bi bi-diagram-3"
     viewBox="0 0 16 16"
   >
     <path
@@ -19,6 +18,3 @@ export default {
   name: "icon-catalogue",
 };
 </script>
-
-<style scoped>
-</style>

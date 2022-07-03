@@ -1,22 +1,13 @@
 <template>
-  <div
-    class="preview__group"
-    :class="text != null ? '' : ''"
+  <img
+    class="item"
+    :disabled="!this.button"
+    draggable="false"
+    :title="item.name"
+    :src="require('@/' + this.imagePath)"
+    @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
+    role="button"
   >
-    <img
-      class="rounded"
-      :class="this.style"
-      :disabled="button"
-      draggable="false"
-      :title="item.name"
-      :src="require('@/' + this.imagePath)"
-      @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
-    >
-    <div
-      v-if="this.text"
-      class="preview__text"
-    >{{ this.text }}</div>
-  </div>
 </template>
 
 <script>
@@ -27,11 +18,6 @@ export default {
   props: {
     item: Object,
     button: Boolean,
-    style: String,
-    text: {
-      Type: String,
-      Default: null
-    }
   },
   methods: {
     ...mapActions({
@@ -52,93 +38,13 @@ export default {
 
 
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+@import "@/assets/styles/utility/vars.scss";
 
-@include media-breakpoint-down(sm) {
-  .preview-md {
-    $size: 3em;
-    $margin: 2px;
-    width: $size;
-    height: $size;
-    margin: $margin;
-  }
-
-  .preview-lg {
-    $size: 100px;
-    width: $size;
-    height: $size;
-  }
-}
-
-@include media-breakpoint-up(sm) {
-
-  .preview-md {
-    $size: 5em;
-    $margin: 5px;
-    width: $size;
-    height: $size;
-    margin: $margin;
-  }
-
-  .preview-lg {
-    $size: 200px;
-    width: $size;
-    height: $size;
-  }
-}
-
-.preview-sm {
-  $size: 48px;
-  background: rgba(0, 0, 0, 0.5);
-  font-family: sans-serif;
-  width: $size;
-  height: $size;
+.item {
+  border-radius: 3px;
   -webkit-user-drag: none;
-  border: 0;
   user-select: none;
-  transition: box-shadow 0.15s ease-in-out;
   color: white;
   text-align: right;
-}
-
-.preview-sm:hover {
-  box-shadow: 0 0 8px black;
-}
-
-.preview-md {
-  background: rgba(0, 0, 0, 0.5);
-  font-family: sans-serif;
-  -webkit-user-drag: none;
-  border: 0;
-  user-select: none;
-  transition: box-shadow 0.15s ease-in-out;
-}
-
-.preview-md:hover {
-  box-shadow: 0 0 8px black;
-}
-
-.active {
-  border: 1px solid white;
-}
-
-.active:hover {
-  box-shadow: none
-}
-
-.preview__text {
-  pointer-events: none;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-size: 16px;
-}
-
-.preview__group {
-  position: relative;
-  text-align: center;
-  color: white;
 }
 </style>
