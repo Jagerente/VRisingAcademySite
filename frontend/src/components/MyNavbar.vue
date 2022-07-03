@@ -12,7 +12,7 @@
 				<ul class="nav__list">
 					<li class="nav__item">
 						<a
-							href=""
+							href="#"
 							class="nav__link"
 							@click="$router.push('/')"
 						>Home</a>
@@ -200,6 +200,7 @@ export default {
 
 .dropdown {
 	position: relative;
+	z-index: 10;
 
 	&__link,
 	&__title {
