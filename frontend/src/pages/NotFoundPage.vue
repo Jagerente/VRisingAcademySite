@@ -1,56 +1,51 @@
 <template>
-    <main class="content h-100">
-        <div class="d-flex justify-content-center h-100">
-            <div class="d-flex my-auto">
-                <img class="image" :src="require('@/assets/images/ui/404_page/Militia - Crier.webp')" draggable="false">
-            </div>
-            <div class="d-flex flex-column justify-content-center text-center my-auto">
-                <h1 class="m-0 p-0">
-                    404
-                </h1>
-                <h2 class="m-0 p-0">
-                    Not Found
-                </h2>
-            </div>
+    <div class="content">
+        <div class="content__image">
+            <img
+                class="image"
+                :src="require('@/assets/images/ui/404_page/Militia - Crier.webp')"
+                draggable="false"
+            >
         </div>
-    </main>
+        <div class="content__text">
+            <p class="text--1">
+                404
+            </p>
+            <p class="text--2">
+                Not Found
+            </p>
+        </div>
+    </div>
 </template>
 
-<!--<style scoped lang="scss">-->
-<!--@import 'bootstrap/scss/_functions.scss';-->
-<!--@import 'bootstrap/scss/_variables.scss';-->
-<!--@import 'bootstrap/scss/_mixins.scss';-->
+<style scoped lang="scss">
+.content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-<!--main {-->
-<!--    padding-top: 85px;-->
-<!--}-->
+    &__image {
+        display: flex;
+        justify-content: end;
+        width: 50%;
+    }
 
-<!--@include media-breakpoint-down(sm) {-->
-<!--    main {-->
-<!--        margin-left: 50px;-->
-<!--        margin-right: 50px;-->
-<!--    }-->
+    &__text {
+        width: 50%;
+    }
+}
 
-<!--    h1 {-->
-<!--        font-size: 5rem;-->
-<!--    }-->
+.image {
+    width: 35%;
+}
 
-<!--    .image {-->
-<!--        $size: 500px;-->
-<!--        height: $size;-->
-<!--        margin-right: -75px;-->
-<!--    }-->
-<!--}-->
+.text {
+    &--1 {
+        font-size: 5rem;
+    }
 
-<!--@include media-breakpoint-up(sm) {-->
-<!--    h1 {-->
-<!--        font-size: 10rem;-->
-<!--    }-->
-
-<!--    .image {-->
-<!--        $size: 500px;-->
-<!--        height: $size;-->
-<!--        margin-right: -75px;-->
-<!--    }-->
-<!--}-->
-<!--</style>-->
+    &--2 {
+        font-size: 1.8rem;
+    }
+}
+</style>
