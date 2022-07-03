@@ -20,9 +20,7 @@ export default {
 
 <style lang="scss">
 @import "@/assets/styles/utility/vars.scss";
-@import 'bootstrap/scss/bootstrap-grid';
-@import 'bootstrap/scss/bootstrap-utilities';
-@import 'assets/styles/main.scss';
+@import '@/assets/styles/main.scss';
 
 body {
   font-family: $mainFontFamily;
