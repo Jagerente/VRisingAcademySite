@@ -1,20 +1,26 @@
 <template>
   <div class="card">
-    <div class="card__header">
-      <div class="header__icon">
-        <slot name="left"></slot>
-      </div>
+    <div class="header card__header">
       <slot
-        v-if="custom"
+        v-if="this.custom"
         name="header"
       ></slot>
+      <div
+        v-if="!custom"
+        class="header__icon"
+      >
+        <slot name="left"></slot>
+      </div>
       <p
-        v-else
+        v-if="!custom"
         class="header__label"
       >
         {{ title }}
       </p>
-      <slot name="right"></slot>
+      <slot
+        v-if="!custom"
+        name="right"
+      ></slot>
     </div>
     <div class="card__content">
       <slot></slot>

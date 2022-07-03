@@ -1,18 +1,16 @@
 <template>
   <!-- Loader -->
-  <div v-if="this.isLoading">
-    <div
-      class="position-absolute top-50 start-50 translate-middle"
-      role="status"
-    >
-      <span class="h1">Loading...</span>
-    </div>
+  <div
+    v-if="this.isLoading"
+    class="loader"
+  >
+    <span class="loader__text">Loading...</span>
   </div>
   <div
     v-else
     class="catalogue"
   >
-    <!-- LEFT TOP -->
+    <!-- TOP -->
     <div class="catalogue__wrapper">
       <!-- LEFT -->
       <my-card
@@ -46,14 +44,17 @@
         <slot name="center"></slot>
       </div>
     </div>
-    <!-- RIGHT TOP -->
+    <!-- BOTTOM -->
     <div
       v-if="right"
       class="catalogue__aside"
     >
       <slot name="right"></slot>
     </div>
-    <Transition name="translate-up">
+    <Transition
+      v-if="right"
+      name="translate-up"
+    >
       <div
         v-if="this.showModal && this.windowWidth < 992"
         class="modal"
@@ -118,6 +119,18 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/styles/utility/vars.scss';
+@import "@/assets/styles/utility/animations.scss";
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+
+  &__text {
+    font-size: 2rem;
+  }
+}
 
 .catalogue {
   padding-top: 15px;
@@ -152,6 +165,9 @@ export default {
           text-transform: capitalize;
           width: 100%;
           height: 40px;
+          transition-property: color, border;
+          transition-duration: .25s;
+          transition-timing-function: ease;
 
           &:not(:last-child) {
             margin-bottom: 5px;
@@ -236,72 +252,10 @@ export default {
       z-index: 10;
       background-color: $background;
       border-radius: 20px;
-      height: 75%;
+      max-height: 75%;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       width: 100%;
-    }
-  }
-}
-
-.fade {
-  &-enter {
-    &-from {
-      opacity: 0;
-    }
-
-    &-active {
-      transition: opacity 0.3s ease;
-    }
-
-    &-to {
-      opacity: 1;
-    }
-  }
-
-  &-leave {
-    &-from {
-      opacity: 1;
-    }
-
-    &-active {
-      transition: opacity 0.3s ease;
-    }
-
-    &-to {
-      opacity: 0;
-    }
-  }
-}
-
-.translate-up {
-  &-enter {
-    &-from {
-      transform: translateY(100%);
-    }
-
-    &-active {
-      transition: transform 0.25s ease;
-    }
-
-    &-to {
-      transform: translateY(0);
-    }
-  }
-
-  &-leave {
-    &-from {
-      transform: translateY(0);
-
-    }
-
-    &-active {
-      transition: transform 0.25s ease;
-    }
-
-    &-to {
-      transform: translateY(100%);
-
     }
   }
 }
