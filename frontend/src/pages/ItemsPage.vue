@@ -16,9 +16,9 @@
 </template>
 
 <script>
-import MyLayout from "@/components/UI/MyLayout";
-import CardCatalogue from "@/components/ItemsPage/CardCatalogue";
-import CardInformation from "@/components/ItemsPage/CardInformation";
+import MyLayout from "@/components/UI/MyLayout.vue";
+import CardCatalogue from "@/components/ItemsPage/CardCatalogue.vue";
+import CardInformation from "@/components/ItemsPage/CardInformation.vue";
 
 import { mapState, mapActions } from "vuex"
 

@@ -56,7 +56,7 @@
                         draggable="false"
                         :title="selectedSpell.name"
                         :src="
-                            require(`@/assets/images/spells/${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
+                            getImageUrl(`${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
                         "
                     />
                 </div>
@@ -87,6 +87,12 @@ export default {
             selectedSpell: (state) => state.spells.selectedSpell
         })
     },
+    setup() {
+        const getImageUrl = (name) => {
+            return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
+        }
+        return { getImageUrl }
+    }
 }
 </script>
 

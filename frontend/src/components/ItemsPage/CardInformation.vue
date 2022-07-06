@@ -215,8 +215,8 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import Markdown from "vue3-markdown-it";
-import ItemPreview from "@/components/ItemsPage/ItemPreview";
-import MyRecipe from "@/components/ItemsPage/MyRecipe";
+import ItemPreview from "@/components/ItemsPage/ItemPreview.vue";
+import MyRecipe from "@/components/ItemsPage/MyRecipe.vue";
 
 export default {
   components: {

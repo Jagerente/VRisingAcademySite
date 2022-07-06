@@ -72,7 +72,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import ItemPreview from "@/components/ItemsPage/ItemPreview";
+import ItemPreview from "@/components/ItemsPage/ItemPreview.vue";
 
 export default {
     components: {

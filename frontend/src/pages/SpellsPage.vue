@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import MyLayout from "@/components/UI/MyLayout";
+import MyLayout from "@/components/UI/MyLayout.vue";
 import CardInformation from '@/components/SpellsPage/CardInformation.vue'
 import CardCatalogue from '@/components/SpellsPage/CardCatalogue.vue'
 

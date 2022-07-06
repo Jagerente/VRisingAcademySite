@@ -5,7 +5,7 @@
       class="container__logo"
       draggable="false"
       :src="
-        require('@/assets/images/ui/main_page/VAlogo.webp')
+        getImageUrl('ui/main_page/VAlogo.webp')
       "
     >
     <!-- Text -->
@@ -184,6 +184,12 @@ export default {
       window.open('https://boosty.to/vrisingacademy', '_blank')
     }
   },
+  setup() {
+    const getImageUrl = (name) => {
+      return new URL(`../assets/images/${name}`, import.meta.url).href
+    }
+    return { getImageUrl }
+  }
 };
 </script>
 

@@ -15,7 +15,7 @@
 
 <script>
 import { mapState } from "vuex";
-import MySpell from "@/components/SpellsPage/MySpell";
+import MySpell from "@/components/SpellsPage/MySpell.vue";
 
 export default {
   name: "spells-list",

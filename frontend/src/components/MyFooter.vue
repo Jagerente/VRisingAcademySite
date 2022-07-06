@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MyLink from "@/components/Footer/MyLink";
+import MyLink from "@/components/Footer/MyLink.vue";
 
 export default {
     components: {

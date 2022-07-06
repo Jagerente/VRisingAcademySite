@@ -3,7 +3,7 @@
         <template #left>
             <img
                 class="icon"
-                :src="require('@/assets/images/blood_types/' + this.bloodTypes[this.selectedBloodType].name.toLowerCase() + '.webp')"
+                :src="getImageUrl(this.bloodTypes[this.selectedBloodType].name.toLowerCase() + '.webp')"
             />
         </template>
         <div
@@ -28,7 +28,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SpellsList from '@/components/SpellsPage/SpellsList'
+import SpellsList from '@/components/SpellsPage/SpellsList.vue'
 import BloodQualitySlider from '@/components/BloodTypesPage/BloodQualitySlider.vue'
 import BloodTypeBonus from '@/components/BloodTypesPage/BloodTypeBonus.vue'
 
@@ -44,6 +44,16 @@ export default {
             selectedBloodType: (state) => state.bloodTypes.selectedBloodType,
         }),
     },
+    setup() {
+        const getImageUrl = (name) => {
+            return new URL(`../../assets/images/blood_types/${name}`, import.meta.url).href
+        }
+
+        return {
+            getImageUrl
+        };
+
+    }
 }
 </script>
 
