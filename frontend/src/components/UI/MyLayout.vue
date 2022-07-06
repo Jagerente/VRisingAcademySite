@@ -124,9 +124,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/utility/vars.scss';
-@import "@/assets/styles/utility/animations.scss";
-
 .loader {
   position: absolute;
   left: 50%;

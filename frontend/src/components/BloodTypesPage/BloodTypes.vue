@@ -58,8 +58,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/utility/vars.scss";
-
 .content {
     display: flex;
     flex-direction: column;

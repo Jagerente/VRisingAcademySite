@@ -33,8 +33,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/utility/vars.scss";
-
 .item {
   $item-size: 3rem;
   border: 1px solid $dark;

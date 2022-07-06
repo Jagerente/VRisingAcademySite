@@ -169,8 +169,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/utility/vars.scss";
-
 .vue-slider-mark-label {
     font-size: 24px;
 

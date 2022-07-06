@@ -23,8 +23,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/utility/vars.scss';
-
 $slider_heigth: 20px;
 $slider_width: 40px;
 $slider_translate: $slider_width - 20px;

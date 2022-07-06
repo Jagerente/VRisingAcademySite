@@ -45,8 +45,6 @@ export default {
 
 
 <style scoped lang="scss">
-@import "@/assets/styles/utility/vars.scss";
-
 .item {
   border-radius: 3px;
   -webkit-user-drag: none;

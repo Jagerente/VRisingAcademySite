@@ -61,7 +61,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/utility/vars.scss";
 $cross_size: 16px;
 $cross_weight: 1.5px;
 $cross_size-tag: $cross_size * .63;

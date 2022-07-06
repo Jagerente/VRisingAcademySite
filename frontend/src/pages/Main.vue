@@ -194,8 +194,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/utility/vars.scss";
-
 .container {
   display: flex;
   flex-direction: column;

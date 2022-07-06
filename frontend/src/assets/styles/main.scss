@@ -1,8 +1,11 @@
 // utility
-@import "utility/reset";
-@import "utility/fonts";
-@import "utility/common";
-@import "utility/slider";
+@import "utility/reset.scss";
+@import "utility/fonts.scss";
+@import "utility/vars.scss";
+@import "utility/common.scss";
+@import "utility/animations.scss";
+
+@import "utility/slider.scss";
 
 .test {
    background-color: aqua;

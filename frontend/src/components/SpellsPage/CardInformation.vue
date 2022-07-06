@@ -97,8 +97,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets/styles/utility/vars.scss';
-
 .image__preview {
     user-select: none;
     --img-size: 200px;

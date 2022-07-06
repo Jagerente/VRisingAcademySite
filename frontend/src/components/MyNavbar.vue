@@ -119,8 +119,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/utility/vars.scss";
-
 .header {
 	user-select: none;
 	background-color: $background;

@@ -268,8 +268,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "@/assets/styles/utility/vars.scss";
-
 .information {
   width: 100%;
 

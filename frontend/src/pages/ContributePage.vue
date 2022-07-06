@@ -75,8 +75,6 @@
 </template>
 
 <style lang="scss" scoped>
-@import "@/assets/styles/utility/vars.scss";
-
 .content {
   max-width: $md;
   margin-left: auto;

@@ -19,9 +19,6 @@ export default {
 </script>
 
 <style lang="scss">
-@import "@/assets/styles/utility/vars.scss";
-@import '@/assets/styles/main.scss';
-
 body {
   font-family: $mainFontFamily;
   background-color: $background;
