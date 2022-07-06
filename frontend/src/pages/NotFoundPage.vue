@@ -18,6 +18,9 @@
     </div>
 </template>
 
+<script>
+</script>
+
 <style scoped lang="scss">
 .content {
     display: flex;

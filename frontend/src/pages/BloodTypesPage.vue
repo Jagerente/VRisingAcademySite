@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import MyLayout from "@/components/UI/MyLayout";
+import MyLayout from "@/components/UI/MyLayout.vue";
 import BloodTypes from '@/components/BloodTypesPage/BloodTypes.vue'
 
 import { mapState, mapActions } from 'vuex'

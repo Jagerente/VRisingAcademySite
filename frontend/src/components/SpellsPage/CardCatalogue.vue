@@ -6,7 +6,7 @@
 
 <script>
 import { mapState } from "vuex";
-import SpellsList from "@/components/SpellsPage/SpellsList"
+import SpellsList from "@/components/SpellsPage/SpellsList.vue"
 
 export default {
     components: {

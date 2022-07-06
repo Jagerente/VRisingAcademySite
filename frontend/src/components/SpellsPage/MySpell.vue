@@ -6,7 +6,7 @@
     type="image"
     :title="spell.name"
     :src="
-      require(`@/assets/images/spells/${spell.school.name.toLowerCase()}/${spell.name}.webp`)
+      getImageUrl(`${spell.school.name.toLowerCase()}/${spell.name}.webp`)
     "
   />
 </template>
@@ -24,6 +24,12 @@ export default {
       selectSpell: "spells/selectSpell"
     })
   },
+  setup() {
+    const getImageUrl = (name) => {
+      return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
+    }
+    return { getImageUrl }
+  }
 };
 </script>
 

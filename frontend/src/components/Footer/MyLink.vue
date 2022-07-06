@@ -1,9 +1,20 @@
 <template>
-    <Popper placement="top" arrow hover :content="this.content">
-        <a :href="link" target="blank">
-            <img class="image" :src="
-                require('@/assets/images/ui/main_page/' + this.icon + '.webp')
-            ">
+    <Popper
+        placement="top"
+        arrow
+        hover
+        :content="this.content"
+    >
+        <a
+            :href="link"
+            target="blank"
+        >
+            <img
+                class="image"
+                :src="
+                    getImageUrl('ui/main_page/' + this.icon + '.webp')
+                "
+            >
         </a>
     </Popper>
 </template>
@@ -16,6 +27,12 @@ export default {
         icon: String
     },
     name: "my-link",
+    setup() {
+        const getImageUrl = (name) => {
+            return new URL(`../../assets/images/${name}`, import.meta.url).href
+        }
+        return { getImageUrl }
+    }
 };
 </script>
 

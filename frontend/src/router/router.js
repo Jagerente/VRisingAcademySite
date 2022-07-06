@@ -1,9 +1,9 @@
-import Main from "@/pages/Main";
-import ItemsPage from "@/pages/ItemsPage"
-import SpellsPage from "@/pages/SpellsPage"
-import BloodTypesPage from "@/pages/BloodTypesPage"
-import ContributePage from "@/pages/ContributePage"
-import NotFoundPage from "@/pages/NotFoundPage"
+import Main from "@/pages/Main.vue";
+import ItemsPage from "@/pages/ItemsPage.vue"
+import SpellsPage from "@/pages/SpellsPage.vue"
+import BloodTypesPage from "@/pages/BloodTypesPage.vue"
+import ContributePage from "@/pages/ContributePage.vue"
+import NotFoundPage from "@/pages/NotFoundPage.vue"
 
 import { createRouter, createWebHistory } from "vue-router";
 

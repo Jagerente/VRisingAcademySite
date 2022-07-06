@@ -31,7 +31,7 @@
             <img
               v-if="this.tabLogo"
               class="button__image"
-              :src="require('@/assets/images/blood_types/' + tab.name.toLowerCase() + '.webp')"
+              :src="getImageUrl('../../assets/images/blood_types/' + tab.name.toLowerCase() + '.webp')"
             />
             <div class="button__label">
               {{ tab.name }}
@@ -109,10 +109,16 @@ export default {
   setup() {
     const { width, height } = useWindowSize();
 
+    const getImageUrl = (name) => {
+      return new URL(`${name}`, import.meta.url).href
+    }
+
     return {
       windowWidth: width,
       windowHeight: height,
+      getImageUrl
     };
+
   }
 }
 </script>
