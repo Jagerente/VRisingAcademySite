@@ -46,8 +46,8 @@ export default {
     },
     setup() {
         const getImageUrl = (name) => {
-            return new URL(`../../assets/images/blood_types/${name}`, import.meta.url).href
-        }
+            return `images/blood_types/${name}`;
+        };
 
         return {
             getImageUrl

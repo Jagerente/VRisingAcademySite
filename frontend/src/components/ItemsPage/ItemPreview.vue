@@ -4,43 +4,34 @@
     :disabled="!this.button"
     draggable="false"
     :title="item.name"
-    :src="getImageUrl(this.imagePath)"
-    @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
+    v-lazy="{ src: getImageUrl(imagePath) }"
+    @click="selectItem(itemInfo)"
     role="button"
   >
 </template>
 
-<script>
-import { mapState, mapActions, mapMutations } from "vuex";
+<script setup>
+import { computed } from "vue";
+import { useStore } from 'vuex';
+const props = defineProps({
+  item: Object,
+  button: Boolean,
+});
 
-export default {
-  name: "item-preview",
-  props: {
-    item: Object,
-    button: Boolean,
-  },
-  methods: {
-    ...mapActions({
-      selectItem: "items/selectItem",
-    }),
-  },
-  computed: {
-    imagePath() {
-      return this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[0])) + '.webp';
-    },
-    ...mapState({
-      items: (state) => state.items.items,
-      selectedItem: (state) => state.items.selectedItem,
-    }),
-  },
+const store = useStore();
+const items = computed(() => store.state.items.items);
 
-  setup() {
-    const getImageUrl = (name) => {
-      return new URL(`../../assets/images/items/${name}`, import.meta.url).href
-    }
-    return { getImageUrl }
-  }
+const itemInfo = items.value.find(item => { return item.id == props.item.id; });
+
+const imagePath = itemInfo.type.name.toLowerCase() + '/' + (itemInfo.type.name.toLowerCase() !== 'blueprints' ? itemInfo.name : (itemInfo.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : itemInfo.tags[0])) + '.webp';
+
+const getImageUrl = (name) => {
+  return `images/items/${name}`;
 };
+
+function selectItem(item) {
+  store.dispatch('items/selectItem', item);
+}
 </script>
 
 

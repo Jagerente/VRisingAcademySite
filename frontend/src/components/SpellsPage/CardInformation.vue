@@ -55,9 +55,7 @@
                         class="image__preview"
                         draggable="false"
                         :title="selectedSpell.name"
-                        :src="
-                            getImageUrl(`${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)
-                        "
+                        v-lazy="getImageUrl(`${selectedSpell.school.name.toLowerCase()}/${selectedSpell.name}.webp`)"
                     />
                 </div>
             </div>
@@ -74,7 +72,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
 import Markdown from 'vue3-markdown-it';
 
 export default {
@@ -89,11 +87,11 @@ export default {
     },
     setup() {
         const getImageUrl = (name) => {
-            return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
-        }
-        return { getImageUrl }
+            return `images/spells/${name}`;
+        };
+        return { getImageUrl };
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>

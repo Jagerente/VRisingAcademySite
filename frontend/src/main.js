@@ -8,11 +8,11 @@ import store from '@/store';
 const app = createApp(App);
 
 components.forEach(component => {
-    app.component(component.name, component)
+    app.component(component.name, component);
 });
 
 customComponents.forEach(component => {
-    app.use(component)
+    app.use(component);
 });
 
 app

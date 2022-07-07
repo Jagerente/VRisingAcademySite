@@ -1,36 +1,30 @@
 <template>
-  <input
+  <img
     @click="selectSpell(spell)"
     :class="spell.type.name === 'Ultimate' ? 'spell-ultimate' : spell.type.name === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
     class="spell"
-    type="image"
+    type="button"
     :title="spell.name"
-    :src="
-      getImageUrl(`${spell.school.name.toLowerCase()}/${spell.name}.webp`)
-    "
+    v-lazy="{ src: spellImageUrl }"
   />
 </template>
 
-<script>
-import { mapActions } from "vuex"
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 
-export default {
-  name: "my-spell",
-  props: {
-    spell: Object,
-  },
-  methods: {
-    ...mapActions({
-      selectSpell: "spells/selectSpell"
-    })
-  },
-  setup() {
-    const getImageUrl = (name) => {
-      return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
-    }
-    return { getImageUrl }
-  }
-};
+const props = defineProps({
+  spell: Object,
+});
+
+const spellImageUrl = computed(() => {
+  return `images/spells/${props.spell.school.name.toLowerCase()}/${props.spell.name}.webp`;
+});
+
+function selectSpell(spell) {
+  store.dispatch('spells/selectSpell', spell);
+}
 </script>
 
 <style scoped lang="scss">
@@ -69,34 +63,34 @@ $item-size: 5em;
   }
 
   &-ultimate {
-    border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 
   &-travel {
-    border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 }
