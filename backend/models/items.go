@@ -39,6 +39,14 @@ type Item struct {
 	MaxStack      *int32         `json:"maxStack"`
 }
 
+type MinimalItem struct {
+	Id    int32          `json:"id"`
+	Name  string         `json:"name"`
+	Type  ItemTypeObject `json:"-"`
+	SetId *int32         `json:"-"`
+	Set   *ItemSetObject `json:"-"`
+}
+
 type OldItem struct {
 	GameEntity
 	Tier       int32    `json:"tier"`
