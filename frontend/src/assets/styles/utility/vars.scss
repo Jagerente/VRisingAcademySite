@@ -19,6 +19,9 @@ $xl: 1200px;
 $m1: 0.5rem;
 $m2: 1rem;
 
+$cursor: url("@/assets/images/ui/Cursor_Arrow.webp");
+$cursor-active: url("@/assets/images/ui/Cursor_Arrow_Active.webp");
+
 :root {
     --popper-theme-background-color: #171722d5;
     --popper-theme-background-color-hover: #14131b;
