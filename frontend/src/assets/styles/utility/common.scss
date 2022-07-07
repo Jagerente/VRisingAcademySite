@@ -1,11 +1,10 @@
-* {
-    cursor: url("@/assets/images/ui/Cursor_Arrow.webp"), default;
+html {
+    cursor: $cursor, default;
 }
 
 a:not(:disabled),
 button:not(:disabled),
 [role="button"]:not(:disabled),
 [type="button"]:not(:disabled) {
-    cursor: url("@/assets/images/ui/Cursor_Arrow_Active.webp"), default;
-
+    cursor: $cursor-active, pointer;
 }
