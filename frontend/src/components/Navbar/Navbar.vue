@@ -56,7 +56,7 @@ import Dropdown from "@/components/Navbar/Dropdown.vue";
 import Hamburger from "@/components/Navbar/Hamburger.vue";
 import { ref, computed } from "vue";
 import { useWindowSize } from 'vue-window-size';
-const { windoWidth, windowHeight } = useWindowSize();
+const { width, height } = useWindowSize();
 
 const catalogueDropdown = {
 	name: 'Catalogue',
@@ -85,7 +85,7 @@ const burgerClicked = ref(false);
 
 const showNavbar = computed({
 	get: () => {
-		if (windoWidth > 992)
+		if (width.value > 992)
 			return true;
 		return burgerClicked.value;
 
