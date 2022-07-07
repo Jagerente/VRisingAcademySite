@@ -1,18 +1,18 @@
 <template>
   <div class="app__container">
-    <my-navbar />
+    <Navbar />
     <router-view />
     <my-footer v-show="false" />
   </div>
 </template>
 
 <script>
-import MyNavbar from "@/components/MyNavbar.vue";
-import MyFooter from "./components/MyFooter.vue";
+import Navbar from "@/components/Navbar/Navbar.vue";
+import MyFooter from "@/components/MyFooter.vue";
 
 export default {
   components: {
-    MyNavbar,
+    Navbar,
     MyFooter
   },
 };
