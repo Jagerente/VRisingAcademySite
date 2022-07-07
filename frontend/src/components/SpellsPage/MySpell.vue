@@ -1,36 +1,30 @@
 <template>
-  <input
+  <img
     @click="selectSpell(spell)"
     :class="spell.type.name === 'Ultimate' ? 'spell-ultimate' : spell.type.name === 'Travel Skill' ? 'spell-travel' : 'spell-basic'"
     class="spell"
-    type="image"
+    type="button"
     :title="spell.name"
-    :src="
-      getImageUrl(`${spell.school.name.toLowerCase()}/${spell.name}.webp`)
-    "
+    v-lazy="{ src: spellImageUrl }"
   />
 </template>
 
-<script>
-import { mapActions } from "vuex"
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+const store = useStore();
 
-export default {
-  name: "my-spell",
-  props: {
-    spell: Object,
-  },
-  methods: {
-    ...mapActions({
-      selectSpell: "spells/selectSpell"
-    })
-  },
-  setup() {
-    const getImageUrl = (name) => {
-      return `images/spells/${name}`;
-    };
-    return { getImageUrl };
-  }
-};
+const props = defineProps({
+  spell: Object,
+});
+
+const spellImageUrl = computed(() => {
+  return `images/spells/${props.spell.school.name.toLowerCase()}/${props.spell.name}.webp`;
+});
+
+function selectSpell(spell) {
+  store.dispatch('spells/selectSpell', spell);
+}
 </script>
 
 <style scoped lang="scss">
