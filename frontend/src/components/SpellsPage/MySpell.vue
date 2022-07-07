@@ -26,9 +26,9 @@ export default {
   },
   setup() {
     const getImageUrl = (name) => {
-      return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
-    }
-    return { getImageUrl }
+      return `images/spells/${name}`;
+    };
+    return { getImageUrl };
   }
 };
 </script>
@@ -69,34 +69,34 @@ $item-size: 5em;
   }
 
   &-ultimate {
-    border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 
   &-travel {
-    border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("@/assets/images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 }

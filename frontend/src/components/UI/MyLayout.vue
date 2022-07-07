@@ -110,8 +110,8 @@ export default {
     const { width, height } = useWindowSize();
 
     const getImageUrl = (name) => {
-      return new URL(`../../assets/images/${name}`, import.meta.url).href
-    }
+      return `images/${name}`;
+    };
 
     return {
       windowWidth: width,

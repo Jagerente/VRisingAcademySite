@@ -5,7 +5,7 @@
     draggable="false"
     :title="item.name"
     :src="getImageUrl(this.imagePath)"
-    @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
+    @click="selectItem(this.items.find(item => { return item.id == this.item.id; }))"
     role="button"
   >
 </template>
@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     imagePath() {
-      return this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[0])) + '.webp';
+      return this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.items.find(item => { return item.id == this.item.id; }).tags[0])) + '.webp';
     },
     ...mapState({
       items: (state) => state.items.items,
@@ -36,9 +36,9 @@ export default {
 
   setup() {
     const getImageUrl = (name) => {
-      return new URL(`../../assets/images/items/${name}`, import.meta.url).href
-    }
-    return { getImageUrl }
+      return `images/items/${name}`;
+    };
+    return { getImageUrl };
   }
 };
 </script>

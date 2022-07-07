@@ -89,9 +89,9 @@ export default {
     },
     setup() {
         const getImageUrl = (name) => {
-            return new URL(`../../assets/images/spells/${name}`, import.meta.url).href
-        }
-        return { getImageUrl }
+            return `images/spells/${name}`;
+        };
+        return { getImageUrl };
     }
 }
 </script>

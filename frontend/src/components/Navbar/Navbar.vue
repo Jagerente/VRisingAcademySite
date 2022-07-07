@@ -70,6 +70,10 @@ const catalogueDropdown = {
 			url: '/spells'
 		},
 		{
+			name: 'Blood Types',
+			url: '/bloodtypes'
+		},
+		{
 			name: 'Bestiary',
 			url: ''
 		},
