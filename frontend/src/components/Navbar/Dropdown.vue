@@ -99,7 +99,6 @@ function linkClick(url) {
     }
 
     &__list {
-        // display: none;
         position: absolute;
         top: 40px;
         left: 0;
@@ -108,10 +107,6 @@ function linkClick(url) {
         padding: 15px;
         border: 1px solid rgba(0, 0, 0, .15);
         border-radius: 5px;
-
-        // &.active {
-        // 	display: block;
-        // }
     }
 
     &__item {
