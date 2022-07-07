@@ -58,7 +58,8 @@ func handleStationList(ctx *gin.Context) {
             where
                 recipestations.stationid = stations.id
         )
-    ) as knowledges
+    ) as knowledges,
+    stations.itemid
 from
     stations`
 
@@ -82,7 +83,8 @@ from
 			&item.Description,
 			pq.Array(&item.Recipes),
 			pq.Array(&item.StationRecipes),
-			pq.Array(&item.Knowledges))
+			pq.Array(&item.Knowledges),
+			&item.ItemId)
 
 		if readError != nil {
 			fmt.Println(readError)

@@ -9,6 +9,7 @@ import (
 )
 
 const (
+	connectionStringTest     string = "user=%s password=%s host=%s port=%d dbname=vrisingdb_test sslmode=disable"
 	connectionString         string = "user=%s password=%s host=%s port=%d dbname=vrisingdb sslmode=disable"
 	connectionStringBaseless string = "user=%s password=%s host=%s port=%d sslmode=disable"
 	checkConnectionString    string = `SELECT * FROM CheckTable limit 1`
@@ -16,8 +17,20 @@ const (
 	postgresPassword         string = "83"
 	postgresHost             string = "localhost"
 	postgresPort             int32  = 5432
-	DatabaseVersion          int32  = 15
+	DatabaseVersion          int32  = 18
 )
+
+var (
+	isTestMode bool = false
+)
+
+func IsTestMode() bool {
+	return isTestMode
+}
+
+func SetTestMode() {
+	isTestMode = true
+}
 
 func CheckIfDatabaseNeedsUpdate() bool {
 	connection := CreateConnection()
@@ -60,7 +73,12 @@ func UpdateDatabase() {
 
 //Checks if database exists
 func CheckIfDatabaseExists() bool {
-	connection, _ := sql.Open("postgres", fmt.Sprintf(connectionString,
+	var stringToConnect = connectionString
+	if isTestMode {
+		stringToConnect = connectionStringTest
+	}
+
+	connection, _ := sql.Open("postgres", fmt.Sprintf(stringToConnect,
 		postgresUser,
 		postgresPassword,
 		postgresHost,
@@ -80,7 +98,12 @@ func CheckIfDatabaseExists() bool {
 
 //Creates connection to database
 func CreateConnection() *sql.DB {
-	db, err := sql.Open("postgres", fmt.Sprintf(connectionString,
+	var stringToConnect = connectionString
+	if isTestMode {
+		stringToConnect = connectionStringTest
+	}
+
+	db, err := sql.Open("postgres", fmt.Sprintf(stringToConnect,
 		postgresUser,
 		postgresPassword,
 		postgresHost,
@@ -102,7 +125,11 @@ func InitializeDatabase() {
 		panic(err)
 	}
 
-	_, k := connection.Query("CREATE DATABASE vrisingdb;")
+	var dbName string = "vrisingdb"
+	if isTestMode {
+		dbName = "vrisingdb_test"
+	}
+	_, k := connection.Query("CREATE DATABASE " + dbName + ";")
 	if k != nil {
 		connection.Close()
 		panic(k)

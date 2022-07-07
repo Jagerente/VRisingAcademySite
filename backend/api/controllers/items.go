@@ -11,6 +11,21 @@ import (
 )
 
 const (
+	GetItemsRequestMinimal = `select
+	items.id,
+	items.name,
+	items.type as typeid,
+	itemtypes.title as typetitle,
+    items.setid,
+    sets.name
+from
+	items
+	join itemtypes on itemtypes.id = items.type
+	left join sets on sets.id = items.setid
+order by
+    items.id,
+	items.type,
+	items.setid`
 	GetItemsRequest = `select
     items.id,
     items.name,
@@ -208,6 +223,66 @@ order by
     items.setid`
 )
 
+type ItemGroupedListResponseItem struct {
+	Id    int32         `json:"id"`
+	Name  string        `json:"name"`
+	Items []models.Item `json:"items"`
+}
+
+type ItemGroupedListResponse struct {
+	Id   int32                         `json:"id"`
+	Name string                        `json:"name"`
+	Sets []ItemGroupedListResponseItem `json:"sets"`
+}
+
+type ItemGroupedListResponseItemMinimal struct {
+	Id    int32                `json:"id"`
+	Name  string               `json:"name"`
+	Items []models.MinimalItem `json:"items"`
+}
+
+type ItemGroupedListResponseMinimal struct {
+	Id   int32                                `json:"id"`
+	Name string                               `json:"name"`
+	Sets []ItemGroupedListResponseItemMinimal `json:"sets"`
+}
+
+func findSetIndex(sets []ItemGroupedListResponseItem, set int32) int32 {
+	for index, item := range sets {
+		if item.Id == set {
+			return int32(index)
+		}
+	}
+	return -2
+}
+
+func findWeaponIndex(response []ItemGroupedListResponse, weaponType int32) int32 {
+	for index, item := range response {
+		if item.Id == weaponType {
+			return int32(index)
+		}
+	}
+	return -1
+}
+
+func findSetIndexMinimal(sets []ItemGroupedListResponseItemMinimal, set int32) int32 {
+	for index, item := range sets {
+		if item.Id == set {
+			return int32(index)
+		}
+	}
+	return -2
+}
+
+func findWeaponIndexMinimal(response []ItemGroupedListResponseMinimal, weaponType int32) int32 {
+	for index, item := range response {
+		if item.Id == weaponType {
+			return int32(index)
+		}
+	}
+	return -1
+}
+
 func getItemTypesList() []models.ItemTypeObject {
 	var items = make([]models.ItemTypeObject, 0)
 	connection := database.CreateConnection()
@@ -276,7 +351,7 @@ func handleItemTypesList(ctx *gin.Context) {
 
 func handleListRequest(ctx *gin.Context) {
 	var queryString = GetItemsRequest
-	if ctx.Query("v2") != "" {
+	if ctx.Request.URL.Query().Has("v2") {
 		queryString = GetItemsrequestV2
 	}
 
@@ -349,36 +424,11 @@ func handleListRequest(ctx *gin.Context) {
 	ctx.JSON(200, response)
 }
 
-type ItemGroupedListResponseItem struct {
-	Id    int32         `json:"id"`
-	Name  string        `json:"name"`
-	Items []models.Item `json:"items"`
-}
-type ItemGroupedListResponse struct {
-	Id   int32                         `json:"id"`
-	Name string                        `json:"name"`
-	Sets []ItemGroupedListResponseItem `json:"sets"`
-}
-
-func findSetIndex(sets []ItemGroupedListResponseItem, set int32) int32 {
-	for index, item := range sets {
-		if item.Id == set {
-			return int32(index)
-		}
-	}
-	return -2
-}
-
-func findWeaponIndex(response []ItemGroupedListResponse, weaponType int32) int32 {
-	for index, item := range response {
-		if item.Id == weaponType {
-			return int32(index)
-		}
-	}
-	return -1
-}
-
 func handleGroupedItemsListRequest(ctx *gin.Context) {
+	if ctx.Request.URL.Query().Has("minimal") {
+		handleGroupedItemsListRequestMinimal(ctx)
+		return
+	}
 
 	var response = make([]ItemGroupedListResponse, 0)
 	types := getItemTypesList()
@@ -391,12 +441,8 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 		response = append(response, toAdd)
 	}
 
-	type ResponseMapItem map[int32][]models.Item
-	type ResponseMap map[int32]*ResponseMapItem
-	const UnsetTypeId int32 = -1
-
 	var queryString = GetItemsRequest
-	if ctx.Query("v2") != "" {
+	if ctx.Request.URL.Query().Has("v2") {
 		queryString = GetItemsrequestV2
 	}
 
@@ -410,6 +456,8 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 		panic(err)
 	}
 	defer rows.Close()
+
+	const UnsetTypeId int32 = -1
 	for rows.Next() {
 		item := models.Item{
 			Stations:      make([]int32, 0),
@@ -493,8 +541,87 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 	ctx.JSON(200, response)
 }
 
+func handleGroupedItemsListRequestMinimal(ctx *gin.Context) {
+
+	var response = make([]ItemGroupedListResponseMinimal, 0)
+	types := getItemTypesList()
+
+	for _, item := range types {
+		toAdd := ItemGroupedListResponseMinimal{
+			Id:   item.Id,
+			Name: item.Name,
+			Sets: make([]ItemGroupedListResponseItemMinimal, 0)}
+		response = append(response, toAdd)
+	}
+
+	connection := database.CreateConnection()
+	defer connection.Close()
+
+	rows, err := connection.Query(GetItemsRequestMinimal)
+
+	if err != nil {
+		fmt.Print(err)
+		panic(err)
+	}
+	defer rows.Close()
+
+	const UnsetTypeId int32 = -1
+	for rows.Next() {
+		item := models.MinimalItem{
+			Type: models.ItemTypeObject{}}
+
+		var setName *string
+
+		readError := rows.Scan(
+			&item.Id,
+			&item.Name,
+			&item.Type.Id,
+			&item.Type.Name,
+			&item.SetId,
+			&setName)
+
+		if readError != nil {
+			fmt.Print(readError)
+			continue
+		}
+
+		var key int32 = UnsetTypeId
+		if item.SetId != nil {
+			key = *item.SetId
+			item.Set = &models.ItemSetObject{
+				Id:   key,
+				Name: *setName}
+		}
+
+		weaponIndex := findWeaponIndexMinimal(response, item.Type.Id)
+		responseWeapon := response[weaponIndex]
+		typeIndex := findSetIndexMinimal(responseWeapon.Sets, key)
+		if typeIndex == -2 {
+			var newItem ItemGroupedListResponseItemMinimal
+			if key == UnsetTypeId {
+				newItem = ItemGroupedListResponseItemMinimal{
+					Id:    UnsetTypeId,
+					Name:  "Unset",
+					Items: make([]models.MinimalItem, 0),
+				}
+			} else {
+				newItem = ItemGroupedListResponseItemMinimal{
+					Id:    item.Set.Id,
+					Name:  item.Set.Name,
+					Items: make([]models.MinimalItem, 0),
+				}
+			}
+			responseWeapon.Sets = append(responseWeapon.Sets, newItem)
+			typeIndex = findSetIndexMinimal(responseWeapon.Sets, key)
+		}
+		responseWeapon.Sets[typeIndex].Items = append(responseWeapon.Sets[typeIndex].Items, item)
+		response[weaponIndex] = responseWeapon
+	}
+	ctx.JSON(200, response)
+}
+
 func HandleItemsRequest(ctx *gin.RouterGroup) {
-	ctx.GET("list", handleListRequest)
+	ctx.GET("/list", handleListRequest)
 	ctx.GET("/grouplist", handleGroupedItemsListRequest)
 	ctx.GET("/types", handleItemTypesList)
 }
