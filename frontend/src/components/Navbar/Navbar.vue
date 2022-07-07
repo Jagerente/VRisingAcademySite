@@ -9,71 +9,94 @@
 				class="header__logo"
 			>
 			<nav class="header__nav nav">
-				<ul class="nav__list">
-					<li class="nav__item">
-						<a
-							href="#"
-							class="nav__link"
-							@click="$router.push('/')"
-						>Home</a>
-					</li>
-					<li class="nav__item">
-						<Dropdown
-							class="nav__dropdown"
-							:name="catalogueDropdown.name"
-							:items="catalogueDropdown.items"
-						/>
-					</li>
-					<li class="nav__item">
-						<a
-							href="https://mapgenie.io/v-rising/maps/vardoran"
-							target="blank"
-							class="nav__link"
-						>Map</a>
-					</li>
-					<li class="nav__item">
-						<a
-							href=""
-							class="nav__link disabled"
-						>Guides</a>
-					</li>
-				</ul>
+				<Transition name="fade">
+					<ul
+						class="nav__list"
+						v-if="showNavbar"
+					>
+						<li class="nav__item">
+							<a
+								href="#"
+								class="nav__link"
+								@click="$router.push('/')"
+							>Home</a>
+						</li>
+						<li class="nav__item">
+							<Dropdown
+								class="nav__dropdown"
+								:name="catalogueDropdown.name"
+								:items="catalogueDropdown.items"
+							/>
+						</li>
+						<li class="nav__item">
+							<a
+								href="https://mapgenie.io/v-rising/maps/vardoran"
+								target="blank"
+								class="nav__link"
+							>Map</a>
+						</li>
+						<li class="nav__item">
+							<a
+								href=""
+								class="nav__link disabled"
+							>Guides</a>
+						</li>
+						<li class="nav__item">
+						</li>
+					</ul>
+				</Transition>
 			</nav>
+			<Hamburger @onChange="toggleNavbar" />
 		</div>
 	</header>
 </template>
 
-<script>
+<script setup>
 import Dropdown from "@/components/Navbar/Dropdown.vue";
-export default {
-	components: {
-		Dropdown,
+import Hamburger from "@/components/Navbar/Hamburger.vue";
+import { ref, computed } from "vue";
+import { useWindowSize } from 'vue-window-size';
+const { windoWidth, windowHeight } = useWindowSize();
+
+const catalogueDropdown = {
+	name: 'Catalogue',
+	items: [
+		{
+			name: 'Items',
+			url: '/items'
+		},
+		{
+			name: 'Spells',
+			url: '/spells'
+		},
+		{
+			name: 'Bestiary',
+			url: ''
+		},
+		{
+			name: 'Hunts',
+			url: ''
+		},
+	]
+
+}
+
+const burgerClicked = ref(false);
+
+const showNavbar = computed({
+	get: () => {
+		if (windoWidth > 992)
+			return true;
+		return burgerClicked.value;
+
 	},
-	data() {
-		return {
-			catalogueDropdown: {
-				name: 'Catalogue',
-				items: [
-					{
-						name: 'Items',
-						url: '/items'
-					},
-					{
-						name: 'Spells',
-						url: '/spells'
-					},
-					{
-						name: 'Bestiary',
-						url: ''
-					},
-					{
-						name: 'Hunts',
-						url: ''
-					},
-				]
-			}
-		}
-	},
+	set: (value) => {
+		burgerClicked.value = value;
+	}
+});
+
+function toggleNavbar(toggle) {
+	showNavbar.value = toggle;
 };
 </script>
 
@@ -85,14 +108,18 @@ export default {
 	padding: 10px;
 
 	&__container {
-		max-width: 1320px;
+		display: flex;
+		max-width: $xl;
 		margin: 0 auto;
+
+		@media (max-width: $lg) {
+			flex-direction: column;
+		}
 	}
 
 	&__logo {
 		display: inline-block;
 		vertical-align: middle;
-		width: auto;
 		margin-right: 30px;
 	}
 
@@ -103,10 +130,18 @@ export default {
 }
 
 .nav {
+	margin-top: auto;
+	margin-bottom: auto;
+
 	&__list {
 		margin: 0;
 		padding: 0;
 		list-style: none;
+
+		@media (max-width: $lg) {
+			margin-top: 10px;
+		}
+
 	}
 
 	&__item {
