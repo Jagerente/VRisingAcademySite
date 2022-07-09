@@ -24,7 +24,7 @@
         <div class="tabs">
           <button
             v-for="(tab, i) in this.tabs"
-            @click="this.selector(i); this.selectedTab = i;"
+            @click="onTabSelect(i)"
             class="tabs__button button"
             :class="{ 'active': i === this.selectedTab }"
           >
@@ -56,12 +56,15 @@
       name="translate-up"
     >
       <div
-        v-if="this.showModal && this.windowWidth < 992"
+        v-if="this.showModal && windowWidth < 992"
         class="modal"
         @click.self="this.updateShowModal(false)"
       >
         <div
           v-if="this.showModal"
+          v-drag="{ axis: 'y' }"
+          @v-drag-end="onDragEnd"
+          ref="modal"
           class="modal__content"
         >
           <slot name="right"></slot>
@@ -71,56 +74,63 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { useWindowSize } from 'vue-window-size';
+import { ref, onMounted } from "vue";
 
-export default {
-  props: {
-    isLoading: Boolean,
-    tabs: Array,
-    selector: Function,
-    left: {
-      type: Boolean,
-      default: true,
-    },
-    tabLogo: {
-      type: Boolean,
-      default: false,
-    },
-    center: {
-      type: Boolean,
-      default: true,
-    },
-    right: {
-      type: Boolean,
-      default: true,
-    },
-    showModal: {
-      type: Boolean,
-      default: false,
-    },
-    updateShowModal: Function
+const props = defineProps({
+  isLoading: Boolean,
+  tabs: Array,
+  selector: Function,
+  left: {
+    type: Boolean,
+    default: true,
   },
-  data() {
-    return {
-      selectedTab: 0,
-    }
+  tabLogo: {
+    type: Boolean,
+    default: false,
   },
-  setup() {
-    const { width, height } = useWindowSize();
+  center: {
+    type: Boolean,
+    default: true,
+  },
+  right: {
+    type: Boolean,
+    default: true,
+  },
+  showModal: {
+    type: Boolean,
+    default: false,
+  },
+  updateShowModal: Function
+});
+const selectedTab = ref(0);
 
-    const getImageUrl = (name) => {
-      return `images/${name}`;
-    };
+const { width, height } = useWindowSize();
+const windowWidth = width;
+const windowHeight = height;
 
-    return {
-      windowWidth: width,
-      windowHeight: height,
-      getImageUrl
-    };
+const modal = ref(null);
 
-  }
+const getImageUrl = (name) => {
+  return `images/${name}`;
+};
+
+function onTabSelect(i) {
+  props.selector(i);
+  selectedTab.value = i;
 }
+
+function onDragEnd(event) {
+  if (!modal.value) return;
+
+  if (windowHeight.value - modal.value.offsetHeight - modal.value.offsetTop > 0) {
+    modal.value.style.top = '0px';
+  }
+  else if (modal.value.offsetTop * 100 / windowHeight.value > 0 && windowHeight.value - modal.value.offsetHeight - modal.value.offsetTop < -50) {
+    props.updateShowModal(false);
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -255,7 +265,7 @@ export default {
       z-index: 10;
       background-color: $background;
       border-radius: 20px;
-      max-height: 75%;
+      // max-height: 75%;
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       width: 100%;
