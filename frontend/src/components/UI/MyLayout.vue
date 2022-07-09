@@ -74,61 +74,68 @@
   </div>
 </template>
 
-<script setup>
+<script>
 import { useWindowSize } from 'vue-window-size';
 import { ref, onMounted } from "vue";
 
-const props = defineProps({
-  isLoading: Boolean,
-  tabs: Array,
-  selector: Function,
-  left: {
-    type: Boolean,
-    default: true,
+export default {
+  props: {
+    isLoading: Boolean,
+    tabs: Array,
+    selector: Function,
+    left: {
+      type: Boolean,
+      default: true,
+    },
+    tabLogo: {
+      type: Boolean,
+      default: false,
+    },
+    center: {
+      type: Boolean,
+      default: true,
+    },
+    right: {
+      type: Boolean,
+      default: true,
+    },
+    showModal: {
+      type: Boolean,
+      default: false,
+    },
+    updateShowModal: Function
   },
-  tabLogo: {
-    type: Boolean,
-    default: false,
+  methods: {
+    onDragEnd(event) {
+      const modal = this.$refs.modal;
+      const windowHeight = window.innerHeight;
+
+      if (!modal) return;
+
+      if (windowHeight - modal.offsetHeight - modal.offsetTop > 0) {
+        modal.style.top = '0px';
+      }
+      else if (modal.offsetTop * 100 / windowHeight > 0 && windowHeight - modal.offsetHeight - modal.offsetTop < -50) {
+        this.updateShowModal(false);
+      }
+    }
   },
-  center: {
-    type: Boolean,
-    default: true,
-  },
-  right: {
-    type: Boolean,
-    default: true,
-  },
-  showModal: {
-    type: Boolean,
-    default: false,
-  },
-  updateShowModal: Function
-});
-const selectedTab = ref(0);
+  setup(props) {
+    const selectedTab = ref(0);
 
-const { width, height } = useWindowSize();
-const windowWidth = width;
-const windowHeight = height;
+    const { width, height } = useWindowSize();
+    const windowWidth = width;
+    const windowHeight = height;
+    const getImageUrl = (name) => {
+      return `images/${name}`;
+    };
 
-const modal = ref(null);
+    function onTabSelect(i) {
+      props.selector(i);
+      selectedTab.value = i;
+    }
 
-const getImageUrl = (name) => {
-  return `images/${name}`;
-};
-
-function onTabSelect(i) {
-  props.selector(i);
-  selectedTab.value = i;
-}
-
-function onDragEnd(event) {
-  if (!modal.value) return;
-
-  if (windowHeight.value - modal.value.offsetHeight - modal.value.offsetTop > 0) {
-    modal.value.style.top = '0px';
-  }
-  else if (modal.value.offsetTop * 100 / windowHeight.value > 0 && windowHeight.value - modal.value.offsetHeight - modal.value.offsetTop < -50) {
-    props.updateShowModal(false);
+    return { windowHeight, windowWidth, selectedTab, onTabSelect, getImageUrl };
   }
 };
 </script>

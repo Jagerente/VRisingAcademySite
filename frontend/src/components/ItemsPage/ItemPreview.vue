@@ -5,20 +5,53 @@
     draggable="false"
     :title="item.name"
     v-lazy="{ src: getImageUrl(imagePath) }"
-    @click="selectItem(itemInfo)"
+    @click="selectItem(this.items.find(item => { return item.id == this.item.id; }))"
     role="button"
   >
 </template>
 
-<script setup>
-import { computed } from "vue";
+<script>
+import { mapState, mapActions, mapMutations } from "vuex";
+export default {
+  name: "item-preview",
+  props: {
+    item: Object,
+    button: Boolean,
+  },
+  methods: {
+    ...mapActions({
+      selectItem: "items/selectItem",
+    }),
+  },
+  computed: {
+    imagePath() {
+      return this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.items.find(item => { return item.id == this.item.id; }).tags[0])) + '.webp';
+    },
+    ...mapState({
+      items: (state) => state.items.items,
+      selectedItem: (state) => state.items.selectedItem,
+    }),
+  },
+  setup(props) {
+    const getImageUrl = (name) => {
+      return `images/items/${name}`;
+    };
+    return { getImageUrl };
+  }
+};
+</script>
+
+<!-- <script setup>
+import { computed, onMounted } from "vue";
 import { useStore } from 'vuex';
+
 const props = defineProps({
   item: Object,
   button: Boolean,
 });
 
 const store = useStore();
+
 const items = computed(() => store.state.items.items);
 
 const itemInfo = items.value.find(item => { return item.id == props.item.id; });
@@ -32,7 +65,7 @@ const getImageUrl = (name) => {
 function selectItem(item) {
   store.dispatch('items/selectItem', item);
 }
-</script>
+</script> -->
 
 
 <style scoped lang="scss">
