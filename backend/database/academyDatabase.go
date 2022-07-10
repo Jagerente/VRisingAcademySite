@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	connectionStringTest     string = "user=%s password=%s host=%s port=%d dbname=vrisingdb_test sslmode=disable"
+	connectionStringTest     string = "user=%s password=%s host=%s port=%d dbname=vrisingdb-dev sslmode=disable"
 	connectionString         string = "user=%s password=%s host=%s port=%d dbname=vrisingdb sslmode=disable"
 	connectionStringBaseless string = "user=%s password=%s host=%s port=%d sslmode=disable"
 	checkConnectionString    string = `SELECT * FROM CheckTable limit 1`
@@ -127,7 +127,7 @@ func InitializeDatabase() {
 
 	var dbName string = "vrisingdb"
 	if isTestMode {
-		dbName = "vrisingdb_test"
+		dbName = "vrisingdb-dev"
 	}
 	_, k := connection.Query("CREATE DATABASE " + dbName + ";")
 	if k != nil {
