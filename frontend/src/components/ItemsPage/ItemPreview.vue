@@ -25,7 +25,8 @@ export default {
   },
   computed: {
     imagePath() {
-      return this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.items.find(item => { return item.id == this.item.id; }).tags[0])) + '.webp';
+      const item = this.items.find(item => { return item.id == this.item.id; });
+      return item.type.name.toLowerCase() + '/' + (item.type.name.toLowerCase() !== 'blueprints' ? item.name : (item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : item.tags[0])) + '.webp';
     },
     ...mapState({
       items: (state) => state.items.items,
