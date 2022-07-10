@@ -51,26 +51,26 @@
     >
       <slot name="right"></slot>
     </div>
-    <Transition
-      v-if="right"
-      name="translate-up"
-    >
-      <div
-        v-if="this.showModal && windowWidth < 992"
-        class="modal"
-        @click.self="this.updateShowModal(false)"
-      >
-        <div
-          v-if="this.showModal"
-          v-drag="{ axis: 'y' }"
-          @v-drag-end="onDragEnd"
-          ref="modal"
-          class="modal__content"
-        >
-          <slot name="right"></slot>
-        </div>
-      </div>
-    </Transition>
+		<div
+			v-if="this.showModal && windowWidth < 992 && this.right"
+			class="modal"
+			@click.self="this.updateShowModal(false)"
+		>
+			<div
+				v-show="this.showModal"
+				v-drag="{ axis: 'y', handle: '#drag' }"
+				@v-drag-end="onDragEnd"
+				ref="modal"
+				class="modal__content"
+			>
+				<div
+					id="drag"
+					class="modal__drag"
+				>
+				</div>
+				<slot name="right"></slot>
+			</div>
+		</div>
   </div>
 </template>
 
@@ -266,9 +266,55 @@ export default {
   opacity: 1;
   align-items: flex-end;
   justify-content: center;
+	background-color: rgba(0,0,0,0.6);
+	animation: fade 0.25s ease-in;
+	
+	&__content {
+		animation: translate-up 0.3s ease-in;
+	}
+	
+	&__drag {
+		position: absolute;
+		top: -35px;
+		left: 50%;
+		transform: translateX(-50%);
+		padding-top: 20px;
+		padding-bottom: 55px;
+		padding-left: 100%;
+		padding-right: 100%;
+		z-index: 11;
+		
+		&::after {
+			content: '';
+			display: block;
+			height: 2px;
+			width: 100px;
+			background-color: #ffffff;
+			border-radius: 5px;
+		}
+	}
+	
+	@keyframes fade {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1
+		}
+	}
+	
+	@keyframes translate-up {
+		from {
+			transform: translateY(100%);
+		}
+		to {
+			transform: translateY(0%);
+		}
+	}
 
   @media (max-width: $lg) {
     &__content {
+			position: relative;
       z-index: 10;
       background-color: $background;
       border-radius: 20px;
@@ -276,7 +322,9 @@ export default {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
       width: 100%;
+			height: 75%;
     }
   }
+	
 }
 </style>
