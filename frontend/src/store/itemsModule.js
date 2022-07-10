@@ -18,7 +18,7 @@ export const itemsModule = {
         matchingFloor: true,
         confinedRoom: true,
         showModal: false,
-        host: "https://vrising-academy.info/api/"
+        host: "https://dev.vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
     getters: {
