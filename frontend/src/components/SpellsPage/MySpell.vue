@@ -29,6 +29,7 @@ function selectSpell(spell) {
 
 <style scoped lang="scss">
 $item-size: 5em;
+$image-path: 'https://dev.vrising-academy.info/images/spells/ui/';
 
 .spell {
   background: none;
@@ -63,34 +64,34 @@ $item-size: 5em;
   }
 
   &-ultimate {
-    border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+    border-image: url($image-path + "UltiFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url($image-path + "UltiFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("images/spells/ui/UltiFrame.webp") 27 / 25px / 1rem;
+      border-image: url($image-path + "UltiFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url($image-path + "UltiFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("images/spells/ui/UltiFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url($image-path + "UltiFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url($image-path + "UltiFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 
   &-travel {
-    border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-    -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+    border-image: url($image-path + "TravelFrame.webp") 27 / 25px / 1rem;
+    -webkit-border-image: url($image-path + "TravelFrame.webp") 27 / 25px / 1rem;
 
     &:hover {
-      border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("images/spells/ui/TravelFrame.webp") 27 / 25px / 1rem;
+      border-image: url($image-path + "TravelFrame.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url($image-path + "TravelFrame.webp") 27 / 25px / 1rem;
       box-shadow: 0 0 28px black;
     }
 
     &.active {
-      border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
-      -webkit-border-image: url("images/spells/ui/TravelFrame_Active.webp") 27 / 25px / 1rem;
+      border-image: url($image-path + "TravelFrame_Active.webp") 27 / 25px / 1rem;
+      -webkit-border-image: url($image-path + "TravelFrame_Active.webp") 27 / 25px / 1rem;
     }
   }
 }
