@@ -278,10 +278,7 @@ export default {
 		top: -35px;
 		left: 50%;
 		transform: translateX(-50%);
-		padding-top: 20px;
-		padding-bottom: 55px;
-		padding-left: 100%;
-		padding-right: 100%;
+		padding: 20px 100% 55px;
 		z-index: 11;
 		
 		&::after {
