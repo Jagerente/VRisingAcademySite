@@ -2,7 +2,7 @@
   <div
     class="items"
     v-if="!searchQuery"
-    v-for="set in this.sets"
+    v-for="set in sets"
     :key="set.id"
   >
     <p class="items__set">{{ set.name }}</p>
@@ -11,6 +11,7 @@
         v-for="item in set.items"
         :key="item.id"
         :item="item"
+        @itemClick="itemClick"
       />
     </div>
   </div>
@@ -19,39 +20,45 @@
     v-else
   >
     <MyItem
-      v-for="item in this.sortedAndSearchedItems"
+      v-for="item in sortedAndSearchedItems"
       :key="item.id"
       :item="item"
+      @itemClick="itemClick"
     />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import MyItem from "@/components/ItemsPage/MyItem.vue"
+import MyItem from "@/components/ItemsPage/MyItem.vue";
 
 export default {
   components: {
     MyItem,
   },
-  name: "items-list",
-  props: {
-    sets: Object
-  },
-  methods: {
-    ...mapActions({
-      selectItem: "items/selectItem",
-    }),
-  },
-  computed: {
-    ...mapState({
-      searchQuery: (state) => state.items.searchQuery,
-    }),
-    ...mapGetters({
-      sortedAndSearchedItems: "items/sortedAndSearchedItems",
-    }),
-  },
 };
+</script>
+
+<script setup>
+import { computed } from "vue";
+import { useStore } from 'vuex';
+
+const props = defineProps({
+  sets: Object,
+});
+
+const emits = defineEmits(["itemClick"]);
+
+const store = useStore();
+
+const sortedAndSearchedItems = computed(() => store.getters.items.sortedAndSearchedItems);
+
+const selectItem = () => store.dispatch("items/selectItem");
+
+const searchQuery = computed(() => store.state.items.searchQuery);
+
+function itemClick(itemInfo) {
+  emits("itemClick", itemInfo);
+}
 </script>
 
 <style lang="scss" scoped>

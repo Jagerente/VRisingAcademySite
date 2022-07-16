@@ -40,10 +40,11 @@
                 class="item content__input"
                 v-for="ingridient in this.recipe.ingredients"
             >
-                <item-preview
+                <ItemPreview
                     class="item__image"
                     :item="this.items.find(item => { return item.id === ingridient.itemId })"
                     :button="true"
+                    @itemClick="selectItem"
                 />
                 <div class="item__text">
                     {{ this.matchingFloor && this.confined ?
@@ -57,10 +58,11 @@
                 class="item content__output"
                 v-for="result in this.recipe.results"
             >
-                <item-preview
+                <ItemPreview
                     class="item__image output__item"
                     :item="this.items.find(item => { return item.id === result.itemId })"
                     :button="true"
+                    @itemClick="selectItem"
                 />
                 <div class="item__text">
                     {{ result.amount }}
@@ -85,6 +87,7 @@ export default {
     methods: {
         ...mapActions({
             updateConfinedRoom: "items/updateConfinedRoom",
+            selectItem: "items/selectItem",
         }),
     },
     computed: {

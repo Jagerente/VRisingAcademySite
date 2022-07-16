@@ -1,11 +1,11 @@
 <template>
   <img
     class="item"
-    :disabled="!this.button"
     draggable="false"
+    :disabled="!button"
     :title="item.name"
     v-lazy="{ src: getImageUrl(imagePath) }"
-    @click="selectItem(this.items.find(item => { return item.id == this.item.id; }))"
+    @click="itemClick"
     role="button"
   >
 </template>
@@ -22,6 +22,9 @@ export default {
     ...mapActions({
       selectItem: "items/selectItem",
     }),
+    itemClick() {
+      this.$emit("itemClick", this.items.find(item => { return item.id == this.item.id; }));
+    }
   },
   computed: {
     imagePath() {
@@ -30,7 +33,6 @@ export default {
     },
     ...mapState({
       items: (state) => state.items.items,
-      selectedItem: (state) => state.items.selectedItem,
     }),
   },
   setup(props) {
@@ -42,6 +44,7 @@ export default {
 };
 </script>
 
+<!-- BUG Image not changes -->
 <!-- <script setup>
 import { computed, onMounted } from "vue";
 import { useStore } from 'vuex';
@@ -51,20 +54,30 @@ const props = defineProps({
   button: Boolean,
 });
 
+const emits = defineEmits(["itemClick"]);
+
 const store = useStore();
 
 const items = computed(() => store.state.items.items);
+const selectedItem = computed(() => store.state.items.selectedItem);
 
-const itemInfo = items.value.find(item => { return item.id == props.item.id; });
+const itemInfo = computed(() => items.value.find(item => { return item.id == props.item.id; })).value;
 
-const imagePath = itemInfo.type.name.toLowerCase() + '/' + (itemInfo.type.name.toLowerCase() !== 'blueprints' ? itemInfo.name : (itemInfo.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : itemInfo.tags[0])) + '.webp';
+const imagePath = computed(() =>
+  itemInfo.type.name.toLowerCase() + '/' +
+  (itemInfo.type.name.toLowerCase() !== 'blueprints' ?
+    itemInfo.name :
+    (itemInfo.name === 'The General\'s Soul Reaper Orb' ?
+      'The General\'s Soul Reaper Orb' :
+      itemInfo.tags[0])) + '.webp'
+);
 
 const getImageUrl = (name) => {
   return `images/items/${name}`;
 };
 
-function selectItem(item) {
-  store.dispatch('items/selectItem', item);
+function itemClick() {
+  emits("itemClick", itemInfo);
 }
 </script> -->
 

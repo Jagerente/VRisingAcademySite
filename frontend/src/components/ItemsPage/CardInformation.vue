@@ -93,7 +93,7 @@
         <div class="block__right">
           <ItemPreview
             class="item__image-preview"
-            :item="this.selectedItem"
+            :item="this.items.find(itema => { return itema.id === selectedItem.id; })"
             :button="false"
           />
           <!-- Show on map -->
@@ -121,9 +121,10 @@
         <div class="item variants__list block__card">
           <ItemPreview
             v-for="itemId in selectedItem.variants"
-            class="item-link"
-            :item="this.items.find(item => { return item.id === itemId })"
+            class="item__image-link"
+            :item="this.items.find(item => { return item.id === itemId; })"
             :button="true"
+            @itemClick="selectItem"
           />
         </div>
       </div>
@@ -152,7 +153,7 @@
           <MyRecipe
             class="recipes__recipe block__card"
             v-for="(recipeId, i) in this.selectedItem.recipes"
-            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })"
+            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId; })"
           />
         </div>
         <!-- Reagent For -->
@@ -168,9 +169,10 @@
             >
               <ItemPreview
                 class="item__image-link"
-                v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
-                :item="this.items.find(item => { return item.id == output.itemId })"
+                v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId; }).results"
+                :item="this.items.find(item => { return item.id == output.itemId; })"
                 :button="true"
+                @itemClick="selectItem"
               />
             </div>
           </div>
@@ -182,12 +184,13 @@
             <div class="salvageables__list block__card ">
               <div
                 class="item"
-                v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
+                v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0]; }).results"
               >
                 <ItemPreview
                   class="item__image-link"
-                  :item="this.items.find(item => { return item.id === output.itemId })"
+                  :item="this.items.find(item => { return item.id === output.itemId; })"
                   :button="true"
+                  @itemClick="selectItem"
                 />
                 <div class="item__text">
                   {{ output.amount }}
@@ -201,8 +204,9 @@
               <ItemPreview
                 class="item__image-link"
                 v-for="input in this.selectedItem.salvageableOf	"
-                :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
+                :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input; }).itemId; })"
                 :button="true"
+                @itemClick="selectItem"
               />
             </div>
           </div>
@@ -230,6 +234,7 @@ export default {
       updateSearchQuery: "items/updateSearchQuery",
       updateMatchingFloor: "items/updateMatchingFloor",
       updateConfinedRoom: "items/updateConfinedRoom",
+      selectItem: "items/selectItem",
     }),
     getStat(item) {
       switch (item.type.id) {
@@ -237,17 +242,17 @@ export default {
           return "Physical Power";
         case 2:
         case 5:
-          return "Max Health"
+          return "Max Health";
         case 3:
-          return "Spell Power"
+          return "Spell Power";
         default:
           console.error("Wrong Item type:", item.typeid, item);
           return '';
       }
     },
     openUrl(url) {
-      window.open(url, '_blank')
-    }
+      window.open(url, '_blank');
+    },
   },
   computed: {
     ...mapState({
