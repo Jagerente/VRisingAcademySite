@@ -221,6 +221,65 @@ order by
     items.id,
     items.type,
     items.setid`
+	GetItemsRequestCraftable = `select
+    items.id,
+    items.name,
+    items.description,
+    items.tier,
+    items.type as typeid,
+    itemtypes.title as typetitle,
+    items.knowledgeid,
+    array_remove(array_agg(distinct recipestations.stationid), NULL) as stations,
+    array_remove(array_agg(distinct reciperesults.recipeid), NULL) as recipes,
+    array_remove(array_agg(distinct recipeingredients.recipeid), NULL) as reagentFor,
+    array_remove(array_agg(distinct tags.value), NULL) as tags,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description,
+    stats.slotid,
+    array_remove(array_agg(distinct secondarystats.bonus), NULL) as bonusStats,
+    array_remove(array_agg(distinct itemlocations.locationid), NULL) as locations,
+    array_remove(array_agg(distinct structurevariants.variantid), NULL) as variants,
+    array_remove(array_agg(distinct salvageables.id), NULL) as salvageables,
+    array_remove(array_agg(distinct salvageableresults.salvageableid), NULL) as salvageableOf,
+    items.maxstack
+from
+    items
+    join itemtypes on itemtypes.id = items.type
+    left join recipeingredients on recipeingredients.itemid = items.id
+    left join recipes as rcp on recipeingredients.itemid = rcp.id
+    left join recipestations on recipestations.recipeid = rcp.id
+    left join reciperesults on reciperesults.itemid = items.id
+    left join itemstats as stats on stats.id = items.id
+    left join sets on sets.id = items.setid
+    left join itemtags on itemtags.itemid=items.id
+    left join tags on tags.id = itemtags.tagid
+    left join salvageables on salvageables.itemid = items.id
+    left join salvageableresults on salvageableresults.itemid = items.id
+    left join itemlocations on itemlocations.itemid = items.id
+    left join structurevariants on structurevariants.structureid = items.id
+    left join secondaryitemstats on secondaryitemstats.statsid = stats.id
+    left join secondarystats on secondarystats.id = secondaryitemstats.secondarystatid
+where
+    reciperesults.recipeid is not null
+group by
+    items.id,
+    itemtypes.title,
+    rcp.id,
+    stats.id,
+    stats.durability,
+    stats.gearLevel,
+    stats.mainStat,
+    items.setid,
+    sets.name,
+    sets.description
+order by
+    items.id,
+    items.type,
+    items.setid`
 )
 
 type ItemGroupedListResponseItem struct {
@@ -445,6 +504,9 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 	if ctx.Request.URL.Query().Has("v2") {
 		queryString = GetItemsrequestV2
 	}
+	if ctx.Request.URL.Query().Has("craftable") {
+		queryString = GetItemsRequestCraftable
+	}
 
 	connection := database.CreateConnection()
 	defer connection.Close()
@@ -538,7 +600,15 @@ func handleGroupedItemsListRequest(ctx *gin.Context) {
 		responseWeapon.Sets[typeIndex].Items = append(responseWeapon.Sets[typeIndex].Items, item)
 		response[weaponIndex] = responseWeapon
 	}
-	ctx.JSON(200, response)
+
+	var responseFinal = make([]ItemGroupedListResponse, 0)
+	for _, item := range response {
+		if len(item.Sets) == 0 {
+			continue
+		}
+		responseFinal = append(responseFinal, item)
+	}
+	ctx.JSON(200, responseFinal)
 }
 
 func handleGroupedItemsListRequestMinimal(ctx *gin.Context) {
