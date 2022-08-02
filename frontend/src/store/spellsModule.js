@@ -19,33 +19,37 @@ export const spellsModule = {
     },
     mutations: {
         setSchools(state, schools) {
-            state.schools = schools
+            state.schools = schools;
         },
         setTypes(state, types) {
-            state.types = types
+            state.types = types;
         },
         setSpells(state, spells) {
-            state.spells = spells
+            state.spells = spells;
         },
         setSpellsGrouped(state, spellsGrouped) {
-            state.spellsGrouped = spellsGrouped
+            state.spellsGrouped = spellsGrouped;
         },
         setSpellsLoading(state, bool) {
-            state.isSpellsLoading = bool
+            state.isSpellsLoading = bool;
         },
         setSelectedSchool(state, selectedSchool) {
-            state.selectedSchool = selectedSchool
+            state.selectedSchool = selectedSchool;
         },
         setSelectedSpell(state, selectedSpell) {
-            state.selectedSpell = selectedSpell
+            state.selectedSpell = selectedSpell;
         },
         setShowModal(state, showModal) {
-            state.showModal = showModal
+            state.showModal = showModal;
         }
     },
     actions: {
         async fetchSpells({ state, commit }) {
-            commit('setSpellsLoading', true)
+            if (state.spells.length > 0) {
+                return;
+            }
+            
+            commit('setSpellsLoading', true);
 
             await axios
                 .get(state.host + "spell/schools")
@@ -60,12 +64,12 @@ export const spellsModule = {
             await axios
                 .get(state.host + "spell/list")
                 .then(response => commit('setSpells', response.data))
-                .catch(error => alert("Error: " + error))
+                .catch(error => alert("Error: " + error));
 
             await axios
                 .get(state.host + "spell/grouplist")
                 .then(response => commit('setSpellsGrouped', response.data))
-                .catch(error => alert("Error: " + error))
+                .catch(error => alert("Error: " + error));
 
             if (!router.currentRoute._value.query.id) {
                 router.replace({
@@ -80,10 +84,10 @@ export const spellsModule = {
                 commit('setSelectedSpell', state.spells[router.currentRoute._value.query.id - 1]);
             }
             else {
-                commit('setSelectedSpell', null)
+                commit('setSelectedSpell', null);
             }
 
-            commit('setSpellsLoading', false)
+            commit('setSpellsLoading', false);
         },
 
         selectSchool({ commit }, id) {
@@ -100,8 +104,8 @@ export const spellsModule = {
             commit('setShowModal', true);
         },
         updateShowModal({ commit }, show) {
-            commit('setShowModal', show)
+            commit('setShowModal', show);
         },
     },
     namespaced: true
-}
+};
