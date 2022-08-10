@@ -1,30 +1,16 @@
-# vrisingacademysite
+# VRising Database
 
-## Tables
-[Master Sheet VRDB](https://docs.google.com/spreadsheets/d/1R-Re2Xszgm2UDUvNVrYwZES5eAN9gIJqCEi6FGA4XPo/edit#gid=1956406025)
+## Dependencies
+[![Vue 3](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)](https://vuejs.org/) 
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Nginx](https://img.shields.io/badge/nginx-%23009639.svg?style=for-the-badge&logo=nginx&logoColor=white)](https://www.nginx.com/)
+[![Go](https://img.shields.io/badge/go-%2300ADD8.svg?style=for-the-badge&logo=go&logoColor=white)](https://go.dev/)
+[![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 
-## Other
-```
-npm i axios
-```
-
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Links
+- Prod — https://vrising-academy.info/
+- Dev — https://dev.vrising-academy.info/
+- [Master Sheet VRDB](https://docs.google.com/spreadsheets/d/1R-Re2Xszgm2UDUvNVrYwZES5eAN9gIJqCEi6FGA4XPo/edit#gid=1956406025)
 
 ### ---- Linux related ----
 GOLang server is launched as systemd daemon (service). Path to service: `/etc/systemd/system/academy-go-server`
