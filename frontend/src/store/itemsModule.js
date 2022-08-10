@@ -194,6 +194,7 @@ export const itemsModule = {
 
         updateConfinedRoom({ state, commit }) {
             commit('setConfinedRoom', !state.confinedRoom);
+            if (!state.confinedRoom && state.matchingFloor) commit('setMatchingFloor', false);
         },
     },
     namespaced: true
