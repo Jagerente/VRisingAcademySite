@@ -44,11 +44,11 @@ export const spellsModule = {
         }
     },
     actions: {
-        async fetchSpells({ state, commit }) {
+        async fetchSpells({ state, commit, dispatch }) {
             if (state.spells.length > 0) {
                 return;
             }
-            
+
             commit('setSpellsLoading', true);
 
             await axios
@@ -70,7 +70,11 @@ export const spellsModule = {
                 .get(state.host + "spell/grouplist")
                 .then(response => commit('setSpellsGrouped', response.data))
                 .catch(error => alert("Error: " + error));
+            commit('setSpellsLoading', false);
+            dispatch('verifyQuery');
+        },
 
+        verifyQuery({ state, commit }) {
             if (!router.currentRoute._value.query.id) {
                 router.replace({
                     query: {
@@ -86,8 +90,6 @@ export const spellsModule = {
             else {
                 commit('setSelectedSpell', null);
             }
-
-            commit('setSpellsLoading', false);
         },
 
         selectSchool({ commit }, id) {
