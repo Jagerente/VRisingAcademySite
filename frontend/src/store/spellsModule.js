@@ -11,7 +11,7 @@ export const spellsModule = {
         selectedSpell: null,
         selectedSchool: 0,
         showModal: false,
-        host: "https://dev.vrising-academy.info/api/"
+        host: "https://vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
     getters: {
