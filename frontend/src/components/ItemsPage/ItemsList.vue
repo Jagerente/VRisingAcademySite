@@ -50,7 +50,7 @@ const emits = defineEmits(["itemClick"]);
 
 const store = useStore();
 
-const sortedAndSearchedItems = computed(() => store.getters.items.sortedAndSearchedItems);
+const sortedAndSearchedItems = computed(() => store.getters["items/sortedAndSearchedItems"]);
 
 const selectItem = () => store.dispatch("items/selectItem");
 
