@@ -152,6 +152,7 @@ export const itemsModule = {
             }
             else if (router.currentRoute._value.query.id > 0 && router.currentRoute._value.query.id <= state.items.length) {
                 commit('setSelectedItem', state.items[router.currentRoute._value.query.id - 1]);
+                commit('setShowModal', true);
             }
             else {
                 commit('setSelectedItem', null);
