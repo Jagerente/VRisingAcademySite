@@ -2,33 +2,33 @@
     <my-card :title="this.bloodTypes[this.selectedBloodType].name">
         <template #left>
             <img
-                class="logo"
-                :src="require('@/assets/images/blood_types/' + this.bloodTypes[this.selectedBloodType].name.toLowerCase() + '.webp')"
+                class="icon"
+                :src="getImageUrl(this.bloodTypes[this.selectedBloodType].name.toLowerCase() + '.webp')"
             />
         </template>
         <div
-            class="d-flex flex-column h-100 w-100 px-1"
+            class="content"
             style="padding-top: 30px"
         >
-            <div class="d-flex flex-column">
-                <BloodQualitySlider
-                    class="col-11 col-lg-6 mx-auto px-2"
-                    style="margin-bottom: 40px"
-                />
-                <BloodTypeBonus
-                    :bonus="bonus"
-                    :tier="j"
-                    class="my-1 col-12 col-lg-6 mx-auto"
-                    v-for="(bonus, j) in this.bloodTypes[this.selectedBloodType].bonuses"
-                />
-            </div>
+            <!-- <div class="d-flex flex-column"> -->
+            <BloodQualitySlider
+                class="content__slider"
+                style="margin-bottom: 40px"
+            />
+            <BloodTypeBonus
+                :bonus="bonus"
+                :tier="j"
+                class="content__bonus"
+                v-for="(bonus, j) in this.bloodTypes[this.selectedBloodType].bonuses"
+            />
         </div>
+        <!-- </div> -->
     </my-card>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import SpellsList from '@/components/SpellsPage/SpellsList'
+import SpellsList from '@/components/SpellsPage/SpellsList.vue'
 import BloodQualitySlider from '@/components/BloodTypesPage/BloodQualitySlider.vue'
 import BloodTypeBonus from '@/components/BloodTypesPage/BloodTypeBonus.vue'
 
@@ -44,25 +44,77 @@ export default {
             selectedBloodType: (state) => state.bloodTypes.selectedBloodType,
         }),
     },
+    setup() {
+        const getImageUrl = (name) => {
+            return `images/blood_types/${name}`;
+        };
+
+        return {
+            getImageUrl
+        };
+
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 
-@include media-breakpoint-down(sm) {
-    .logo {
-        $size: 24px;
-        width: $size;
-        height: $size;
+    &__slider {
+        width: 50%;
+        margin-top: $m1;
+        transition-property: width;
+        transition-duration: .2s;
+        transition-timing-function: ease;
+
+        @media (max-width: $lg) {
+            width: 60%;
+        }
+
+        @media (max-width: $md) {
+            width: 80%;
+        }
+
+        @media (max-width: $sm) {
+            width: 80%;
+        }
+    }
+
+    &__bonus {
+        width: 50%;
+        margin-top: $m1;
+        transition-property: width;
+        transition-duration: .2s;
+        transition-timing-function: ease;
+
+        @media (max-width: $lg) {
+            width: 60%;
+        }
+
+        @media (max-width: $md) {
+            width: 80%;
+        }
+
+        @media (max-width: $sm) {
+            width: 90%;
+        }
     }
 }
 
-@include media-breakpoint-up(sm) {
-    .logo {
-        $size: 32px;
+.icon {
+    $size: 32px;
+    width: $size;
+    height: $size;
+    transition-property: width, height;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+
+    @media (max-width: $lg) {
+        $size: 24px;
         width: $size;
         height: $size;
     }

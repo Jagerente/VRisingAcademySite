@@ -1,0 +1,10 @@
+html {
+    cursor: $cursor, default;
+}
+
+a:not(:disabled),
+button:not(:disabled),
+[role="button"]:not(:disabled),
+[type="button"]:not(:disabled) {
+    cursor: $cursor-active, pointer;
+}

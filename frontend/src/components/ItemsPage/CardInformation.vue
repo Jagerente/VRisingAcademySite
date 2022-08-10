@@ -1,236 +1,214 @@
 <template>
   <my-card
     title="Information"
-    class="w-100"
     :custom="false"
+    class="information"
   >
     <div v-if="this.selectedItem === null">
-      <div></div>
       <h1 class="text-center">Select an item.</h1>
       <h5 class="text-center">This module is still W.I.P.</h5>
     </div>
 
     <div
-      class="d-flex flex-column overflow p-2"
+      class="information__block-column"
       v-else
     >
-      <div class="d-flex justify-content-between">
-        <div class="d-flex flex-column">
-          <!-- Title -->
-          <p class="h-1">
-            {{ this.selectedItem.name }}
-          </p>
+      <!-- Title -->
+      <div class="information__header">
+        {{ this.selectedItem.name }}
+      </div>
+      <div class="block information__block">
+        <div class="block__left">
           <!-- Tags -->
-          <div class="d-flex flex-wrap tags mb-2">
-            <input
+          <div class="information__tags">
+            <button
               v-for="(tag, i) in this.selectedItem.tags"
-              type="button"
-              class="tag px-2"
-              :value="tag"
+              class="tag"
               :key="i"
               @click="updateSearchQuery({ query: tag, type: 2 })"
-            />
+            >
+              {{ tag }}
+            </button>
+
+          </div>
+          <!-- Stats -->
+          <div v-if="this.selectedItem.mainStat">
+            <!-- Gear Level -->
+            <div
+              class="stat"
+              v-if="this.selectedItem.gearLevel"
+            >
+              <span class="stat__value">{{ this.selectedItem.gearLevel }}</span>
+              Gear Level
+            </div>
+            <!-- Main Stat -->
+            <div class="stat">
+              <span class="stat__value">+{{ this.selectedItem.mainStat }}</span>
+              {{ getStat(this.selectedItem) }}
+            </div>
+            <!-- Sets -->
+            <div
+              v-if="this.selectedItem.set.description"
+              class="stat"
+            >
+              <div class="set__name">
+                {{ this.selectedItem.set.name }}
+              </div>
+              <Markdown
+                class="stat"
+                breaks
+                html
+                xhtmlOut
+                :source="this.selectedItem.set.description.replace('\\n', '\n')"
+              />
+            </div>
+            <!-- Bonus Stats -->
+            <div v-if="this.selectedItem.bonusStats.length">
+              <div
+                class="stat"
+                v-for="(stat, i) in this.selectedItem.bonusStats"
+                :key="i"
+              >
+                <span class="stat__value">{{ stat.split(' ')[0] }}</span>
+                {{ ' ' + stat.split(' ').slice(1).join(' ') }}
+              </div>
+            </div>
+            <!-- Durability -->
+            <div
+              class="stat"
+              v-if="this.selectedItem.durability"
+            >
+              <span class="stat__value">Durability: {{ this.selectedItem.durability }}</span>
+            </div>
+            <!-- Max Stack -->
           </div>
           <div
-            v-if="this.selectedItem.mainStat"
-            class="d-flex stats justify-content-between"
-          >
-            <div class="d-flex flex-column w-100">
-              <!-- Gear Level -->
-              <p
-                class="h-2"
-                v-if="this.selectedItem.gearLevel"
-              >
-                <span class="text-white">{{ this.selectedItem.gearLevel }}</span> Gear Level
-              </p>
-              <!-- Main Stat -->
-              <p class="h-3"><span class="text-white">+{{ this.selectedItem.mainStat }}</span> {{
-                  getStat(this.selectedItem)
-              }}
-              </p>
-              <!-- Sets -->
-              <div
-                v-if="this.selectedItem.set.description"
-                class="my-2"
-              >
-                <p class="h-3 text-white">
-                  {{ this.selectedItem.set.name }}
-                </p>
-                <Markdown
-                  class="h-3"
-                  breaks
-                  html
-                  xhtmlOut
-                  :source="this.selectedItem.set.description.replace('\\n', '\n')"
-                />
-              </div>
-              <!-- Bonus Stats -->
-              <div v-if="this.selectedItem.bonusStats.length">
-                <p
-                  class="h-3"
-                  v-for="(stat, i) in this.selectedItem.bonusStats"
-                  :key="i"
-                >
-                  <span class="text-white">{{ stat.split(' ')[0] }}</span>
-                  <span>
-                    {{ ' ' + stat.split(' ').slice(1).join(' ') }}
-                  </span>
-                </p>
-              </div>
-              <!-- Durability -->
-              <p
-                class="h-3"
-                v-if="this.selectedItem.durability"
-              >
-                <span class="text-white">Durability: {{ this.selectedItem.durability }}</span>
-              </p>
-              <!-- Max Stack -->
-            </div>
-          </div>
-          <p
-            class="h-3"
+            class="stat"
             v-if="this.selectedItem.maxStack"
           >
-            <span class="text-white">Max Stack: {{ this.selectedItem.maxStack }}</span>
-          </p>
-        </div>
-        <div class="d-flex justify-content-center flex-fill mx-2">
-          <!-- Preview -->
-          <div class="d-flex flex-column">
-            <ItemPreview
-              :style="'preview-lg'"
-              :item="this.selectedItem"
-              :button="false"
-            />
-            <!-- Show on map -->
-            <button
-              v-if="this.selectedItem.locations.length"
-              class="btn btn-primary rounded mt-2"
-              @click="this.openUrl(`https://mapgenie.io/v-rising/maps/vardoran?locationIds=${this.mapGenieLocations}`)"
-            >Show on map</button>
+            <span class="stat__value">Max Stack: {{ this.selectedItem.maxStack }}</span>
           </div>
+        </div>
+        <!-- Preview -->
+        <div class="block__right">
+          <ItemPreview
+            class="item__image-preview"
+            :item="this.items.find(itema => { return itema.id === selectedItem.id; })"
+            :button="false"
+          />
+          <!-- Show on map -->
+          <button
+            v-if="this.selectedItem.locations.length"
+            class="button"
+            @click="this.openUrl(`https://mapgenie.io/v-rising/maps/vardoran?locationIds=${this.mapGenieLocations}`)"
+          >Show on map</button>
         </div>
       </div>
       <!-- Description -->
       <Markdown
         :source="this.selectedItem.description"
-        class="block mt-2 py-2 h-3"
+        class="block__card"
         html
         xhtmlOut
         v-if="this.selectedItem.description"
       />
       <!-- Variants -->
       <div
-        class="d-flex flex-column"
+        class="information__block-column"
         v-if="this.selectedItem.variants.length"
       >
-        <p class="h-2">Variants</p>
-        <div class="d-flex flex-wrap block py-2">
+        <div class="variants__title">Variants</div>
+        <div class="item variants__list block__card">
           <ItemPreview
             v-for="itemId in selectedItem.variants"
-            class="m-1"
-            :style="'preview-sm'"
-            :item="this.items.find(item => { return item.id === itemId })"
+            class="item__image-link"
+            :item="this.items.find(item => { return item.id === itemId; })"
             :button="true"
+            @itemClick="selectItem"
           />
         </div>
       </div>
       <!-- Recipes -->
-      <div class="d-flex flex-column">
+      <div class="recipes">
         <div
           v-if="this.selectedItem.recipes.length"
-          class="d-flex flex-column"
+          class="recipes__ingridients"
         >
-          <div class="d-flex justify-content-between mt-1">
-            <p class="h-2 mb-auto">Recipes</p>
-            <div class="d-flex flex-column mt-auto">
-              <label id="matchingfloor-label">Matching Floor</label>
-              <div class="form-check form-switch">
-                <input
-                  @click="this.updateMatchingFloor"
-                  class="form-check-input"
-                  :checked="this.matchingFloor"
-                  type="checkbox"
-                  id="flexSwitchMatchingFloor"
-                >
-                <label
-                  class="form-check-label"
-                  for="flexSwitchMatchingFloor"
-                  style="user-select: none;"
-                >Matching
-                  Floor</label>
-              </div>
-              <div class="form-check form-switch">
-                <input
-                  @click="this.updateConfinedRoom"
-                  class="form-check-input"
-                  :checked="this.confinedRoom"
-                  type="checkbox"
-                  id="flexSwitchConfinedRoom"
-                >
-                <label
-                  class="form-check-label"
-                  for="flexSwitchConfinedRoom"
-                  style="user-select: none;"
-                >Confined
-                  Room</label>
-              </div>
+          <div class="ingridients">
+            <div class="ingridients__title">Recipes</div>
+            <div class="ingridients__options">
+              <MySwitch
+                label="Matching Floor"
+                :update="this.updateMatchingFloor"
+                :checked="this.matchingFloor"
+              />
+              <MySwitch
+                label="Confined Room"
+                :update="this.updateConfinedRoom"
+                :checked="this.confinedRoom"
+              />
             </div>
           </div>
 
           <MyRecipe
-            :class="i < this.selectedItem.recipes.length - 1 ? 'mb-2' : ''"
+            class="recipes__recipe block__card"
             v-for="(recipeId, i) in this.selectedItem.recipes"
-            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId })"
+            :recipe="this.recipes.find(recipe => { return recipe.id == recipeId; })"
           />
         </div>
         <!-- Reagent For -->
         <div
           v-if="this.selectedItem.reagentFor.length"
-          class="d-flex flex-column"
+          class="reagents"
         >
-          <p class="h-2">Reagent for</p>
-          <div class="d-flex block flex-wrap">
+          <div class="reagents__title">Reagent for</div>
+          <div class="reagents__list block__card">
             <div
-              class="d-flex"
+              class="item"
               v-for="recipeId in selectedItem.reagentFor"
             >
               <ItemPreview
-                class="m-1"
-                :style="'preview-sm'"
-                v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId }).results"
-                :item="this.items.find(item => { return item.id == output.itemId })"
+                class="item__image-link"
+                v-for="output in this.recipes.find(recipe => { return recipe.id == recipeId; }).results"
+                :item="this.items.find(item => { return item.id == output.itemId; })"
                 :button="true"
+                @itemClick="selectItem"
               />
             </div>
           </div>
         </div>
-      </div>
-      <!-- Salvageables -->
-      <div class="d-flex flex-column">
-        <div v-if="this.selectedItem.salvageables.length">
-          <p class="h-2 mb-auto">Salvageable For</p>
-          <div class="d-flex block ">
-            <ItemPreview
-              class="m-1"
-              :style="'preview-sm'"
-              v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0] }).results"
-              :item="this.items.find(item => { return item.id === output.itemId })"
-              :text="output.amount"
-              :button="true"
-            />
+        <!-- Salvageables -->
+        <div class="salvageables">
+          <div v-if="this.selectedItem.salvageables.length">
+            <div class="salvageables__title">Salvageable For</div>
+            <div class="salvageables__list block__card ">
+              <div
+                class="item"
+                v-for="output in this.salvageables.find(salvageable => { return salvageable.id === this.selectedItem.salvageables[0]; }).results"
+              >
+                <ItemPreview
+                  class="item__image-link"
+                  :item="this.items.find(item => { return item.id === output.itemId; })"
+                  :button="true"
+                  @itemClick="selectItem"
+                />
+                <div class="item__text">
+                  {{ output.amount }}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div v-if="this.selectedItem.salvageableOf.length">
-          <p class="h-2 mb-auto">Salvageable From</p>
-          <div class="d-flex flex-wrap block">
-            <ItemPreview
-              class="m-1"
-              :style="'preview-sm'"
-              v-for="input in this.selectedItem.salvageableOf	"
-              :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input }).itemId })"
-              :button="true"
-            />
+          <div v-if="this.selectedItem.salvageableOf.length">
+            <p class="salvageables__title">Salvageable From</p>
+            <div class="salvageables__list block__card item">
+              <ItemPreview
+                class="item__image-link"
+                v-for="input in this.selectedItem.salvageableOf	"
+                :item="this.items.find(item => { return item.id === this.salvageables.find(salvageable => { return salvageable.id === input; }).itemId; })"
+                :button="true"
+                @itemClick="selectItem"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -241,14 +219,14 @@
 <script>
 import { mapState, mapActions, mapGetters } from "vuex";
 import Markdown from "vue3-markdown-it";
-import ItemPreview from "@/components/ItemsPage/ItemPreview";
-import MyRecipe from "@/components/ItemsPage/MyRecipe";
+import ItemPreview from "@/components/ItemsPage/ItemPreview.vue";
+import MyRecipe from "@/components/ItemsPage/MyRecipe.vue";
 
 export default {
   components: {
     Markdown,
     ItemPreview,
-    MyRecipe
+    MyRecipe,
   },
 
   methods: {
@@ -256,6 +234,7 @@ export default {
       updateSearchQuery: "items/updateSearchQuery",
       updateMatchingFloor: "items/updateMatchingFloor",
       updateConfinedRoom: "items/updateConfinedRoom",
+      selectItem: "items/selectItem",
     }),
     getStat(item) {
       switch (item.type.id) {
@@ -263,17 +242,17 @@ export default {
           return "Physical Power";
         case 2:
         case 5:
-          return "Max Health"
+          return "Max Health";
         case 3:
-          return "Spell Power"
+          return "Spell Power";
         default:
           console.error("Wrong Item type:", item.typeid, item);
           return '';
       }
     },
     openUrl(url) {
-      window.open(url, '_blank')
-    }
+      window.open(url, '_blank');
+    },
   },
   computed: {
     ...mapState({
@@ -294,52 +273,237 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.tag {
-  margin-top: 5px;
-  font-size: 0.8rem;
-  background: #ae1d1d;
-  border-radius: 100px;
-  text-transform: capitalize;
-  margin-right: 5px;
-  border: none;
-  color: silver;
+.information {
+  width: 100%;
+
+
+  &__block {
+    display: flex;
+    justify-content: space-between;
+
+    &:not(:last-child) {
+      margin-bottom: $m1;
+    }
+
+    &-column {
+      flex-direction: column;
+
+      &:not(:last-child) {
+        margin-bottom: $m1;
+      }
+    }
+
+    .block {
+      &__right {
+        display: flex;
+        flex-direction: column;
+      }
+    }
+  }
+
+  &__header {
+    color: white;
+    font-size: 32px;
+    margin-bottom: $m1;
+  }
+
+  &__tags {
+    margin-bottom: $m1;
+
+    &>.tag {
+      margin-top: 5px;
+      font-size: 0.8rem;
+      background: $primary;
+      border-radius: 15px;
+      text-transform: capitalize;
+      border: none;
+      color: white;
+      transition: box-shadow 0.1s ease-in-out;
+      padding-left: $m1;
+      padding-right: $m1;
+      padding-top: 3px;
+      padding-bottom: 3px;
+
+      &:not(:last-child) {
+        margin-right: 5px;
+      }
+
+      &:hover {
+        box-shadow: 0 0 3px black;
+      }
+    }
+  }
+
+  .block__card {
+    background: $dark;
+    border-radius: 10px;
+    margin-bottom: $m1;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .stat {
+    margin-bottom: 5px;
+    font-size: 1rem;
+
+    &__value {
+      color: white;
+    }
+
+    .set {
+      &__name {
+        color: white;
+      }
+    }
+  }
 }
 
-.tag:hover {
-  box-shadow: 0 0 5px black;
-  transition: box-shadow 0.05s ease-in-out;
+.variants {
+  &__title {
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: $m1;
+    user-select: none;
+  }
+
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
 }
 
-.block {
-  background: #14131b;
-  border-radius: 10px;
-  margin-left: -10px;
-  margin-right: -10px;
+.recipes {
+  display: flex;
+  flex-direction: column;
+
+  &__ingridients {
+    .ingridients {
+
+      display: flex;
+      justify-content: space-between;
+
+      &__title {
+        color: white;
+        font-size: 1.5rem;
+        margin-bottom: $m1;
+        user-select: none;
+      }
+
+      &__options {
+        margin-bottom: $m1;
+        display: flex;
+        flex-direction: column;
+      }
+    }
+
+  }
+
+  .reagents {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: $m1;
+      user-select: none;
+    }
+
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+
+
+
+  .salvageables {
+    display: flex;
+    flex-direction: column;
+
+    &__title {
+      color: white;
+      font-size: 1.5rem;
+      margin-bottom: $m1;
+      user-select: none;
+    }
+
+    &__list {
+      display: flex;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.item {
+  position: relative;
+
+  &__image {
+    &-preview {
+      background: none;
+      $item-size: 10rem;
+      width: $item-size;
+      height: $item-size;
+      border: none;
+      pointer-events: none;
+
+      &:hover {
+        box-shadow: none;
+      }
+
+      @media (min-width: $lg) {
+        $item-size: 13rem;
+        width: $item-size;
+        height: $item-size;
+      }
+    }
+
+    &-link {
+      margin: 5px 4px;
+      position: relative;
+      $item-size: 2.5rem;
+      width: $item-size;
+      height: $item-size;
+      background: black;
+      border: 1px solid black;
+      gap: 5px;
+    }
+  }
+
+  &__text {
+    position: absolute;
+    color: white;
+    font-family: sans-serif;
+    pointer-events: none;
+    bottom: 0px;
+    right: 0px;
+    font-size: 16px;
+    user-select: none;
+  }
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: $m1;
+}
+
+.button {
+  background-color: $primary;
+  border: 1px solid $primary;
+  border-radius: 5px;
+  color: white;
   padding-left: 15px;
   padding-right: 15px;
   padding-top: 5px;
   padding-bottom: 5px;
-}
+  width: 100%;
+  transition: box-shadow 0.1s ease-in-out;
 
-.form-check-input {
-  background-color: #14131b;
-  border: 1px solid;
-  border-color: silver;
-}
-
-.form-check-input:focus {
-  box-shadow: none;
-  border-color: white;
-}
-
-.form-check-input:checked {
-  background-color: green;
-  border-color: green;
-
-}
-
-p {
-  margin: 0;
-  padding: 0;
+  &:hover {
+    box-shadow: 0 0 3px black;
+  }
 }
 </style>

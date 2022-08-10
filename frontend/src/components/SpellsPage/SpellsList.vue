@@ -1,13 +1,13 @@
 <template>
-  <div class="d-flex flex-column">
+  <div class="spells d-flex flex-column">
     <div
-      class="d-flex justify-content-evenly my-3 flex-wrap"
+      class="spells__row"
       v-for="stype in this.types"
     >
       <my-spell
         v-for="spell in stype.spells"
         :spell="spell"
-        :class="this.selectedSpell && this.selectedSpell.id === spell.id ? 'active' : ''"
+        :class="{ 'active': this.selectedSpell && this.selectedSpell.id === spell.id }"
       ></my-spell>
     </div>
   </div>
@@ -15,7 +15,7 @@
 
 <script>
 import { mapState } from "vuex";
-import MySpell from "@/components/SpellsPage/MySpell";
+import MySpell from "@/components/SpellsPage/MySpell.vue";
 
 export default {
   name: "spells-list",
@@ -33,5 +33,16 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.spells {
+  display: flex;
+  flex-direction: column;
+
+  &__row {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    margin: $m2 0px;
+  }
+}
 </style>

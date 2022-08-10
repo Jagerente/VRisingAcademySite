@@ -1,5 +1,5 @@
 import axios from "axios";
-import router from '@/router/router';
+import router from '@/router/router.js';
 
 export const itemsModule = {
     state: () => ({
@@ -17,7 +17,8 @@ export const itemsModule = {
         selectedItem: null,
         matchingFloor: true,
         confinedRoom: true,
-        host: "https://vrising-academy.info/api/"
+        showModal: false,
+        host: "https://dev.vrising-academy.info/api/"
         // host: "http://localhost:8087/api/"
     }),
     getters: {
@@ -29,11 +30,11 @@ export const itemsModule = {
         sortedAndSearchedItems: (state, getters) => {
             switch (state.searchType) {
                 case 1:
-                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) });
+                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()); });
                 case 2:
-                    return getters.sortedItems.filter(item => { return item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
+                    return getters.sortedItems.filter(item => { return item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()); });
                 default:
-                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()) });
+                    return getters.sortedItems.filter(item => { return item.name.toLowerCase().includes(state.searchQuery.toLowerCase()) || item.tags.some(tag => tag.toLowerCase() === state.searchQuery.toLowerCase()); });
             }
         },
 
@@ -46,61 +47,68 @@ export const itemsModule = {
     },
     mutations: {
         setItems(state, items) {
-            state.items = items
+            state.items = items;
         },
         setItemsGrouped(state, items) {
-            state.itemsGrouped = items
+            state.itemsGrouped = items;
         },
         setTypes(state, types) {
-            state.types = types
+            state.types = types;
         },
         setSets(state, sets) {
-            state.sets = sets
+            state.sets = sets;
         },
         setLocations(state, locations) {
-            state.locations = locations
+            state.locations = locations;
         },
         setRecipes(state, recipes) {
-            state.recipes = recipes
+            state.recipes = recipes;
         },
         setSalvageables(state, salvageables) {
-            state.salvageables = salvageables
+            state.salvageables = salvageables;
         },
         setLoading(state, bool) {
-            state.isItemsLoading = bool
+            state.isItemsLoading = bool;
         },
         setSearchType(state, searchType) {
-            state.searchType = searchType
+            state.searchType = searchType;
         },
         setSearchQuery(state, searchQuery) {
-            state.searchQuery = searchQuery
+            state.searchQuery = searchQuery;
         },
         setSelectedType(state, selectedType) {
-            state.selectedType = selectedType
+            state.selectedType = selectedType;
         },
         setSelectedItem(state, selectedItem) {
-            state.selectedItem = selectedItem
+            state.selectedItem = selectedItem;
         },
         setMatchingFloor(state, matchingFloor) {
-            state.matchingFloor = matchingFloor
+            state.matchingFloor = matchingFloor;
         },
         setConfinedRoom(state, confinedRoom) {
-            state.confinedRoom = confinedRoom
+            state.confinedRoom = confinedRoom;
+        },
+        setShowModal(state, showModal) {
+            state.showModal = showModal;
         }
     },
     actions: {
-        async fetchItems({ state, commit }) {
+        async fetchItems({ state, commit, dispatch }) {
+            if (state.items.length > 0) {
+                commit('setSelectedItem', null);
+                return;
+            }
             commit('setLoading', true);
 
             await axios
-                .get(state.host + "item/list?v2=1")
+                .get(state.host + "item/list?v2")
                 .then(response => commit('setItems', response.data))
-                .catch(error => alert("Error: " + error))
+                .catch(error => alert("Error: " + error));
 
             await axios
-                .get(state.host + "item/grouplist?v2=1")
+                .get(state.host + "item/grouplist" + "?minimal")
                 .then(response => commit('setItemsGrouped', response.data))
-                .catch(error => alert("Error: " + error))
+                .catch(error => alert("Error: " + error));
 
             await axios
                 .get(state.host + "item/types")
@@ -127,6 +135,12 @@ export const itemsModule = {
                 .then(response => commit('setSalvageables', response.data))
                 .catch(error => alert("Error: " + error));
 
+            commit('setLoading', false);
+            dispatch('verifyQuery');
+
+        },
+
+        verifyQuery({ state, commit }) {
             if (!router.currentRoute._value.query.id) {
                 router.replace({
                     query: {
@@ -140,16 +154,13 @@ export const itemsModule = {
                 commit('setSelectedItem', state.items[router.currentRoute._value.query.id - 1]);
             }
             else {
-                commit('setSelectedItem', null)
+                commit('setSelectedItem', null);
             }
-
-
-            commit('setLoading', false)
         },
 
         selectType({ commit }, id) {
             commit('setSelectedType', id);
-            commit('setSearchQuery', '')
+            commit('setSearchQuery', '');
         },
 
         selectItem({ commit }, item) {
@@ -159,12 +170,20 @@ export const itemsModule = {
                     id: item.id
                 }
             });
-            commit('setSelectedItem', item)
+            commit('setSelectedItem', item);
+            commit('setShowModal', true);
+        },
+
+        updateShowModal({ commit }, show) {
+            commit('setShowModal', show);
         },
 
         updateSearchQuery({ commit }, { query = '', type = 0 }) {
-            commit('setSearchType', type)
-            commit('setSearchQuery', query)
+            if (type === 2) {
+                commit('setShowModal', false);
+            }
+            commit('setSearchType', type);
+            commit('setSearchQuery', query);
         },
 
         updateMatchingFloor({ state, commit }) {
@@ -177,4 +196,4 @@ export const itemsModule = {
         },
     },
     namespaced: true
-}
+};

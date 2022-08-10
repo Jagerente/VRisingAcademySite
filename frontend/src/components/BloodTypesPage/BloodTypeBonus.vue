@@ -1,21 +1,21 @@
 <template>
     <div>
-        <div class="d-flex block rounded py-2 py-lg-3 w-100">
-            <div class="col-2 d-flex">
-                <div
-                    class="d-flex flex-column mx-auto justify-content-center tier"
-                    :class="this.isActive ? 'tier-active' : ''"
+        <div class="bonus">
+            <div class="bonus__tier">
+                <p
+                    :class="{ 'active': this.isActive }"
+                    class="tier"
                 >
                     {{ this.getTier.name }}
-                </div>
+                </p>
             </div>
-            <div class="col-10 d-flex">
-                <div
-                    class="d-flex flex-column justify-content-center flex-wrap bonus"
-                    :class="this.isActive ? 'description-active' : ''"
+            <div class="bonus__text">
+                <p
+                    :class="{ 'active': this.isActive }"
+                    class="text"
                     v-html="this.getBonus"
                 >
-                </div>
+                </p>
             </div>
         </div>
     </div>
@@ -89,41 +89,49 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-@import '@/assets/styles/va_variables.scss';
+.bonus {
+    display: flex;
+    background-color: $dark;
+    border-radius: 5px;
+    padding: 15px;
 
-p {
-    margin: 0;
-}
-
-@include media-breakpoint-down(sm) {
-    .bonus {
-        font-size: 13px;
+    &__tier {
+        width: 5%;
+        margin-right: 15px;
     }
 
-    .tier {
-        font-size: 18px;
+    &__text {
+        width: 95%;
     }
 }
 
-@include media-breakpoint-up(sm) {
-    .tier {
-        font-size: 22px;
+.tier {
+    text-align: center;
+    transition-property: color;
+    transition-duration: .2s;
+    transition-timing-function: ease;
+
+    &.active {
+        color: yellow
     }
 }
 
-.tier-active {
-    color: yellow;
-}
+.text {
+    font-size: 1.25rem;
+    transition-property: font-size, color;
+    transition-duration: .2s;
+    transition-timing-function: ease;
 
-.description-active {
-    color: white;
-    opacity: 1;
-}
+    &.active {
+        color: white
+    }
 
-.block {
-    background-color: #14141e;
+    @media (max-width: $lg) {
+        font-size: 1rem;
+    }
+
+    @media (max-width: $md) {
+        font-size: .8rem;
+    }
 }
 </style>

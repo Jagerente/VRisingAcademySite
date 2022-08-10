@@ -1,22 +1,32 @@
 <template>
-  <div class="d-flex flex-column h-100">
-    <my-navbar />
+  <div class="app__container">
+    <Navbar />
     <router-view />
-    <my-footer v-if="false" />
+    <my-footer v-show="false" />
   </div>
 </template>
 
 <script>
-import MyNavbar from "@/components/MyNavbar.vue";
-import MyFooter from "./components/MyFooter.vue";
+import Navbar from "@/components/Navbar/Navbar.vue";
+import MyFooter from "@/components/MyFooter.vue";
 
 export default {
   components: {
-    MyNavbar,
+    Navbar,
     MyFooter
   },
 };
 </script>
 
-<style scoped>
+<style lang="scss">
+body {
+  font-family: $mainFontFamily;
+  background-color: $background;
+  color: $text-color;
+}
+
+.app__container {
+  display: flex;
+  flex-direction: column;
+}
 </style>

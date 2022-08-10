@@ -1,144 +1,93 @@
 <template>
-  <div
-    class="preview__group"
-    :class="text != null ? '' : ''"
+  <img
+    class="item"
+    draggable="false"
+    :disabled="!button"
+    :title="item.name"
+    v-lazy="{ src: getImageUrl(imagePath) }"
+    @click="itemClick"
+    role="button"
   >
-    <img
-      class="rounded"
-      :class="this.style"
-      :disabled="button"
-      draggable="false"
-      :title="item.name"
-      :src="require('@/' + this.imagePath)"
-      @click="selectItem(this.items.find(item => { return item.id == this.item.id }))"
-    >
-    <div
-      v-if="this.text"
-      class="preview__text"
-    >{{ this.text }}</div>
-  </div>
 </template>
 
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
-
 export default {
   name: "item-preview",
   props: {
     item: Object,
     button: Boolean,
-    style: String,
-    text: {
-      Type: String,
-      Default: null
-    }
   },
   methods: {
     ...mapActions({
       selectItem: "items/selectItem",
     }),
+    itemClick() {
+      this.$emit("itemClick", this.items.find(item => { return item.id == this.item.id; }));
+    }
   },
   computed: {
     imagePath() {
-      return 'assets/images/items/' + this.item.type.name.toLowerCase() + '/' + (this.item.type.name.toLowerCase() !== 'blueprints' ? this.item.name : (this.item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : this.item.tags[0])) + '.webp';
+      const item = this.items.find(item => { return item.id == this.item.id; });
+      return item.type.name.toLowerCase() + '/' + (item.type.name.toLowerCase() !== 'blueprints' ? item.name : (item.name === 'The General\'s Soul Reaper Orb' ? 'The General\'s Soul Reaper Orb' : item.tags[0])) + '.webp';
     },
     ...mapState({
       items: (state) => state.items.items,
-      selectedItem: (state) => state.items.selectedItem,
     }),
   },
+  setup(props) {
+    const getImageUrl = (name) => {
+      return `images/items/${name}`;
+    };
+    return { getImageUrl };
+  }
 };
 </script>
 
+<!-- BUG Image not changes -->
+<!-- <script setup>
+import { computed, onMounted } from "vue";
+import { useStore } from 'vuex';
+
+const props = defineProps({
+  item: Object,
+  button: Boolean,
+});
+
+const emits = defineEmits(["itemClick"]);
+
+const store = useStore();
+
+const items = computed(() => store.state.items.items);
+const selectedItem = computed(() => store.state.items.selectedItem);
+
+const itemInfo = computed(() => items.value.find(item => { return item.id == props.item.id; })).value;
+
+const imagePath = computed(() =>
+  itemInfo.type.name.toLowerCase() + '/' +
+  (itemInfo.type.name.toLowerCase() !== 'blueprints' ?
+    itemInfo.name :
+    (itemInfo.name === 'The General\'s Soul Reaper Orb' ?
+      'The General\'s Soul Reaper Orb' :
+      itemInfo.tags[0])) + '.webp'
+);
+
+const getImageUrl = (name) => {
+  return `images/items/${name}`;
+};
+
+function itemClick() {
+  emits("itemClick", itemInfo);
+}
+</script> -->
+
 
 <style scoped lang="scss">
-@import 'bootstrap/scss/_functions.scss';
-@import 'bootstrap/scss/_variables.scss';
-@import 'bootstrap/scss/_mixins.scss';
-
-@include media-breakpoint-down(sm) {
-  .preview-md {
-    $size: 3em;
-    $margin: 2px;
-    width: $size;
-    height: $size;
-    margin: $margin;
-  }
-
-  .preview-lg {
-    $size: 100px;
-    width: $size;
-    height: $size;
-  }
-}
-
-@include media-breakpoint-up(sm) {
-
-  .preview-md {
-    $size: 5em;
-    $margin: 5px;
-    width: $size;
-    height: $size;
-    margin: $margin;
-  }
-
-  .preview-lg {
-    $size: 200px;
-    width: $size;
-    height: $size;
-  }
-}
-
-.preview-sm {
-  $size: 48px;
-  background: rgba(0, 0, 0, 0.5);
-  font-family: sans-serif;
-  width: $size;
-  height: $size;
+.item {
+  border-radius: 3px;
   -webkit-user-drag: none;
-  border: 0;
   user-select: none;
-  transition: box-shadow 0.15s ease-in-out;
   color: white;
   text-align: right;
-}
-
-.preview-sm:hover {
-  box-shadow: 0 0 8px black;
-}
-
-.preview-md {
-  background: rgba(0, 0, 0, 0.5);
-  font-family: sans-serif;
-  -webkit-user-drag: none;
-  border: 0;
-  user-select: none;
-  transition: box-shadow 0.15s ease-in-out;
-}
-
-.preview-md:hover {
-  box-shadow: 0 0 8px black;
-}
-
-.active {
-  border: 1px solid white;
-}
-
-.active:hover {
-  box-shadow: none
-}
-
-.preview__text {
-  pointer-events: none;
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  font-size: 16px;
-}
-
-.preview__group {
-  position: relative;
-  text-align: center;
-  color: white;
 }
 </style>

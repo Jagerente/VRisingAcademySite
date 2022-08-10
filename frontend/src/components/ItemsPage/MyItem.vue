@@ -1,35 +1,69 @@
 <template>
   <ItemPreview
-    :style="`preview-md rounded ${this.selectedItem !== null && this.item.id === this.selectedItem.id ? 'active' : ''}`"
+    class="item"
+    :class="{ 'active': selectedItem !== null && item.id === selectedItem.id }"
     :item="item"
-    @click="selectItem(item)"
+    button
+    @itemClick="itemClick"
   />
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
 import ItemPreview from '@/components/ItemsPage/ItemPreview.vue';
 
 export default {
   components: {
     ItemPreview,
   },
-  name: "my-item",
-  props: {
-    item: Object,
-  },
-  methods: {
-    ...mapActions({
-      selectItem: "items/selectItem",
-    }),
-  },
-  computed: {
-    ...mapState({
-      selectedItem: (state) => state.items.selectedItem,
-    })
-  }
 };
 </script>
 
+<script setup>
+import { computed } from "vue";
+import { useStore } from 'vuex';
+
+const props = defineProps({
+  item: Object,
+});
+
+const store = useStore();
+
+const selectedItem = computed(() => store.state.items.selectedItem);
+
+const emits = defineEmits(["itemClick"]);
+
+function itemClick(itemInfo) {
+  emits("itemClick", itemInfo);
+}
+</script>
+
 <style scoped lang="scss">
+.item {
+  $item-size: 3rem;
+  border: 1px solid $dark;
+  background-color: $dark;
+  width: $item-size;
+  height: $item-size;
+  margin: 2px;
+  transition: border 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+
+  @media (min-width: $sm) {
+    $item-size: 5rem;
+    width: $item-size;
+    height: $item-size;
+    margin: 5px;
+  }
+
+  &:hover {
+    box-shadow: 0 0 8px black;
+  }
+
+  &.active {
+    border: 1px solid white;
+
+    &:hover {
+      box-shadow: none
+    }
+  }
+}
 </style>

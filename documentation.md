@@ -155,12 +155,13 @@ insert into recipes(time, knowledgeid) values
 - id
 - name
 - description
+- [itemid](#items)
 
 Список станций, которые могут предоставить скидки за Matching Floor (-25% к ресурсам) или за Confined Room (-20% к времени):
 _simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil_
 ```
-insert into stations(name, description) values
-('Character Menu', 'Open your character menu to craft some basic survival tools.')
+insert into stations(name, description, itemid) values
+('Character Menu', 'Open your character menu to craft some basic survival tools.', NULL)
 ```
 
 ### recipestations

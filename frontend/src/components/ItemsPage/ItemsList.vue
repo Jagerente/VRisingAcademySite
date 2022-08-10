@@ -1,88 +1,76 @@
 <template>
-  <div class="d-flex flex-wrap">
-    <div class="d-flex flex-column w-100 ">
-      <!-- <transition-group name="items-list"> -->
-      <div
-        v-if="!searchQuery"
-        class="d-flex flex-column"
-        v-for="set in this.sets"
-        :key="set.id"
-      >
-        <h1>{{ set.name }}</h1>
-        <div class="d-flex flex-wrap">
-          <MyItem
-            v-for="item in set.items"
-            :key="item.id"
-            :item="item"
-          />
-        </div>
-      </div>
-      <div
-        class="d-flex flex-wrap"
-        v-else
-      >
-        <!-- <transition-group name="items-list"> -->
-        <MyItem
-          v-for="item in this.sortedAndSearchedItems"
-          :key="item.id"
-          :item="item"
-        />
-        <!-- </transition-group> -->
-      </div>
-      <!-- </transition-group> -->
+  <div
+    class="items"
+    v-if="!searchQuery"
+    v-for="set in sets"
+    :key="set.id"
+  >
+    <p class="items__set">{{ set.name }}</p>
+    <div class="items__list">
+      <MyItem
+        v-for="item in set.items"
+        :key="item.id"
+        :item="item"
+        @itemClick="itemClick"
+      />
     </div>
+  </div>
+  <div
+    class="items__list"
+    v-else
+  >
+    <MyItem
+      v-for="item in sortedAndSearchedItems"
+      :key="item.id"
+      :item="item"
+      @itemClick="itemClick"
+    />
   </div>
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
-import MyItem from "@/components/ItemsPage/MyItem.vue"
+import MyItem from "@/components/ItemsPage/MyItem.vue";
 
 export default {
   components: {
     MyItem,
   },
-  name: "items-list",
-  props: {
-    sets: Object
-  },
-  methods: {
-    ...mapActions({
-      selectItem: "items/selectItem",
-    }),
-  },
-  computed: {
-    ...mapState({
-      searchQuery: (state) => state.items.searchQuery,
-    }),
-    ...mapGetters({
-      sortedAndSearchedItems: "items/sortedAndSearchedItems",
-    }),
-  },
 };
 </script>
 
-<style scoped>
-/* .items-list-enter-active,
-.items-list-leave-active {
-  transition: all 0.45s ease;
+<script setup>
+import { computed } from "vue";
+import { useStore } from 'vuex';
+
+const props = defineProps({
+  sets: Object,
+});
+
+const emits = defineEmits(["itemClick"]);
+
+const store = useStore();
+
+const sortedAndSearchedItems = computed(() => store.getters["items/sortedAndSearchedItems"]);
+
+const selectItem = () => store.dispatch("items/selectItem");
+
+const searchQuery = computed(() => store.state.items.searchQuery);
+
+function itemClick(itemInfo) {
+  emits("itemClick", itemInfo);
 }
+</script>
 
-.items-list-enter-from,
-.items-list-leave-to {
-  opacity: 0;
-  transform: translateY(30px);
-}
+<style lang="scss" scoped>
+.items {
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+  }
 
-.items-list-move {
-  transition: transform 0.35s ease;
-}
-
-.items-list-leave-active {
-  position: absolute;
-} */
-
-.input-group {
-  height: 39px;
+  &__set {
+    font-size: 26px;
+    user-select: none;
+  }
 }
 </style>

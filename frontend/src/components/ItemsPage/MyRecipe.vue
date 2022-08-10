@@ -1,98 +1,71 @@
 <template>
-    <div class="d-flex flex-column block ">
-        <div class="d-flex justify-content-between">
-            <div class="d-flex">
+    <div class="recipe">
+        <div class="header recipe__header">
+            <div class="header__stations">
                 <span
                     v-for="(station, i) in recipe.stations"
-                    class="h-3 "
+                    class="station"
                 >
                     {{ (i > 0 ? '&nbsp;/&nbsp;' : '') + station }}
                 </span>
             </div>
-            <div
+            <Popper
                 v-if="this.recipe.time"
-                class="d-flex"
+                hover
+                placement="left"
+                :content="this.confinedRoom && this.confined ? 'Time in a confined castle room.' : 'Time without bonuses.'"
             >
-                <Popper
-                    v-if="this.confinedRoom && this.confined"
-                    hover
-                    placement="left"
-                    content="Time in a confined castle room."
+                <span
+                    v-if="this.confined"
+                    class="header__time"
+                    :class="{ 'confined': this.confinedRoom && this.confined }"
+                    @click="this.updateConfinedRoom"
                 >
-                    <span
-                        v-if="this.confined"
-                        class="h-3 tag tag__time-confined"
-                        @click="this.updateConfinedRoom"
-                    >
-                        <span v-if="this.confinedTime.minutes">
-                            {{ `${this.confinedTime.minutes}m${this.confinedTime.seconds ? '&nbsp;' : ''}` }}
-                        </span>
-                        <span v-if="this.confinedTime.seconds">
-                            {{ `${this.confinedTime.seconds}s` }}
-                        </span>
+                    <span v-if="this.confinedTime.minutes">
+                        {{ this.confinedRoom && this.confined ?
+                                `${this.confinedTime.minutes}m${this.confinedTime.seconds ? '&nbsp;' : ''}` :
+                                `${this.time.minutes}m${this.time.seconds ? '&nbsp;' : ''}`
+                        }}
                     </span>
-                </Popper>
-                <Popper
-                    v-else
-                    interactive
-                    hover
-                    placement="left"
-                    content="Time without bonuses."
-                >
-                    <span
-                        class="h-3 tag tag__time-normal"
-                        @click="this.updateConfinedRoom"
-                    >
-                        <span v-if="this.time.minutes">
-                            {{ `${this.time.minutes}m${this.time.seconds ? '&nbsp;' : ''}` }}
-                        </span>
-                        <span v-if="this.time.seconds">
-                            {{ `${this.time.seconds}s` }}
-                        </span>
+                    <span v-if="this.confinedTime.seconds">
+                        {{ this.confinedRoom && this.confined ? `${this.confinedTime.seconds}s` :
+                                `${this.time.seconds}s`
+                        }}
                     </span>
-                </Popper>
-            </div>
+                </span>
+            </Popper>
         </div>
-        <div class="d-flex mt-1">
-            <div class="d-flex block ">
-                <div
-                    v-for="ingridient in this.recipe.ingredients"
-                    class="recipe__group px-1"
-                >
-                    <item-preview
-                        :style="'preview-sm'"
-                        :item="this.items.find(item => { return item.id === ingridient.itemId })"
-                        :text="this.matchingFloor && this.confined ?
-                        Math.ceil(ingridient.amount * 0.75) : ingridient.amount"
-                        :button="true"
-                    />
+        <div class="content recipe__content">
+            <div
+                class="item content__input"
+                v-for="ingridient in this.recipe.ingredients"
+            >
+                <ItemPreview
+                    class="item__image"
+                    :item="this.items.find(item => { return item.id === ingridient.itemId; })"
+                    :button="true"
+                    @itemClick="selectItem"
+                />
+                <div class="item__text">
+                    {{ this.matchingFloor && this.confined ?
+                            Math.ceil(ingridient.amount * 0.75) : ingridient.amount
+                    }}
                 </div>
             </div>
-
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="40"
-                height="40"
-                fill="#a8a9ae"
-                class=""
-                viewBox="0 0 16 16"
+            <span class="content__divider">
+            </span>
+            <div
+                class="item content__output"
+                v-for="result in this.recipe.results"
             >
-                <path
-                    d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"
+                <ItemPreview
+                    class="item__image output__item"
+                    :item="this.items.find(item => { return item.id === result.itemId; })"
+                    :button="true"
+                    @itemClick="selectItem"
                 />
-            </svg>
-
-            <div class="d-flex flex-fill">
-                <div
-                    v-for="result in this.recipe.results"
-                    class="recipe__group px-1"
-                >
-                    <item-preview
-                        :style="'preview-sm'"
-                        :item="this.items.find(item => { return item.id === result.itemId })"
-                        :text="result.amount"
-                        :button="true"
-                    />
+                <div class="item__text">
+                    {{ result.amount }}
                 </div>
             </div>
         </div>
@@ -101,7 +74,7 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
-import ItemPreview from "@/components/ItemsPage/ItemPreview";
+import ItemPreview from "@/components/ItemsPage/ItemPreview.vue";
 
 export default {
     components: {
@@ -114,6 +87,7 @@ export default {
     methods: {
         ...mapActions({
             updateConfinedRoom: "items/updateConfinedRoom",
+            selectItem: "items/selectItem",
         }),
     },
     computed: {
@@ -123,26 +97,26 @@ export default {
             confinedRoom: (state) => state.items.confinedRoom,
         }),
         confined() {
-            return this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase()))
+            return this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase()));
         },
         time() {
             var multiplier = 1;
-            var minutes = Math.floor(this.recipe.time * multiplier / 60)
-            var seconds = this.recipe.time * multiplier - (minutes * 60)
+            var minutes = Math.floor(this.recipe.time * multiplier / 60);
+            var seconds = this.recipe.time * multiplier - (minutes * 60);
             var time = {
                 seconds: seconds,
                 minutes: minutes
-            }
+            };
             return time;
         },
         confinedTime() {
             var multiplier = 0.8;
-            var minutes = Math.floor(this.recipe.time * multiplier / 60)
-            var seconds = this.recipe.time * multiplier - (minutes * 60)
+            var minutes = Math.floor(this.recipe.time * multiplier / 60);
+            var seconds = this.recipe.time * multiplier - (minutes * 60);
             var time = {
                 seconds: seconds,
                 minutes: minutes
-            }
+            };
             return time;
         }
     },
@@ -150,32 +124,87 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import '@/assets/styles/va_styles.scss';
+.recipe {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: $m1;
+    }
 
-* {
-    user-select: none;
+    &__content {
+        display: flex;
+    }
 }
 
-.tag__time-confined {
-    background: #176744;
+.header {
+    &__stations {
+        user-select: none;
+    }
+
+    &__time {
+        border-radius: 100px;
+        text-transform: capitalize;
+        margin-right: 5px;
+        padding: 2px 10px;
+        background-color: #282737;
+        color: $text-color;
+        user-select: none;
+        box-shadow: none;
+        transition: box-shadow .1s ease-in-out, background-color .25s ease-in-out, color .25s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 5px black;
+        }
+
+        &.confined {
+            background-color: $primary;
+            color: white;
+        }
+    }
 }
 
-.tag__time-normal {
-    background: #ae1d1d;
+.content {
+
+    &__input,
+    &__output {
+        display: flex;
+    }
+
+    &__divider {
+        $size: 1rem;
+        content: "";
+        display: flex;
+        flex-direction: column;
+        margin: auto 1rem;
+        border-top: $size solid transparent;
+        border-bottom: $size solid transparent;
+        border-right: 0;
+        border-left: $size solid;
+    }
 }
 
-.tag {
-    border-radius: 100px;
-    text-transform: capitalize;
-    margin-right: 5px;
-    border: none;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: silver;
-}
+.item {
+    position: relative;
 
-.tag:hover {
-    box-shadow: 0 0 5px black;
-    transition: box-shadow 0.05s ease-in-out;
+    &__image {
+        margin: 5px 4px;
+        position: relative;
+        $item-size: 2.5rem;
+        width: $item-size;
+        height: $item-size;
+        background: black;
+        border: 1px solid black;
+    }
+
+    &__text {
+        position: absolute;
+        color: white;
+        font-family: sans-serif;
+        pointer-events: none;
+        bottom: 0px;
+        right: 0px;
+        font-size: 16px;
+        user-select: none;
+    }
 }
 </style>

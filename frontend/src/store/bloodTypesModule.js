@@ -6,7 +6,7 @@ export const bloodTypesModule = {
     isBloodTypesLoading: true,
     selectedBloodType: 0,
     bloodQuality: 0,
-    host: "https://vrising-academy.info/api/"
+    host: "https://dev.vrising-academy.info/api/"
     // host: "http://localhost:8087/api/",
   }),
   getters: {},
@@ -26,6 +26,10 @@ export const bloodTypesModule = {
   },
   actions: {
     async fetchBloodTypes({ state, commit }) {
+      if (state.bloodTypes.length > 0) {
+        return;
+      }
+      
       commit("setBloodTypesLoading", true);
       await axios
         .get(state.host + "bloodtype/list")
