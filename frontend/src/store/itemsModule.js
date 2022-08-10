@@ -94,6 +94,10 @@ export const itemsModule = {
     },
     actions: {
         async fetchItems({ state, commit }) {
+            if (state.items.length > 0) {
+                commit('setSelectedItem', null);
+                return;
+            }
             commit('setLoading', true);
 
             await axios
@@ -131,6 +135,10 @@ export const itemsModule = {
                 .then(response => commit('setSalvageables', response.data))
                 .catch(error => alert("Error: " + error));
 
+            commit('setLoading', false);
+        },
+
+        verifyQuery({ state, commit }) {
             if (!router.currentRoute._value.query.id) {
                 router.replace({
                     query: {
@@ -146,9 +154,6 @@ export const itemsModule = {
             else {
                 commit('setSelectedItem', null);
             }
-
-
-            commit('setLoading', false);
         },
 
         selectType({ commit }, id) {

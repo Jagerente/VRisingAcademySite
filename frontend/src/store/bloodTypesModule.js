@@ -26,6 +26,10 @@ export const bloodTypesModule = {
   },
   actions: {
     async fetchBloodTypes({ state, commit }) {
+      if (state.bloodTypes.length > 0) {
+        return;
+      }
+      
       commit("setBloodTypesLoading", true);
       await axios
         .get(state.host + "bloodtype/list")

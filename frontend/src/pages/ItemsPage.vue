@@ -31,6 +31,7 @@ export default {
   methods: {
     ...mapActions({
       fetchItems: "items/fetchItems",
+      verifyQuery: "items/verifyQuery",
       selectType: "items/selectType",
       updateShowModal: "items/updateShowModal",
     })
@@ -44,6 +45,7 @@ export default {
   },
   mounted() {
     this.fetchItems();
+    this.verifyQuery();
   }
 };
 </script>
