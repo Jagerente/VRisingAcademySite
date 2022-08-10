@@ -93,7 +93,7 @@ export const itemsModule = {
         }
     },
     actions: {
-        async fetchItems({ state, commit }) {
+        async fetchItems({ state, commit, dispatch }) {
             if (state.items.length > 0) {
                 commit('setSelectedItem', null);
                 return;
@@ -136,6 +136,8 @@ export const itemsModule = {
                 .catch(error => alert("Error: " + error));
 
             commit('setLoading', false);
+            dispatch('verifyQuery');
+
         },
 
         verifyQuery({ state, commit }) {
@@ -177,6 +179,9 @@ export const itemsModule = {
         },
 
         updateSearchQuery({ commit }, { query = '', type = 0 }) {
+            if (type === 2) {
+                commit('setShowModal', false);
+            }
             commit('setSearchType', type);
             commit('setSearchQuery', query);
         },
