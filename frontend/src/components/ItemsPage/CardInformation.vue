@@ -461,12 +461,14 @@ export default {
     }
 
     &-link {
+      margin: 5px 4px;
       position: relative;
       $item-size: 2.5rem;
       width: $item-size;
       height: $item-size;
       background: black;
       border: 1px solid black;
+      gap: 5px;
     }
   }
 
