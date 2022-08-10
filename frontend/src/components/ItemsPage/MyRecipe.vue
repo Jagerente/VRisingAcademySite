@@ -42,7 +42,7 @@
             >
                 <ItemPreview
                     class="item__image"
-                    :item="this.items.find(item => { return item.id === ingridient.itemId })"
+                    :item="this.items.find(item => { return item.id === ingridient.itemId; })"
                     :button="true"
                     @itemClick="selectItem"
                 />
@@ -60,7 +60,7 @@
             >
                 <ItemPreview
                     class="item__image output__item"
-                    :item="this.items.find(item => { return item.id === result.itemId })"
+                    :item="this.items.find(item => { return item.id === result.itemId; })"
                     :button="true"
                     @itemClick="selectItem"
                 />
@@ -97,26 +97,26 @@ export default {
             confinedRoom: (state) => state.items.confinedRoom,
         }),
         confined() {
-            return this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase()))
+            return this.recipe.stations.some(station1 => 'simple workbench,sawmill,furnace,grinder,tannery,blood press,woodworking bench,vermin nest,alchemy table,tailoring bench,smithy,loom,jewelcrafting table,gem cutting table,paper press,anvil'.split(',').some(station2 => station1.toLowerCase() === station2.toLowerCase()));
         },
         time() {
             var multiplier = 1;
-            var minutes = Math.floor(this.recipe.time * multiplier / 60)
-            var seconds = this.recipe.time * multiplier - (minutes * 60)
+            var minutes = Math.floor(this.recipe.time * multiplier / 60);
+            var seconds = this.recipe.time * multiplier - (minutes * 60);
             var time = {
                 seconds: seconds,
                 minutes: minutes
-            }
+            };
             return time;
         },
         confinedTime() {
             var multiplier = 0.8;
-            var minutes = Math.floor(this.recipe.time * multiplier / 60)
-            var seconds = this.recipe.time * multiplier - (minutes * 60)
+            var minutes = Math.floor(this.recipe.time * multiplier / 60);
+            var seconds = this.recipe.time * multiplier - (minutes * 60);
             var time = {
                 seconds: seconds,
                 minutes: minutes
-            }
+            };
             return time;
         }
     },
@@ -187,6 +187,7 @@ export default {
     position: relative;
 
     &__image {
+        margin: 5px 4px;
         position: relative;
         $item-size: 2.5rem;
         width: $item-size;
