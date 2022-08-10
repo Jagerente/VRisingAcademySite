@@ -12,10 +12,66 @@
     <div class="description container__description">
       <div class="block description__block">Welcome to the academy, V Academy!
         <p class="block__text">
-          This website is Work In Progress, and we are
-          working
-          hard to fill up the
-          database with missing items and develop new features.
+          This is our first Web project ever. Site made in education purposes only.<br>
+          This website developement is frozen forever (or not?). <br />
+          If you are frontend developer and want to continue development feel free to contact
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/jagerente')"
+          >Jagerente</a>
+          or contribute at <a
+            class="log__link"
+            @click="$router.push('/github')"
+          >GitHub</a>.
+
+        </p>
+        <button
+          @click="$router.push('/contribute')"
+          class="button block__button"
+        >
+          Contribute
+        </button>
+      </div>
+      <div class="block description__block">
+        <p class="block__header">
+          Credits:
+        </p>
+        <p class="block__text">
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/bobrokrot/discord')"
+          >Bobrokrot</a> — Owner, Researching, Data Filling
+        </p>
+        <p class="block__text">
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/dixtasy')"
+          >Dixtasy</a> — UI/UX
+        </p>
+        <p class="block__text">
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/order')"
+          >Order</a> — Backend, Database
+        </p>
+        <p class="block__text">
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/jagerente')"
+          >Jagerente</a> — Frontend, UI/UX, Meme Lead
+        </p>
+        <p class="block__text">
+          Special thanks to
+          <a
+            class="log__link"
+            href="#"
+            @click="$router.push('/credits/inflex')"
+          >Inflex</a> for some Frontend methodologies and code organization improvement.
         </p>
       </div>
       <div class="description__block">
@@ -30,21 +86,19 @@
           ad-free.
         </p>
       </div>
-      <div class="description__block">
-        <button
-          @click="$router.push('/contribute')"
-          class="button block__button"
-        >
-          Contribute
-        </button>
-        <p class="block__text">
-          If you want to help fill up the database, there is a number of topics we
-          seek data about.
-        </p>
-      </div>
     </div>
     <div class="changelog container__changelog">
       <h2 class="changelog__header">Changelog</h2>
+      <div class="log changelog__log">
+        <h3 class="log__title">10/08/2022 THE END</h3>
+        <div class="log__body">
+          <p>— Better mobile UX.</p>
+          <p>— Grand code refactoring.</p>
+          <p>— Lots of optimization.</p>
+          <p>— Caching.</p>
+          <p>— GitHub project reveal.</p>
+        </div>
+      </div>
       <div class="log changelog__log">
         <h3 class="log__title">16/06/2022 "Show on Map" Update</h3>
         <div class="log__body">
@@ -181,14 +235,14 @@ export default {
   },
   methods: {
     gotoBoosty() {
-      window.open('https://boosty.to/vrisingacademy', '_blank')
+      window.open('https://boosty.to/vrisingacademy', '_blank');
     }
   },
   setup() {
     const getImageUrl = (name) => {
-      return new URL(`../assets/images/${name}`, import.meta.url).href
-    }
-    return { getImageUrl }
+      return new URL(`../assets/images/${name}`, import.meta.url).href;
+    };
+    return { getImageUrl };
   }
 };
 </script>
@@ -236,6 +290,12 @@ export default {
   }
 
   &__text {
+    margin-bottom: 15px;
+  }
+
+  &__header {
+    font-size: 32px;
+    font-weight: bold;
     margin-bottom: 15px;
   }
 }

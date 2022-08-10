@@ -1,9 +1,9 @@
 import Main from "@/pages/Main.vue";
-import ItemsPage from "@/pages/ItemsPage.vue"
-import SpellsPage from "@/pages/SpellsPage.vue"
-import BloodTypesPage from "@/pages/BloodTypesPage.vue"
-import ContributePage from "@/pages/ContributePage.vue"
-import NotFoundPage from "@/pages/NotFoundPage.vue"
+import ItemsPage from "@/pages/ItemsPage.vue";
+import SpellsPage from "@/pages/SpellsPage.vue";
+import BloodTypesPage from "@/pages/BloodTypesPage.vue";
+import ContributePage from "@/pages/ContributePage.vue";
+import NotFoundPage from "@/pages/NotFoundPage.vue";
 
 import { createRouter, createWebHistory } from "vue-router";
 
@@ -38,7 +38,10 @@ const routes = [
     },
     {
         path: '/contribute',
-        component: ContributePage
+        // component: ContributePage
+        beforeEnter(to, from, next) {
+            window.open("https://github.com/Jagerente/VRisingAcademySite", '_blank');
+        }
     },
     {
         path: '/contribute/books',
@@ -68,9 +71,33 @@ const routes = [
         }
     },
     {
-        path: '/credits/jagerente/discord',
+        path: '/credits/jagerente',
         beforeEnter(to, from, next) {
-            window.open("https://discordapp.com/users/584324991471058946", '_blank');
+            window.open("https://jagerente.xyz", '_blank');
+        }
+    },
+    {
+        path: '/credits/order',
+        beforeEnter(to, from, next) {
+            window.open("https://github.com/aelariane", '_blank');
+        }
+    },
+    {
+        path: '/credits/dixtasy',
+        beforeEnter(to, from, next) {
+            window.open("https://vk.com/dixtasy", '_blank');
+        }
+    },
+    {
+        path: '/credits/inflex',
+        beforeEnter(to, from, next) {
+            window.open("https://github.com/inflexjs", '_blank');
+        }
+    },
+    {
+        path: '/github',
+        beforeEnter(to, from, next) {
+            window.open("https://github.com/Jagerente/VRisingAcademySite", '_blank');
         }
     },
     {
@@ -78,7 +105,7 @@ const routes = [
         name: '404',
         component: NotFoundPage
     },
-]
+];
 
 const router = createRouter({
     routes,
