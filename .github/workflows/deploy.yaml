@@ -59,7 +59,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           source: "*"
-          target: "sraka"
+          target: "~/VRisingAcademySite/frontend/dist/"
 
       - name: Restart server
         uses: appleboy/ssh-action@master
@@ -69,9 +69,7 @@ jobs:
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            whoami
-            ls -al
-            ls sraka
+            sudo systemctl restart nginx.service
 
       # - name: "Deploy"
       #   run: |
