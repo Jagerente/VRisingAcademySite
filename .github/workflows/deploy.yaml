@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 env:
-  NODE_VERSION: '14.x'                # set this to the node version to use
+  NODE_VERSION: "14.x" # set this to the node version to use
 
 permissions:
   contents: read
@@ -14,27 +14,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Set up Vue.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ env.NODE_VERSION }}
-        cache: 'npm'
-        cache-dependency-path: frontend/package-lock.json
+      - name: Set up Vue.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
 
-    - name: npm install, build, and test
-      working-directory: frontend
-      run: |
-        npm i
-        npm run build
-        npm run test --if-present
+      - name: npm install, build, and test
+        working-directory: frontend
+        run: |
+          npm i
+          npm run build
+          npm run test --if-present
 
-    - name: Upload artifact for deployment job
-      uses: actions/upload-artifact@v3
-      with:
-        name: vue-app
-        path: frontend/dist
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: vue-app
+          path: frontend/dist
 
   deploy:
     permissions:
@@ -42,17 +42,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development'
+      name: "Development"
       # url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-    - name: Download artifact from build job
-      uses: actions/download-artifact@v3
-      with:
-        name: vue-app
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v3
+        with:
+          name: vue-app
 
-    - name: 'Deploy'
-      run: |
-        ls
-        ls frontend
-        ls frontend/dist
+      - name: "Deploy"
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            whoami
+            ls -al
+
+      # - name: "Deploy"
+      #   run: |
+      #     scp * academy@178.250.157.100:~/sraka
+      #     ssh academy@178.250.157.100 'echo "START"'
